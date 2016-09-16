@@ -73,12 +73,12 @@ public class Ship : MoveableObject
 
 	private Vector3 LeftPosition()
 	{
-		return new Vector3(-PaddleOffset(), 0, 0);
+		return new Vector3(PaddleOffset(), 0, 0);
 	}
 
 	private Vector3 RightPosition()
 	{
-		return new Vector3(PaddleOffset(), 0, 0);
+		return new Vector3(-PaddleOffset(), 0, 0);
 	}
 
 	public void PaddleLeft()
