@@ -536,7 +536,7 @@ Rigidbody:
   m_GameObject: {fileID: 1089113468}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 2.5
   m_AngularDrag: 0.5
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -571,8 +571,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reservedTransform: {fileID: 0}
-  accelerationBase: 20
-  sideAccelerationBase: 0.03
+  accelerationBase: 50
+  sideAccelerationBase: 0.05
   accelerationGrowth: 0.02
 --- !u!75 &1089113474
 ConstantForce:
