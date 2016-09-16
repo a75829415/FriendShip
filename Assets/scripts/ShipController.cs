@@ -17,7 +17,7 @@ public class ShipController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(isLocalPlayer);
+        //Debug.Log(isLocalPlayer);
         if (isSingleGame)
         {
             if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftArrow))

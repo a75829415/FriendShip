@@ -47,11 +47,11 @@ public class Manager : MonoBehaviour
 		{
 			if (currentPiece.position.x > pieceScale / 2)
 			{
-				currentPiece.Translate(-2 * pieceScale, 0, 0);
+				currentPiece.Translate(-2 * pieceScale, 0, 0, Space.World);
 			}
 			else
 			{
-				currentPiece.Translate(pieceScale, 0, 0);
+				currentPiece.Translate(pieceScale, 0, 0, Space.World);
 			}
 		}
 	}
@@ -63,11 +63,11 @@ public class Manager : MonoBehaviour
 		{
 			if (currentPiece.position.z < -pieceScale / 2)
 			{
-				currentPiece.Translate(0, 2 * pieceScale, 0);
+				currentPiece.Translate(0, 0, 2 * pieceScale, Space.World);
 			}
 			else
 			{
-				currentPiece.Translate(0, -pieceScale, 0);
+				currentPiece.Translate(0, 0, -pieceScale, Space.World);
 			}
 		}
 	}
@@ -79,11 +79,11 @@ public class Manager : MonoBehaviour
 		{
 			if (currentPiece.position.x < -pieceScale / 2)
 			{
-				currentPiece.Translate(2 * pieceScale, 0, 0);
+				currentPiece.Translate(2 * pieceScale, 0, 0, Space.World);
 			}
 			else
 			{
-				currentPiece.Translate(-pieceScale, 0, 0);
+				currentPiece.Translate(-pieceScale, 0, 0, Space.World);
 			}
 		}
 	}
@@ -95,11 +95,11 @@ public class Manager : MonoBehaviour
 		{
 			if (currentPiece.position.z > pieceScale / 2)
 			{
-				currentPiece.Translate(0, -2 * pieceScale, 0);
+				currentPiece.Translate(0, 0, -2 * pieceScale, Space.World);
 			}
 			else
 			{
-				currentPiece.Translate(0, pieceScale, 0);
+				currentPiece.Translate(0, 0, pieceScale, Space.World);
 			}
 		}
 	}
