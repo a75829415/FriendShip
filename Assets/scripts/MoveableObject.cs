@@ -16,9 +16,16 @@ public class MoveableObject : MonoBehaviour
 		reservedTransform = GetComponent<Transform>();
 	}
 
-	public void Move(float x, float z)
+	public void MoveVertically(float x, float z)
 	{
 		reservedTransform.Translate(x, 0, z, Space.World);
 	}
+
+	public void MoveToVertically(float x, float z)
+	{
+		reservedTransform.position = new Vector3(x, reservedTransform.position.y, z);
+	}
+
+	public Vector3 Position { get { return reservedTransform.position; } }
 
 }

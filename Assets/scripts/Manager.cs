@@ -3,11 +3,20 @@ using System.Collections;
 
 public class Manager : MonoBehaviour
 {
+	public static Manager instance;
+
 	public Ship ship;
-	public Transform[] backgroundPieces;
+	public BackgroundPiece[] backgroundPieces;
 	public float backgroundScale;
 
+	public Transform obstacleProtocal;
+
 	private float pieceScale;
+
+	void Awake()
+	{
+		instance = this;
+	}
 
 	// Use this for initialization
 	void Start()
@@ -18,88 +27,97 @@ public class Manager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (ship.reservedTransform.position.x < -PieceBound())
+		if (ship.Position.x < -PieceBound())
 		{
 			MoveTowardEast();
-		} else if (ship.reservedTransform.position.x > PieceBound())
+		} else if (ship.Position.x > PieceBound())
 		{
 			MoveTowardWest();
 		}
-		if (ship.reservedTransform.position.z < -PieceBound())
+		if (ship.Position.z < -PieceBound())
 		{
 			MoveTowardNorth();
 		}
-		else if (ship.reservedTransform.position.z > PieceBound())
+		else if (ship.Position.z > PieceBound())
 		{
 			MoveTowardSouth();
 		}
 	}
 
+	public float PieceScale()
+	{
+		return pieceScale;
+	}
+
 	public float PieceBound()
 	{
-		return pieceScale / 2;
+		return PieceScale() / 2;
 	}
 
 	public void MoveTowardEast()
 	{
-		ship.Move(pieceScale, 0);
-		foreach (Transform currentPiece in backgroundPieces)
+		ship.MoveVertically(PieceScale(), 0);
+		foreach (BackgroundPiece currentPiece in backgroundPieces)
 		{
-			if (currentPiece.position.x > pieceScale / 2)
+			if (currentPiece.Position.x > PieceBound())
 			{
-				currentPiece.Translate(-2 * pieceScale, 0, 0, Space.World);
+				currentPiece.MoveVertically(-2 * PieceScale(), 0);
+				currentPiece.Regenerate();
 			}
 			else
 			{
-				currentPiece.Translate(pieceScale, 0, 0, Space.World);
+				currentPiece.MoveVertically(PieceScale(), 0);
 			}
 		}
 	}
 
 	public void MoveTowardSouth()
 	{
-		ship.Move(0, -pieceScale);
-		foreach (Transform currentPiece in backgroundPieces)
+		ship.MoveVertically(0, -PieceScale());
+		foreach (BackgroundPiece currentPiece in backgroundPieces)
 		{
-			if (currentPiece.position.z < -pieceScale / 2)
+			if (currentPiece.Position.z < -PieceBound())
 			{
-				currentPiece.Translate(0, 0, 2 * pieceScale, Space.World);
+				currentPiece.MoveVertically(0, 2 * PieceScale());
+				currentPiece.Regenerate();
 			}
 			else
 			{
-				currentPiece.Translate(0, 0, -pieceScale, Space.World);
+				currentPiece.MoveVertically(0, -PieceScale());
 			}
 		}
 	}
 
 	public void MoveTowardWest()
 	{
-		ship.Move(-pieceScale, 0);
-		foreach (Transform currentPiece in backgroundPieces)
+		ship.MoveVertically(-PieceScale(), 0);
+		foreach (BackgroundPiece currentPiece in backgroundPieces)
 		{
-			if (currentPiece.position.x < -pieceScale / 2)
+			if (currentPiece.Position.x < -PieceBound())
 			{
-				currentPiece.Translate(2 * pieceScale, 0, 0, Space.World);
+				currentPiece.MoveVertically(2 * PieceScale(), 0);
+				currentPiece.Regenerate();
 			}
 			else
 			{
-				currentPiece.Translate(-pieceScale, 0, 0, Space.World);
+				currentPiece.MoveVertically(-PieceScale(), 0);
 			}
 		}
 	}
 
 	public void MoveTowardNorth()
 	{
-		ship.Move(0, pieceScale);
-		foreach (Transform currentPiece in backgroundPieces)
+		ship.MoveVertically(0, PieceScale());
+		foreach (BackgroundPiece currentPiece in backgroundPieces)
 		{
-			if (currentPiece.position.z > pieceScale / 2)
+			if (currentPiece.Position.z > PieceBound())
 			{
-				currentPiece.Translate(0, 0, -2 * pieceScale, Space.World);
+				currentPiece.MoveVertically(0, -2 * PieceScale());
+				currentPiece.Regenerate();
 			}
 			else
 			{
-				currentPiece.Translate(0, 0, pieceScale, Space.World);
+				currentPiece.MoveVertically(0, PieceScale());
 			}
 		}
 	}
