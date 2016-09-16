@@ -74,7 +74,7 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardWest()
 	{
-		ship.Move(0, -pieceScale);
+		ship.Move(-pieceScale, 0);
 		foreach (Transform currentPiece in backgroundPieces)
 		{
 			if (currentPiece.position.x < -pieceScale / 2)
@@ -90,7 +90,7 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardNorth()
 	{
-		ship.Move(0, -pieceScale);
+		ship.Move(0, pieceScale);
 		foreach (Transform currentPiece in backgroundPieces)
 		{
 			if (currentPiece.position.z > pieceScale / 2)

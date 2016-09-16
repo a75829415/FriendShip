@@ -17,7 +17,7 @@ public class Ship : MoveableObject
         base.StartWorkaround();
 		reservedRigidbody = GetComponent<Rigidbody>();
 		reservedBackgroundForce = GetComponent<ConstantForce>();
-		reservedBackgroundForce.relativeForce = Vector3.forward * ForceValueBase();
+		reservedBackgroundForce.relativeForce = ValueToForce(ForceValueBase());
     }
 
 	// Update is called once per frame
@@ -28,12 +28,12 @@ public class Ship : MoveableObject
 
 	private void UpdateForce()
 	{
-		reservedBackgroundForce.relativeForce += Vector3.forward * DeltaForceValue();
-    }
+		reservedBackgroundForce.relativeForce += ValueToForce(DeltaForceValue());
+	}
 
 	private float ForceValueBase()
 	{
-		return ToActualForce(accelerationBase);
+		return ToActualForceValue(accelerationBase);
     }
 
 	private float DeltaForceValue()
@@ -41,10 +41,15 @@ public class Ship : MoveableObject
 		return Time.deltaTime * accelerationGrowth * ForceValueBase();
     }
 
-	private float ToActualForce(float acceleration)
+	private float ToActualForceValue(float acceleration)
 	{
 		return acceleration * reservedRigidbody.mass;
     }
+
+	private Vector3 ValueToForce(float force)
+	{
+		return Vector3.forward * force;
+	}
 
 	private float SideAccelerationValueBase()
 	{
