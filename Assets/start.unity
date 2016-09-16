@@ -290,6 +290,7 @@ MonoBehaviour:
   - {fileID: 1539290790}
   - {fileID: 1300552837}
   backgroundScale: 0
+  obstacleProtocal: {fileID: 431154, guid: 4a833f9c17ab959409d4c464dafef9fc, type: 2}
 --- !u!4 &535880128
 Transform:
   m_ObjectHideFlags: 0

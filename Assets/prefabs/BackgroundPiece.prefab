@@ -89,6 +89,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reservedTransform: {fileID: 0}
+  bounds: 3
+  minScale: 4
+  maxScale: 16
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
