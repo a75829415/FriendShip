@@ -7,7 +7,9 @@ public class Ship : MoveableObject
 	private ConstantForce reservedBackgroundForce;
 
 	public float accelerationBase;
+	public float sideAccelerationBase;
 	public float accelerationGrowth;
+
 
 	// Use this for initialization
 	void Start()
@@ -43,5 +45,45 @@ public class Ship : MoveableObject
 	{
 		return acceleration * reservedRigidbody.mass;
     }
+
+	private float SideAccelerationValueBase()
+	{
+		return sideAccelerationBase;
+	}
+
+	private float LeftAccelerationValueBase()
+	{
+		return SideAccelerationValueBase();
+	}
+
+	private float RightAccelerationValueBase()
+	{
+		return SideAccelerationValueBase();
+	}
+
+	private float PaddleOffset()
+	{
+		return 1.0f;
+	}
+
+	private Vector3 LeftPosition()
+	{
+		return new Vector3(-PaddleOffset(), 0, 0);
+	}
+
+	private Vector3 RightPosition()
+	{
+		return new Vector3(PaddleOffset(), 0, 0);
+	}
+
+	private void PaddleLeft()
+	{
+		reservedRigidbody.AddForceAtPosition(Vector3.forward * LeftAccelerationValueBase(), LeftPosition(), ForceMode.VelocityChange);
+	}
+
+	private void PaddleRight()
+	{
+		reservedRigidbody.AddForceAtPosition(Vector3.forward * RightAccelerationValueBase(), RightPosition(), ForceMode.VelocityChange);
+	}
 
 }
