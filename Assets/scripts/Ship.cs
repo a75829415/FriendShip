@@ -84,13 +84,11 @@ public class Ship : MoveableObject
 	public void PaddleLeft()
 	{
 		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * LeftAccelerationValueBase()), LeftPosition()), ForceMode.VelocityChange);
-		Debug.Log("Left!");
 	}
 
 	public void PaddleRight()
 	{
 		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * RightAccelerationValueBase()), RightPosition()), ForceMode.VelocityChange);
-		Debug.Log("Right!");
 	}
 
 }
