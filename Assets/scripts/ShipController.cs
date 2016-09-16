@@ -20,18 +20,18 @@ public class ShipController : NetworkBehaviour
         Debug.Log(isLocalPlayer);
         if (isSingleGame)
         {
-            if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 CmdPaddleLeft();
             }
-            if (Input.GetMouseButton(1) || Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 CmdPaddleRight();
             }
         }
         else
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 if (isServer)
                 {
