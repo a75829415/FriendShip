@@ -73,22 +73,24 @@ public class Ship : MoveableObject
 
 	private Vector3 LeftPosition()
 	{
-		return new Vector3(-PaddleOffset(), 0, 0);
+		return new Vector3(PaddleOffset(), 0, 0);
 	}
 
 	private Vector3 RightPosition()
 	{
-		return new Vector3(PaddleOffset(), 0, 0);
+		return new Vector3(-PaddleOffset(), 0, 0);
 	}
 
 	public void PaddleLeft()
 	{
-		reservedRigidbody.AddForceAtPosition(Vector3.forward * LeftAccelerationValueBase(), LeftPosition(), ForceMode.VelocityChange);
+		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * LeftAccelerationValueBase()), LeftPosition()), ForceMode.VelocityChange);
+		Debug.Log("Left!");
 	}
 
 	public void PaddleRight()
 	{
-		reservedRigidbody.AddForceAtPosition(Vector3.forward * RightAccelerationValueBase(), RightPosition(), ForceMode.VelocityChange);
+		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * RightAccelerationValueBase()), RightPosition()), ForceMode.VelocityChange);
+		Debug.Log("Right!");
 	}
 
 }

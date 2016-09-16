@@ -18,7 +18,7 @@ public class MoveableObject : MonoBehaviour
 
 	public void Move(float x, float z)
 	{
-		reservedTransform.Translate(x, 0, z);
+		reservedTransform.Translate(x, 0, z, Space.World);
 	}
 
 }
