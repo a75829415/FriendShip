@@ -70,7 +70,6 @@ public class Manager : MonoBehaviour
 				currentPiece.Translate(0, -pieceScale, 0);
 			}
 		}
-		Debug.Log(backgroundPieces[0].position);
 	}
 
 	public void MoveTowardWest()
