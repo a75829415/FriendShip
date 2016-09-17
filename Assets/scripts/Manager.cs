@@ -10,8 +10,27 @@ public class Manager : MonoBehaviour
 	public float backgroundScale;
 
 	public Transform obstacleProtocal;
+	public float waitTimeBase;
 
 	private float pieceScale;
+	private float waitTime;
+
+	public float WaitTime { get { return waitTime; } }
+
+	public bool IsOperating()
+	{
+		return waitTime < 0;
+	}
+
+	public void ResetWaitTime()
+	{
+		waitTime = waitTimeBase;
+	}
+
+	private void UpdateWaitTime()
+	{
+		waitTime -= Time.deltaTime;
+	}
 
 	void Awake()
 	{
@@ -22,11 +41,13 @@ public class Manager : MonoBehaviour
 	void Start()
 	{
 		pieceScale = GameObject.FindGameObjectWithTag("Background").transform.localScale.x;
+		ResetWaitTime();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		UpdateWaitTime();
 		if (ship.Position.x < -PieceBound())
 		{
 			MoveTowardEast();

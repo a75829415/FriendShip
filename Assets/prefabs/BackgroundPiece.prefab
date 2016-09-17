@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reservedTransform: {fileID: 0}
-  bounds: 3
+  bounds: 4
   minScale: 8
   maxScale: 32
 --- !u!1001 &100100000
