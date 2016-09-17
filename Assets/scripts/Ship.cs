@@ -134,30 +134,24 @@ public class Ship : MoveableObject
 
 	public void PaddleLeft()
 	{
-		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * LeftAccelerationValueBase()), LeftPosition()), ForceMode.VelocityChange);
+		reservedRigidbody.AddTorque(
+			Vector3.Cross((Vector3.forward * LeftAccelerationValueBase()) * accelerationBase, LeftPosition()), ForceMode.VelocityChange);
 	}
 
 	public void PaddleRight()
 	{
-		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * RightAccelerationValueBase()), RightPosition()), ForceMode.VelocityChange);
+		reservedRigidbody.AddTorque(
+			Vector3.Cross((Vector3.forward * RightAccelerationValueBase()) * accelerationBase, RightPosition()), ForceMode.VelocityChange);
 	}
 
 
-	void OnColliderEnter(Collider other)
+	void OnCollisionEnter(Collision collision)
 	{
 		if (!isInvincible())
 		{
-			ResetForce();
 			Debug.Log("Crash!");
-		}
-	}
-
-	void OnColliderExit(Collider other)
-	{
-		if (!isInvincible())
-		{
+			ResetForce();
 			ResetInvincibleStatus();
-			Debug.Log("Crash Done!");
 		}
 	}
 
