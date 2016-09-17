@@ -347,6 +347,14 @@ Prefab:
       propertyPath: m_Name
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11481588, guid: 78a7516f478e31840b9e48bada091e3f, type: 2}
+      propertyPath: maxScale
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 11481588, guid: 78a7516f478e31840b9e48bada091e3f, type: 2}
+      propertyPath: minScale
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78a7516f478e31840b9e48bada091e3f, type: 2}
   m_IsPrefabParent: 0
@@ -606,7 +614,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!64 &1089113471
 MeshCollider:
@@ -636,9 +644,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reservedTransform: {fileID: 0}
+  mainCollider: {fileID: 1089113471}
   accelerationBase: 50
   sideAccelerationBase: 0.1
   accelerationGrowth: 0.02
+  invincibleTimeBase: 0
 --- !u!75 &1089113474
 ConstantForce:
   m_ObjectHideFlags: 0

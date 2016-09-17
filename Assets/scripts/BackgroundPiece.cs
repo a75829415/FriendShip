@@ -38,7 +38,6 @@ public class BackgroundPiece : MoveableObject {
 		obstacles[i, j].position = new Vector3(GenerateObstacleX(i), obstacles[i, j].position.y, GenerateObstacleZ(j));
 		float scale = Random.Range(minScale, maxScale) / reservedTransform.lossyScale.x;
 		obstacles[i, j].localScale = new Vector3(scale, 1, scale);
-		Debug.Log(obstacles[i, j].lossyScale);
     }
 
 	private float ObstacleBoundRange()
