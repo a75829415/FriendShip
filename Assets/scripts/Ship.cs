@@ -22,7 +22,7 @@ public class Ship : MoveableObject
         base.StartWorkaround();
 		reservedRigidbody = GetComponent<Rigidbody>();
 		reservedBackgroundForce = GetComponent<ConstantForce>();
-		invincibleTime = invincibleTimeBase;
+		ResetInvincibleStatus();
         ResetForce();
     }
 
@@ -145,12 +145,20 @@ public class Ship : MoveableObject
 
 	void OnColliderEnter(Collider other)
 	{
-		ResetForce();
+		if (!isInvincible())
+		{
+			ResetForce();
+			Debug.Log("Crash!");
+		}
 	}
 
 	void OnColliderExit(Collider other)
 	{
-		ResetInvincibleStatus();
+		if (!isInvincible())
+		{
+			ResetInvincibleStatus();
+			Debug.Log("Crash Done!");
+		}
 	}
 
 }

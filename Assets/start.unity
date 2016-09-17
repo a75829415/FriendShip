@@ -347,14 +347,6 @@ Prefab:
       propertyPath: m_Name
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11481588, guid: 78a7516f478e31840b9e48bada091e3f, type: 2}
-      propertyPath: maxScale
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 11481588, guid: 78a7516f478e31840b9e48bada091e3f, type: 2}
-      propertyPath: minScale
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78a7516f478e31840b9e48bada091e3f, type: 2}
   m_IsPrefabParent: 0
@@ -648,7 +640,7 @@ MonoBehaviour:
   accelerationBase: 50
   sideAccelerationBase: 0.1
   accelerationGrowth: 0.02
-  invincibleTimeBase: 0
+  invincibleTimeBase: 3
 --- !u!75 &1089113474
 ConstantForce:
   m_ObjectHideFlags: 0
