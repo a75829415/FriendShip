@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ShipController : NetworkBehaviour
 {
-    public bool isSingleGame = false;
+    public static bool isSingleGame = false;
 
     private Ship ship;
 
@@ -17,7 +17,6 @@ public class ShipController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(isLocalPlayer);
         if (isSingleGame)
         {
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftArrow))
