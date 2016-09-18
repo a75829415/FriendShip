@@ -4,11 +4,9 @@ using System.Collections;
 public class Ship : MoveableObject
 {
 	public Collider mainCollider;
-	public Camera thirdPersonCamera;
-    public Transform thirdPersonCameraTransform;
 
-	private Rigidbody reservedRigidbody;
-	private ConstantForce reservedBackgroundForce;
+	public Rigidbody reservedRigidbody;
+	public ConstantForce reservedBackgroundForce;
 
 	public float accelerationBase;
 	public float sideAccelerationBase;
@@ -19,24 +17,14 @@ public class Ship : MoveableObject
 
 	private bool unprepared;
 
-
-	private float ChasingCameraProgress(float y)
-	{
-		float starting = 50.0f;
-		float result = GetSpeed() + starting;
-		float ratio = 2.0f * Manager.instance.WaitTime / Manager.instance.waitTimeBase - 1.0f;
-		if (ratio > 0) {
-			result -= starting * ratio;
-		}
-		result /= 50.0f;
-		result += 1.0f;
-		Debug.Log(Mathf.Pow(result, y));
-        return Mathf.Pow(result, y);
-	}
-
 	public float GetSpeed()
 	{
 		return reservedRigidbody.velocity.magnitude;
+	}
+
+	public float GetVertical()
+	{
+		return reservedRigidbody.angularVelocity.y;
 	}
 
 	public bool isInvincible()
@@ -62,8 +50,6 @@ public class Ship : MoveableObject
 	{
 		unprepared = true;
         base.StartWorkaround();
-		reservedRigidbody = GetComponent<Rigidbody>();
-		reservedBackgroundForce = GetComponent<ConstantForce>();
 		ResetInvincibleStatus();
     }
 
@@ -80,35 +66,6 @@ public class Ship : MoveableObject
 			UpdateInvincibilityStatus();
 			UpdateForce();
 		}
-		UpdateCamera();
-	}
-
-	private void UpdateCamera()
-	{
-		UpdateCameraPosition();
-		UpdateCameraRotation();
-		UpdateCameraFOV();
-    }
-
-	private void UpdateCameraPosition()
-	{
-		float x = 0;
-		float y = 3 + 13 / ChasingCameraProgress(2.2f);
-		float z = -3f + 16f / ChasingCameraProgress(2.5f);
-		thirdPersonCameraTransform.localPosition = new Vector3(x, y, z);
-    }
-
-	private void UpdateCameraRotation()
-	{
-		float x = 15 + 75 /  ChasingCameraProgress(1.0f);
-		float y = 0;
-		float z = 0;
-		thirdPersonCameraTransform.localRotation = Quaternion.Euler(x, y, z);
-    }
-
-	private void UpdateCameraFOV()
-	{
-		thirdPersonCamera.fieldOfView = 90 + 30 / ChasingCameraProgress(1.0f);
 	}
 
 	private void UpdateEngagingStatus()
