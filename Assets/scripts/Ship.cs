@@ -5,8 +5,8 @@ public class Ship : MoveableObject
 {
 	public Collider mainCollider;
 
-	private Rigidbody reservedRigidbody;
-	private ConstantForce reservedBackgroundForce;
+	public Rigidbody reservedRigidbody;
+	public ConstantForce reservedBackgroundForce;
 
 	public float accelerationBase;
 	public float sideAccelerationBase;
@@ -15,22 +15,16 @@ public class Ship : MoveableObject
 
 	private float invincibleTime;
 
+	private bool unprepared;
 
-	// Use this for initialization
-	void Start()
+	public float GetSpeed()
 	{
-        base.StartWorkaround();
-		reservedRigidbody = GetComponent<Rigidbody>();
-		reservedBackgroundForce = GetComponent<ConstantForce>();
-		invincibleTime = invincibleTimeBase;
-        ResetForce();
-    }
+		return reservedRigidbody.velocity.magnitude;
+	}
 
-	// Update is called once per frame
-	void Update()
+	public float GetVertical()
 	{
-		UpdateInvincibilityStatus();
-		UpdateForce();
+		return reservedRigidbody.angularVelocity.y;
 	}
 
 	public bool isInvincible()
@@ -44,7 +38,37 @@ public class Ship : MoveableObject
 		UpdateEngagingStatus();
 	}
 
-	public void UpdateEngagingStatus()
+	private void UpdateInvincibilityStatus()
+	{
+		invincibleTime -= Time.deltaTime;
+		UpdateEngagingStatus();
+	}
+
+
+	// Use this for initialization
+	void Start()
+	{
+		unprepared = true;
+        base.StartWorkaround();
+		ResetInvincibleStatus();
+    }
+
+	// Update is called once per frame
+	void Update()
+	{
+		if (Manager.instance.IsOperating())
+		{
+			if (unprepared)
+			{
+				ResetForce();
+				unprepared = false;
+            }
+			UpdateInvincibilityStatus();
+			UpdateForce();
+		}
+	}
+
+	private void UpdateEngagingStatus()
 	{
 		if (isInvincible())
 		{
@@ -55,12 +79,6 @@ public class Ship : MoveableObject
 			Engage();
 		}
 	}
-
-	private void UpdateInvincibilityStatus()
-	{
-		invincibleTime -= Time.deltaTime;
-		UpdateEngagingStatus();
-    }
 
 	private void Engage()
 	{
@@ -134,23 +152,31 @@ public class Ship : MoveableObject
 
 	public void PaddleLeft()
 	{
-		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * LeftAccelerationValueBase()), LeftPosition()), ForceMode.VelocityChange);
+		if (Manager.instance.IsOperating())
+		{
+			reservedRigidbody.AddTorque(
+			Vector3.Cross((Vector3.forward * LeftAccelerationValueBase()) * accelerationBase, LeftPosition()), ForceMode.VelocityChange);
+		}
 	}
 
 	public void PaddleRight()
 	{
-		reservedRigidbody.AddTorque(Vector3.Cross((Vector3.forward * RightAccelerationValueBase()), RightPosition()), ForceMode.VelocityChange);
+		if (Manager.instance.IsOperating())
+		{
+			reservedRigidbody.AddTorque(
+				Vector3.Cross((Vector3.forward * RightAccelerationValueBase()) * accelerationBase, RightPosition()), ForceMode.VelocityChange);
+		}
 	}
 
 
-	void OnColliderEnter(Collider other)
+	void OnCollisionEnter(Collision collision)
 	{
-		ResetForce();
-	}
-
-	void OnColliderExit(Collider other)
-	{
-		ResetInvincibleStatus();
+		if (!isInvincible())
+		{
+			Debug.Log("Crash!");
+			ResetForce();
+			ResetInvincibleStatus();
+		}
 	}
 
 }
