@@ -18,11 +18,22 @@ public class ShipController : NetworkBehaviour
     {
         if (LobbyManager.instance.Mode == GameMode.ClassicSingle)
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Input.mousePosition.x < Screen.width / 2)
+                {
+                    CmdPaddleLeft();
+                }
+                else
+                {
+                    CmdPaddleRight();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 CmdPaddleLeft();
             }
-            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 CmdPaddleRight();
             }
