@@ -17,6 +17,11 @@ public class Manager : MonoBehaviour
 
 	public float WaitTime { get { return waitTime; } }
 
+	private float beginTime;
+
+	public float BeginTime { get { return beginTime; } }
+	public float GameTime { get { return beginTime < Time.time ? Time.time - beginTime : 0.0f; } }
+
 	public bool IsOperating()
 	{
 		return waitTime < 0;
@@ -40,6 +45,7 @@ public class Manager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		beginTime = waitTime;
 		pieceScale = GameObject.FindGameObjectWithTag("Background").transform.localScale.x;
 		ResetWaitTime();
 	}
