@@ -4,20 +4,19 @@ using System.Collections;
 
 public class ShipController : NetworkBehaviour
 {
-    public static bool isSingleGame = false;
-
     private Ship ship;
 
     // Use this for initialization
     void Start()
     {
         ship = GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>();
+        LobbyManager.instance.HideLobbyGUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isSingleGame)
+        if (LobbyManager.instance.Mode == GameMode.ClassicSingle)
         {
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -42,6 +41,18 @@ public class ShipController : NetworkBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
+    void OnApplicationQuit()
+    {
+        LobbyManager.instance.SendReturnToLobby();
+        LobbyManager.instance.ShowLobbyGUI();
+        LobbyManager.instance.quitRoomDelegate();
+        Application.CancelQuit();
     }
 
     [ClientRpc]
