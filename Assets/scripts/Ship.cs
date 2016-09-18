@@ -27,7 +27,7 @@ public class Ship : MoveableObject
 		return reservedRigidbody.angularVelocity.y;
 	}
 
-	public bool isInvincible()
+	public bool IsInvincible()
 	{
 		return invincibleTime > 0;
 	}
@@ -35,13 +35,11 @@ public class Ship : MoveableObject
 	public void ResetInvincibleStatus()
 	{
 		invincibleTime = invincibleTimeBase;
-		UpdateEngagingStatus();
 	}
 
 	private void UpdateInvincibilityStatus()
 	{
 		invincibleTime -= Time.deltaTime;
-		UpdateEngagingStatus();
 	}
 
 
@@ -68,27 +66,6 @@ public class Ship : MoveableObject
 		}
 	}
 
-	private void UpdateEngagingStatus()
-	{
-		if (isInvincible())
-		{
-			Disengage();
-		}
-		else
-		{
-			Engage();
-		}
-	}
-
-	private void Engage()
-	{
-		mainCollider.isTrigger = false;
-	}
-
-	private void Disengage()
-	{
-		mainCollider.isTrigger = true;
-	}
 
 	private void UpdateForce()
 	{
@@ -168,15 +145,5 @@ public class Ship : MoveableObject
 		}
 	}
 
-
-	void OnCollisionEnter(Collision collision)
-	{
-		if (!isInvincible())
-		{
-			Debug.Log("Crash!");
-			ResetForce();
-			ResetInvincibleStatus();
-		}
-	}
 
 }

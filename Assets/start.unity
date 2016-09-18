@@ -637,7 +637,7 @@ MeshCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1089113469}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Convex: 1
@@ -664,7 +664,7 @@ MonoBehaviour:
   accelerationBase: 50
   sideAccelerationBase: 0.002
   accelerationGrowth: 0.03
-  invincibleTimeBase: 3
+  invincibleTimeBase: 5
 --- !u!75 &1089113474
 ConstantForce:
   m_ObjectHideFlags: 0
@@ -676,6 +676,18 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
+--- !u!114 &1089113475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1089113469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0271e67e041b69f4a8fbe1fbc6a1a376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 1089113473}
 --- !u!1001 &1145541354
 Prefab:
   m_ObjectHideFlags: 0
