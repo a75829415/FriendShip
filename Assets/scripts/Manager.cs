@@ -6,7 +6,6 @@ public class Manager : MonoBehaviour
 	public static Manager instance;
 
 	public Ship ship;
-	public BackgroundPiece[] backgroundPieces;
 	public float backgroundScale;
 
 	public Transform obstacleProtocal;
@@ -48,6 +47,11 @@ public class Manager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		StartWorkaround();
+    }
+
+	public void StartWorkaround()
+	{
 		beginTime = waitTime;
 		pieceScale = GameObject.FindGameObjectWithTag("Background").transform.localScale.x;
 		ResetWaitTime();
@@ -56,11 +60,17 @@ public class Manager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		UpdateWorkaround();
+    }
+
+	public void UpdateWorkaround()
+	{
 		UpdateWaitTime();
 		if (ship.Position.x < -PieceBound())
 		{
 			MoveTowardEast();
-		} else if (ship.Position.x > PieceBound())
+		}
+		else if (ship.Position.x > PieceBound())
 		{
 			MoveTowardWest();
 		}
@@ -87,7 +97,7 @@ public class Manager : MonoBehaviour
 	public void MoveTowardEast()
 	{
 		ship.MoveVertically(PieceScale(), 0);
-		foreach (BackgroundPiece currentPiece in backgroundPieces)
+		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
 		{
 			if (currentPiece.Position.x > PieceBound())
 			{
@@ -104,7 +114,7 @@ public class Manager : MonoBehaviour
 	public void MoveTowardSouth()
 	{
 		ship.MoveVertically(0, -PieceScale());
-		foreach (BackgroundPiece currentPiece in backgroundPieces)
+		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
 		{
 			if (currentPiece.Position.z < -PieceBound())
 			{
@@ -121,7 +131,7 @@ public class Manager : MonoBehaviour
 	public void MoveTowardWest()
 	{
 		ship.MoveVertically(-PieceScale(), 0);
-		foreach (BackgroundPiece currentPiece in backgroundPieces)
+		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
 		{
 			if (currentPiece.Position.x < -PieceBound())
 			{
@@ -138,7 +148,7 @@ public class Manager : MonoBehaviour
 	public void MoveTowardNorth()
 	{
 		ship.MoveVertically(0, PieceScale());
-		foreach (BackgroundPiece currentPiece in backgroundPieces)
+		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
 		{
 			if (currentPiece.Position.z > PieceBound())
 			{
@@ -152,7 +162,7 @@ public class Manager : MonoBehaviour
 		}
 	}
 
-	public void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
+	public virtual void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
 	}
