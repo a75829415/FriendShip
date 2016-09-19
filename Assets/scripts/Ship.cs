@@ -72,7 +72,7 @@ public class Ship : MoveableObject
 		reservedBackgroundForce.relativeForce += ValueToForce(DeltaForceValue());
 	}
 
-	private void ResetForce()
+	public void ResetForce()
 	{
 		reservedBackgroundForce.relativeForce = ValueToForce(ForceValueBase());
 	}

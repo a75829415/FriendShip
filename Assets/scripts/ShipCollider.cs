@@ -4,6 +4,7 @@ using System.Collections;
 public class ShipCollider : MonoBehaviour
 {
 	public Ship ship;
+	public Collider reservedCollider;
 
 	// Use this for initialization
 	void Start()
@@ -15,12 +16,14 @@ public class ShipCollider : MonoBehaviour
 	{
 	}
 
-	void OnTriggerEnter()
+	void OnTriggerEnter(Collider other)
 	{
 		if (!ship.IsInvincible())
 		{
 			Debug.Log("Crash");
 			ship.ResetInvincibleStatus();
+			ship.ResetForce();
+			Manager.instance.NotifyCrash(reservedCollider, other);
 		}
 	}
 

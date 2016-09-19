@@ -22,6 +22,9 @@ public class Manager : MonoBehaviour
 	public float BeginTime { get { return beginTime; } }
 	public float GameTime { get { return beginTime < Time.time ? Time.time - beginTime : 0.0f; } }
 
+	public delegate void CrashHandler(Collider shipCollider, Collider obstacleCollider);
+	public CrashHandler crashHandler = DefaultCrashHandler;
+
 	public bool IsOperating()
 	{
 		return waitTime < 0;
@@ -148,5 +151,15 @@ public class Manager : MonoBehaviour
 			}
 		}
 	}
+
+	public void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
+	{
+		crashHandler(shipCollider, obstacleCollider);
+	}
+
+	public static void DefaultCrashHandler(Collider shipCollider, Collider obstacleCollider)
+	{
+	}
+
 
 }
