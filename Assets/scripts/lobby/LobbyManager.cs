@@ -14,7 +14,7 @@ public class LobbyManager : NetworkLobbyManager
     public QuitRoomDelegate quitRoomDelegate;
     public RectTransform leftContainer;
     public RectTransform rightContainer;
-    public Manager classicManager;
+    public ClassicManager classicManager;
 
     private LobbyPlayer leftPlayer;
     private LobbyPlayer rightPlayer;
