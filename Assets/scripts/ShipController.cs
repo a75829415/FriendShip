@@ -4,6 +4,8 @@ using System.Collections;
 
 public class ShipController : NetworkBehaviour
 {
+    public ShipControlMode ControlMode { get; set; }
+
     private Ship ship;
 
     // Use this for initialization
@@ -16,7 +18,7 @@ public class ShipController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (LobbyManager.instance.Mode == GameMode.ClassicSingle)
+        if (ControlMode == ShipControlMode.Whole)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -42,11 +44,11 @@ public class ShipController : NetworkBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (isServer)
+                if (ControlMode == ShipControlMode.Left)
                 {
                     CmdPaddleLeft();
                 }
-                else
+                else if (ControlMode == ShipControlMode.Right)
                 {
                     CmdPaddleRight();
                 }

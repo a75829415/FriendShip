@@ -12,6 +12,11 @@ public class LobbyManager : NetworkLobbyManager
     public RectTransform lobbyPanel;
     public delegate void QuitRoomDelegate();
     public QuitRoomDelegate quitRoomDelegate;
+    public RectTransform leftContainer;
+    public RectTransform rightContainer;
+
+    private LobbyPlayer leftPlayer;
+    private LobbyPlayer rightPlayer;
 
     private GameMode mode;
     public GameMode Mode
@@ -42,6 +47,16 @@ public class LobbyManager : NetworkLobbyManager
     public override void OnLobbyServerPlayersReady()
     {
         base.OnLobbyServerPlayersReady();
+    }
+
+    public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
+    {
+        GameObject obj = base.OnLobbyServerCreateGamePlayer(conn, playerControllerId);
+        if (leftPlayer != null && leftPlayer.playerControllerId == playerControllerId)
+        {
+
+        }
+        return obj;
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
@@ -109,11 +124,6 @@ public class LobbyManager : NetworkLobbyManager
         quitRoomDelegate();
     }
 
-    public RectTransform leftContainer;
-    public RectTransform rightContainer;
-
-    private LobbyPlayer leftPlayer;
-    private LobbyPlayer rightPlayer;
 
     public void AddPlayer(LobbyPlayer player)
     {
