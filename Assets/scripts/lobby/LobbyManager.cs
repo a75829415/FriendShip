@@ -14,6 +14,7 @@ public class LobbyManager : NetworkLobbyManager
     public QuitRoomDelegate quitRoomDelegate;
     public RectTransform leftContainer;
     public RectTransform rightContainer;
+    public Manager classicManager;
 
     private LobbyPlayer leftPlayer;
     private LobbyPlayer rightPlayer;
@@ -51,10 +52,18 @@ public class LobbyManager : NetworkLobbyManager
 
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
     {
-        GameObject obj = base.OnLobbyServerCreateGamePlayer(conn, playerControllerId);
-        if (leftPlayer != null && leftPlayer.playerControllerId == playerControllerId)
+        GameObject obj = null;
+        if (leftPlayer != null && leftPlayer.connectionToClient.connectionId == conn.connectionId)
         {
-
+            obj = Instantiate(gamePlayerPrefab);
+            obj.GetComponent<ShipController>().ControlMode = ShipControlMode.Left;
+            Debug.Log("Left controller created.");
+        }
+        if (rightPlayer != null && rightPlayer.connectionToClient.connectionId == conn.connectionId)
+        {
+            obj = Instantiate(gamePlayerPrefab);
+            obj.GetComponent<ShipController>().ControlMode = ShipControlMode.Right;
+            Debug.Log("Right controller created.");
         }
         return obj;
     }

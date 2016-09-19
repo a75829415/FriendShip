@@ -14,7 +14,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
         base.OnClientEnterLobby();
         LobbyManager.instance.AddPlayer(this);
         SetupOtherPlayer();
-        SendNotReadyToBeginMessage();
+        readyToBegin = false;
     }
 
     public override void OnStartAuthority()
