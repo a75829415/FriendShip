@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BackgroundPiece : MoveableObject {
 	public int bounds;
 	public float minScale;
 	public float maxScale;
+
+	public static List<BackgroundPiece> backgroundPieces = new List<BackgroundPiece>();
+
 	private Transform[,] obstacles;
+
+	void Awake()
+	{
+		backgroundPieces.Add(this);
+    }
 
 	// Use this for initialization
 	void Start () {
