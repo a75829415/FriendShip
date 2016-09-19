@@ -234,7 +234,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!1001 &1961559479
+--- !u!1001 &866008304
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -313,7 +313,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 11472318, guid: e412728ae66b336449bd87402b832052, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e412728ae66b336449bd87402b832052, type: 2}
   m_IsPrefabParent: 0
