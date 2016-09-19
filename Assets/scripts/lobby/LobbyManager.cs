@@ -47,7 +47,8 @@ public class LobbyManager : NetworkLobbyManager
 
     public override void OnLobbyServerPlayersReady()
     {
-        base.OnLobbyServerPlayersReady();
+        Instantiate(classicManager);
+        ServerChangeScene(playScene);
     }
 
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
@@ -66,7 +67,7 @@ public class LobbyManager : NetworkLobbyManager
             Debug.Log("Right controller created.");
         }
         return obj;
-    }
+    } 
 
     public override void OnClientDisconnect(NetworkConnection conn)
     {
