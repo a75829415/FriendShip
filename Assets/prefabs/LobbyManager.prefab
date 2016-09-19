@@ -431,6 +431,7 @@ MonoBehaviour:
   lobbyPanel: {fileID: 22415232}
   leftContainer: {fileID: 22424282}
   rightContainer: {fileID: 22453572}
+  classicManager: {fileID: 11422060, guid: b4e8a9b15d0bf46478f66d73cf606796, type: 2}
 --- !u!114 &11413648
 MonoBehaviour:
   m_ObjectHideFlags: 1
