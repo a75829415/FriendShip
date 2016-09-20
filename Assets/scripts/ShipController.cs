@@ -11,12 +11,19 @@ public class ShipController : NetworkBehaviour
     void Start()
     {
         ship = Manager.instance.ship/*GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>()*/;
-        controlMode = LobbyManager.instance.GetShipControlMode(connectionToServer);
+        if (isLocalPlayer)
+        {
+            controlMode = LobbyManager.instance.GetShipControlMode(connectionToServer);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
         if (controlMode == ShipControlMode.BothPaddles)
         {
             if (Input.GetMouseButtonDown(0))
