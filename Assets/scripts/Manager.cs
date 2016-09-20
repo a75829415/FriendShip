@@ -17,7 +17,7 @@ public class Manager : MonoBehaviour
 
 	public float WaitTime { get { return waitTime; } }
 
-	private float beginTime;
+	private float beginTime = 0.0f;
 
 	public float BeginTime { get { return beginTime; } }
 	public float GameTime { get { return beginTime < Time.time ? Time.time - beginTime : 0.0f; } }
@@ -38,6 +38,10 @@ public class Manager : MonoBehaviour
 	private void UpdateWaitTime()
 	{
 		waitTime -= Time.deltaTime;
+		if (waitTime <= 0.0f && beginTime == 0.0f)
+		{
+			beginTime = Time.time;
+		}
 	}
 
 	void Awake()
@@ -48,8 +52,6 @@ public class Manager : MonoBehaviour
 	public void AwakeWorkaround()
 	{
 		instance = this;
-		ship = Instantiate(shipProtocal);
-		beginTime = waitTime;
 		ResetWaitTime();
 	}
 
@@ -72,22 +74,25 @@ public class Manager : MonoBehaviour
 
 	public void UpdateWorkaround()
 	{
-		UpdateWaitTime();
-		if (ship.Position.x < -PieceBound())
+		if (ship != null)
 		{
-			MoveTowardEast();
-		}
-		else if (ship.Position.x > PieceBound())
-		{
-			MoveTowardWest();
-		}
-		if (ship.Position.z < -PieceBound())
-		{
-			MoveTowardNorth();
-		}
-		else if (ship.Position.z > PieceBound())
-		{
-			MoveTowardSouth();
+			UpdateWaitTime();
+			if (ship.Position.x < -PieceBound())
+			{
+				MoveTowardEast();
+			}
+			else if (ship.Position.x > PieceBound())
+			{
+				MoveTowardWest();
+			}
+			if (ship.Position.z < -PieceBound())
+			{
+				MoveTowardNorth();
+			}
+			else if (ship.Position.z > PieceBound())
+			{
+				MoveTowardSouth();
+			}
 		}
 	}
 
