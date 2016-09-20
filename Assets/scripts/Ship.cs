@@ -49,6 +49,7 @@ public class Ship : MoveableObject
 		unprepared = true;
         base.StartWorkaround();
 		ResetInvincibleStatus();
+		Manager.instance.ship = this;
     }
 
 	// Update is called once per frame
