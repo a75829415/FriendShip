@@ -41,7 +41,7 @@ public class Competetiv : Manager {
 		}
 	}
 
-	public void DefaultGameOverHandler(uint leftHealth, uint rightHealth)
+	public static void DefaultGameOverHandler(uint leftHealth, uint rightHealth)
 	{
 	}
 
