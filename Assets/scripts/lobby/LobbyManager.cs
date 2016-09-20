@@ -74,7 +74,8 @@ public class LobbyManager : NetworkLobbyManager
             obj.GetComponent<ShipController>().ControlMode = ShipControlMode.Right;
             Debug.Log("Right controller created.");
         }
-        Instantiate(GameManager);
+        DontDestroyOnLoad(Instantiate(GameManager));
+        HideLobbyGUI();
         return obj;
     }
 
@@ -88,6 +89,7 @@ public class LobbyManager : NetworkLobbyManager
     {
         SendReturnToLobby();
         Destroy(Manager.instance);
+        ShowLobbyGUI();
     }
 
     public void ShowLobbyGUI()
