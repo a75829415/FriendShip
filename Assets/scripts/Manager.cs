@@ -42,6 +42,11 @@ public class Manager : MonoBehaviour
 
 	void Awake()
 	{
+		AwakeWorkaround();
+    }
+
+	public void AwakeWorkaround()
+	{
 		instance = this;
 	}
 

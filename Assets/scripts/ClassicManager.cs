@@ -11,6 +11,11 @@ public class ClassicManager : Manager
 
 	private uint currentHealth;
 
+	void Awake()
+	{
+		base.AwakeWorkaround();
+	}
+
 	// Use this for initialization
 	void Start()
 	{
@@ -19,7 +24,7 @@ public class ClassicManager : Manager
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
 		base.UpdateWorkaround();
 	}
