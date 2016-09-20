@@ -42,9 +42,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
   backgroundScale: 0
-  obstacleProtocal: {fileID: 0}
-  waitTimeBase: 0
-  health: 0
+  shipProtocal: {fileID: 11452464, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
+  obstacleProtocal: {fileID: 431154, guid: 4a833f9c17ab959409d4c464dafef9fc, type: 2}
+  waitTimeBase: 6
+  health: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

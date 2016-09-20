@@ -39,6 +39,7 @@ public class ChasingCamera : MoveableObject {
 	// Use this for initialization
 	void Start () {
 		base.StartWorkaround();
+		gameObject.SetActive(true);
     }
 	
 	// Update is called once per frame

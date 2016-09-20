@@ -11,7 +11,7 @@ public class ShipController : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-        ship = GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>();
+        ship = Manager.instance.ship/*GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>()*/;
         LobbyManager.instance.HideLobbyGUI();
     }
 

@@ -9,10 +9,13 @@ public class ClassicManager : Manager
 
 	public uint health;
 
+	private uint currentHealth;
+
 	// Use this for initialization
 	void Start()
 	{
 		base.StartWorkaround();
+		currentHealth = health;
     }
 	
 	// Update is called once per frame
@@ -24,11 +27,7 @@ public class ClassicManager : Manager
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
-		if (health > 0)
-		{
-			health--;
-		}
-		else
+		if (--currentHealth == 0)
 		{
 			gameOverHandler(GameTime);
 		}

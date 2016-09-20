@@ -8,6 +8,7 @@ public class Manager : MonoBehaviour
 	public Ship ship;
 	public float backgroundScale;
 
+	public Ship shipProtocal;
 	public Transform obstacleProtocal;
 	public float waitTimeBase;
 
@@ -52,8 +53,9 @@ public class Manager : MonoBehaviour
 
 	public void StartWorkaround()
 	{
+		ship = Instantiate(shipProtocal);
 		beginTime = waitTime;
-		pieceScale = GameObject.FindGameObjectWithTag("Background").transform.localScale.x;
+		pieceScale = 256/*GameObject.FindGameObjectWithTag("Background").transform.localScale.x*/;
 		ResetWaitTime();
 	}
 
