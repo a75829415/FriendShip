@@ -61,7 +61,7 @@ public class Manager : MonoBehaviour
 
 	public void StartWorkaround()
 	{
-		pieceScale = GameObject.FindGameObjectWithTag("Background").transform.localScale.x;
+		pieceScale = 256;
 	}
 
 	// Update is called once per frame
