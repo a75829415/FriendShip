@@ -14,7 +14,7 @@ public class LobbyManager : NetworkLobbyManager
     public QuitRoomDelegate quitRoomDelegate;
     public RectTransform leftContainer;
     public RectTransform rightContainer;
-    public ClassicManager classicManager;
+    public Manager classicManager;
 
     private LobbyPlayer leftPlayer;
     private LobbyPlayer rightPlayer;
@@ -38,17 +38,25 @@ public class LobbyManager : NetworkLobbyManager
             }
         }
     }
+    
+    public Manager GameManager
+    {
+        get
+        {
+            switch (Mode)
+            {
+                case GameMode.ClassicSingle:
+                    return classicManager;
+                default:
+                    return null;
+            }
+        }
+    }
 
-    void Start()
+    void Awake()
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    public override void OnLobbyServerPlayersReady()
-    {
-        Instantiate(classicManager);
-        ServerChangeScene(playScene);
     }
 
     public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
@@ -66,14 +74,20 @@ public class LobbyManager : NetworkLobbyManager
             obj.GetComponent<ShipController>().ControlMode = ShipControlMode.Right;
             Debug.Log("Right controller created.");
         }
+        Instantiate(GameManager);
         return obj;
-    } 
+    }
 
-    public override void OnClientDisconnect(NetworkConnection conn)
+    public override void OnLobbyClientExit()
     {
-        base.OnClientDisconnect(conn);
         ShowLobbyGUI();
         stopPanel.localScale = new Vector3(0, 0, 0);
+    }
+
+    public void ReturnLobby()
+    {
+        SendReturnToLobby();
+        Destroy(Manager.instance);
     }
 
     public void ShowLobbyGUI()

@@ -11,7 +11,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnClientEnterLobby()
     {
-        base.OnClientEnterLobby();
         LobbyManager.instance.AddPlayer(this);
         SetupOtherPlayer();
         readyToBegin = false;
