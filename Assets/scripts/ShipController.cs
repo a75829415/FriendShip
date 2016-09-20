@@ -4,21 +4,20 @@ using System.Collections;
 
 public class ShipController : NetworkBehaviour
 {
-    public ShipControlMode ControlMode { get; set; }
-
     private Ship ship;
+    private ShipControlMode controlMode;
 
     // Use this for initialization
     void Start()
     {
         ship = Manager.instance.ship/*GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>()*/;
-        LobbyManager.instance.HideLobbyGUI();
+        controlMode = LobbyManager.instance.GetShipControlMode(connectionToServer);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ControlMode == ShipControlMode.Whole)
+        if (controlMode == ShipControlMode.BothPaddles)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -44,11 +43,11 @@ public class ShipController : NetworkBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (ControlMode == ShipControlMode.Left)
+                if (controlMode == ShipControlMode.LeftPaddleOnly)
                 {
                     CmdPaddleLeft();
                 }
-                else if (ControlMode == ShipControlMode.Right)
+                else if (controlMode == ShipControlMode.RightPaddleOnly)
                 {
                     CmdPaddleRight();
                 }

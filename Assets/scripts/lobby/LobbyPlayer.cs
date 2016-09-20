@@ -18,7 +18,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnStartAuthority()
     {
-        base.OnStartAuthority();
         SetupLocalPlayer();
         if (LobbyManager.instance.Mode == GameMode.ClassicSingle)
         {
@@ -34,7 +33,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnClientExitLobby()
     {
-        base.OnClientExitLobby();
         LobbyManager.instance.RemovePlayer(this);
     }
 
