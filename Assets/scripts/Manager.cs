@@ -48,6 +48,9 @@ public class Manager : MonoBehaviour
 	public void AwakeWorkaround()
 	{
 		instance = this;
+		ship = Instantiate(shipProtocal);
+		beginTime = waitTime;
+		ResetWaitTime();
 	}
 
 	// Use this for initialization
@@ -58,10 +61,7 @@ public class Manager : MonoBehaviour
 
 	public void StartWorkaround()
 	{
-		ship = Instantiate(shipProtocal);
-		beginTime = waitTime;
-		pieceScale = 256/*GameObject.FindGameObjectWithTag("Background").transform.localScale.x*/;
-		ResetWaitTime();
+		pieceScale = GameObject.FindGameObjectWithTag("Background").transform.localScale.x;
 	}
 
 	// Update is called once per frame
