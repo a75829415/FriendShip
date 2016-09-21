@@ -29,11 +29,21 @@ public class ClassicManager : Manager
 		base.UpdateWorkaround();
 	}
 
+	void OnGUI()
+	{
+		GUI.skin.label.fontSize = 50;
+		GUI.Label(new Rect(10, 10, 130, 60), "Time: ");
+		GUI.Label(new Rect(180, 10, 130, 60), GameTime.ToString());
+		GUI.Label(new Rect(10, 70, 190, 60), "Health: ");
+		GUI.Label(new Rect(180, 70, 30, 60), currentHealth.ToString());
+	}
+
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
 		if (--currentHealth == 0)
 		{
+			Time.timeScale = 0.0f;
 			gameOverHandler(GameTime);
 		}
 	}

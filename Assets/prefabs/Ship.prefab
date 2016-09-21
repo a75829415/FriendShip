@@ -11,6 +11,7 @@ GameObject:
   - 33: {fileID: 3373756}
   - 23: {fileID: 2353904}
   - 64: {fileID: 6448750}
+  - 114: {fileID: 114000013111882884}
   m_Layer: 0
   m_Name: col
   m_TagString: Untagged
@@ -337,7 +338,7 @@ MonoBehaviour:
   reservedBackgroundForce: {fileID: 7535310}
   accelerationBase: 50
   sideAccelerationBase: 0.002
-  accelerationGrowth: 0.03
+  accelerationGrowth: 0.05
   invincibleTimeBase: 5
 --- !u!124 &12418738
 Behaviour:
@@ -357,3 +358,16 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 143752}
   m_IsPrefabParent: 1
+--- !u!114 &114000013111882884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0271e67e041b69f4a8fbe1fbc6a1a376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 11452464}
+  reservedCollider: {fileID: 6448750}
