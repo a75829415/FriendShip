@@ -5,7 +5,13 @@ using System.Collections.Generic;
 
 public class LobbyManager : NetworkLobbyManager
 {
-    public static LobbyManager instance;
+    public static LobbyManager instance
+    {
+        get
+        {
+            return singleton as LobbyManager;
+        }
+    }
 
     public Text ip;
     public RectTransform startPanel;
@@ -60,9 +66,16 @@ public class LobbyManager : NetworkLobbyManager
 
     void Awake()
     {
-        instance = this;
         DontDestroyOnLoad(gameObject);
         controlModeAllocation = new Dictionary<NetworkConnection, ShipControlMode>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public override void OnLobbyServerPlayersReady()
@@ -138,8 +151,7 @@ public class LobbyManager : NetworkLobbyManager
         if (!string.IsNullOrEmpty(ip.text))
         {
             Mode = GameMode.ClassicDouble;
-            NetworkClient client = StartClient();
-            client.Connect(ip.text, networkPort);
+            StartClient().Connect(ip.text, networkPort);
             startPanel.localScale = new Vector3(0, 1, 1);
             stopPanel.localScale = new Vector3(1, 1, 1);
             quitRoomDelegate = QuitRemoteRoom;
@@ -156,6 +168,7 @@ public class LobbyManager : NetworkLobbyManager
 
     public void QuitHostRoom()
     {
+        StopClient();
         StopHost();
     }
 
@@ -170,6 +183,7 @@ public class LobbyManager : NetworkLobbyManager
         startPanel.localScale = new Vector3(1, 1, 1);
         stopPanel.localScale = new Vector3(0, 1, 1);
         Destroy(Manager.instance.gameObject);
+        Destroy(gameObject);
     }
 
 
