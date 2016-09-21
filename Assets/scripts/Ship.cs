@@ -142,7 +142,8 @@ public class Ship : MoveableObject
 		if (Manager.instance.IsOperating())
 		{
 			reservedRigidbody.AddTorque(
-				Vector3.Cross((Vector3.forward * RightAccelerationValueBase()) * accelerationBase, RightPosition()), ForceMode.VelocityChange);
+				Vector3.Cross((Vector3.forward * RightAccelerationValueBase()) * accelerationBase, RightPosition()),
+				ForceMode.VelocityChange);
 		}
 	}
 

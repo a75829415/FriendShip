@@ -338,7 +338,7 @@ MonoBehaviour:
   reservedBackgroundForce: {fileID: 7535310}
   accelerationBase: 50
   sideAccelerationBase: 0.002
-  accelerationGrowth: 0.05
+  accelerationGrowth: 0.1
   invincibleTimeBase: 5
 --- !u!124 &12418738
 Behaviour:

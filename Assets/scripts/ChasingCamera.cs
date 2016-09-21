@@ -39,6 +39,7 @@ public class ChasingCamera : MoveableObject {
 	// Use this for initialization
 	void Start () {
 		base.StartWorkaround();
+		Manager.instance.playerCamera = reservedCamera;
 		gameObject.SetActive(true);
     }
 	

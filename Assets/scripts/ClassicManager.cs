@@ -6,8 +6,15 @@ public class ClassicManager : Manager
 {
 	public delegate void GameOverHandler(ClassicManager manager, float time);
 
+	public Canvas uiCanvas;
+
+	public RectTransform Hud;
+	public Text hudTime;
+	public Text hudHealth;
+
 	public RectTransform gameOverPanel;
 	public Text resultText;
+
 	public GameOverHandler gameOverHandler = DefaultGameOverHandler;
 
 	public uint health;
@@ -18,7 +25,8 @@ public class ClassicManager : Manager
 	{
 		base.AwakeWorkaround();
 		gameOverPanel.gameObject.SetActive(false);
-    }
+		Hud.gameObject.SetActive(false);
+	}
 
 	// Use this for initialization
 	void Start()
@@ -31,19 +39,14 @@ public class ClassicManager : Manager
 	void Update()
 	{
 		base.UpdateWorkaround();
-	}
-
-	void OnGUI()
-	{
-		if (ship != null && Time.timeScale != 0.0f)
+		if (!Hud.gameObject.activeSelf && currentHealth > 0 && ship != null)
 		{
-			GUI.skin.label.fontSize = 50;
-			GUI.Label(new Rect(10, 10, 130, 60), "Time: ");
-			GUI.Label(new Rect(180, 10, 130, 60), GameTime.ToString());
-			GUI.Label(new Rect(10, 70, 190, 60), "Health: ");
-			GUI.Label(new Rect(180, 70, 30, 60), currentHealth.ToString());
+			uiCanvas.worldCamera = playerCamera;
+			Hud.gameObject.SetActive(true);
 		}
-	}
+		hudTime.text = GameTimeInString;
+		hudHealth.text = currentHealth + "/" + health;
+    }
 
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{
@@ -51,6 +54,7 @@ public class ClassicManager : Manager
 		if (--currentHealth == 0)
 		{
 			Time.timeScale = 0.0f;
+			Hud.gameObject.SetActive(false);
 			gameOverHandler(this, GameTime);
 		}
 	}
@@ -58,7 +62,7 @@ public class ClassicManager : Manager
 	public static void DefaultGameOverHandler(ClassicManager manager, float time)
 	{
 		manager.gameOverPanel.gameObject.SetActive(true);
-		manager.resultText.text = "Time: " + manager.GameTime;
+		manager.resultText.text = "Time: " + manager.GameTimeInString;
     }
 
 }
