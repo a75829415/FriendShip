@@ -80,21 +80,24 @@ public class LobbyManager : NetworkLobbyManager
                     random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
                 break;
         }
-        DontDestroyOnLoad(Instantiate(GameManager));
-        HideLobbyGUI();
         base.OnLobbyServerPlayersReady();
     }
 
-    public override void OnLobbyClientDisconnect(NetworkConnection conn)
+    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
     {
-        ShowLobbyGUI();
-        StopClient();
+        HideLobbyGUI();
     }
 
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
     {
         ReturnLobby();
         StopHost();
+    }
+
+    public override void OnLobbyClientDisconnect(NetworkConnection conn)
+    {
+        ShowLobbyGUI();
+        StopClient();
     }
 
     public ShipControlMode GetShipControlMode(NetworkConnection conn)
@@ -127,6 +130,7 @@ public class LobbyManager : NetworkLobbyManager
         startPanel.localScale = new Vector3(0, 1, 1);
         stopPanel.localScale = new Vector3(1, 1, 1);
         quitRoomDelegate = QuitHostRoom;
+        DontDestroyOnLoad(Instantiate(GameManager));
     }
 
     public void JoinRoom()
@@ -139,6 +143,7 @@ public class LobbyManager : NetworkLobbyManager
             startPanel.localScale = new Vector3(0, 1, 1);
             stopPanel.localScale = new Vector3(1, 1, 1);
             quitRoomDelegate = QuitRemoteRoom;
+            DontDestroyOnLoad(Instantiate(GameManager));
         }
     }
 
@@ -146,26 +151,25 @@ public class LobbyManager : NetworkLobbyManager
     {
         Mode = GameMode.ClassicSingle;
         StartHost();
-        quitRoomDelegate = QuitHostRoom;
+        DontDestroyOnLoad(Instantiate(GameManager));
     }
 
     public void QuitHostRoom()
     {
         StopHost();
-        startPanel.localScale = new Vector3(1, 1, 1);
-        stopPanel.localScale = new Vector3(0, 1, 1);
     }
 
     public void QuitRemoteRoom()
     {
         StopClient();
-        startPanel.localScale = new Vector3(1, 1, 1);
-        stopPanel.localScale = new Vector3(0, 1, 1);
     }
 
     public void QuitRoom()
     {
         quitRoomDelegate();
+        startPanel.localScale = new Vector3(1, 1, 1);
+        stopPanel.localScale = new Vector3(0, 1, 1);
+        Destroy(Manager.instance.gameObject);
     }
 
 
