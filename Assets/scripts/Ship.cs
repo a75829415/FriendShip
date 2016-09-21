@@ -15,6 +15,8 @@ public class Ship : MoveableObject
 
 	private float invincibleTime;
 
+	public float InvincibleTime { get { return invincibleTime; } }
+
 	private bool unprepared;
 
 	public float GetSpeed()
@@ -142,7 +144,8 @@ public class Ship : MoveableObject
 		if (Manager.instance.IsOperating())
 		{
 			reservedRigidbody.AddTorque(
-				Vector3.Cross((Vector3.forward * RightAccelerationValueBase()) * accelerationBase, RightPosition()), ForceMode.VelocityChange);
+				Vector3.Cross((Vector3.forward * RightAccelerationValueBase()) * accelerationBase, RightPosition()),
+				ForceMode.VelocityChange);
 		}
 	}
 

@@ -18,7 +18,6 @@ public class ShipCollider : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("Crash...");
 		if (!ship.IsInvincible())
 		{
 			Debug.Log("Crash");

@@ -8,6 +8,8 @@ public class Manager : MonoBehaviour
 	public Ship ship;
 	public float backgroundScale;
 
+	public Camera playerCamera;
+
 	public Ship shipProtocal;
 	public Transform obstacleProtocal;
 	public float waitTimeBase;
@@ -21,6 +23,7 @@ public class Manager : MonoBehaviour
 
 	public float BeginTime { get { return beginTime; } }
 	public float GameTime { get { return IsOperating() ? Time.time - beginTime : 0.0f; } }
+	public string GameTimeInString { get { return string.Format("{0:F3}", GameTime); } }
 
 	public delegate void CrashHandler(Collider shipCollider, Collider obstacleCollider);
 	public CrashHandler crashHandler = DefaultCrashHandler;
