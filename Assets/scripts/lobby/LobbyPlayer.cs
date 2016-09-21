@@ -11,7 +11,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnClientEnterLobby()
     {
-        LobbyManager.instance.AddPlayer(this);
+        GUIEventHandler.instance.AddPlayer(this);
         SetupOtherPlayer();
         readyToBegin = false;
     }
@@ -33,7 +33,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnClientExitLobby()
     {
-        LobbyManager.instance.RemovePlayer(this);
+        GUIEventHandler.instance.RemovePlayer(this);
     }
 
     private void SetupOtherPlayer()
