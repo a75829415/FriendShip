@@ -50,6 +50,8 @@ public class LobbyManager : NetworkLobbyManager
             {
                 case GameMode.ClassicSingle:
                     return classicManager;
+                case GameMode.ClassicDouble:
+                    return classicManager;
                 default:
                     return null;
             }
