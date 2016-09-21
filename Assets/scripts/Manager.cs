@@ -20,7 +20,7 @@ public class Manager : MonoBehaviour
 	private float beginTime = 0.0f;
 
 	public float BeginTime { get { return beginTime; } }
-	public float GameTime { get { return beginTime < Time.time ? Time.time - beginTime : 0.0f; } }
+	public float GameTime { get { return IsOperating() ? Time.time - beginTime : 0.0f; } }
 
 	public delegate void CrashHandler(Collider shipCollider, Collider obstacleCollider);
 	public CrashHandler crashHandler = DefaultCrashHandler;
