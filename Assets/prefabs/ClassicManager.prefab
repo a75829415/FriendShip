@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.694, b: 0.694, a: 1}
+  m_Color: {r: 0, g: 0.694, b: 0.694, a: 0.39215687}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -429,7 +429,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Time
+  m_Text: "\u65F6\u95F4"
 --- !u!114 &114000013160088680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -565,9 +565,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Game Over!
-
-'
+  m_Text: "\u6E38\u620F\u7ED3\u675F"
 --- !u!114 &114000013758623458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -580,7 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -654,7 +652,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Health
+  m_Text: "\u8010\u4E45"
 --- !u!222 &222000010035924444
 CanvasRenderer:
   m_ObjectHideFlags: 1

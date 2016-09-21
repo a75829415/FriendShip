@@ -57,7 +57,7 @@ public class ClassicManager : Manager
 				{
 					status.gameObject.SetActive(true);
 				}
-				statusName.text = "Invincible";
+				statusName.text = "无敌";
 				statusTime.localScale = new Vector3(ship.InvincibleTime / ship.invincibleTimeBase, 1, 1);
 			}
 			else if (status.gameObject.activeSelf)
@@ -83,7 +83,7 @@ public class ClassicManager : Manager
 	public static void DefaultGameOverHandler(ClassicManager manager, float time)
 	{
 		manager.gameOverPanel.gameObject.SetActive(true);
-		manager.resultText.text = "Time: " + manager.GameTimeInString;
+		manager.resultText.text = "时间: " + manager.GameTimeInString;
     }
 
 }
