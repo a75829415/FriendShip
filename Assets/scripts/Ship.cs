@@ -15,6 +15,8 @@ public class Ship : MoveableObject
 
 	private float invincibleTime;
 
+	public float InvincibleTime { get { return invincibleTime; } }
+
 	private bool unprepared;
 
 	public float GetSpeed()
