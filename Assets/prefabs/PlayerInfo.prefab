@@ -45,8 +45,6 @@ GameObject:
   - 224: {fileID: 22466760}
   - 222: {fileID: 22255928}
   - 114: {fileID: 11415540}
-  - 114: {fileID: 11495344}
-  - 114: {fileID: 11442644}
   m_Layer: 0
   m_Name: PlayerInfo
   m_TagString: Untagged
@@ -98,20 +96,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11442644
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d177cb9ca00f2a2429a2d16a1b875498, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLobbyGUI: 1
-  playerNameText: {fileID: 11483904}
-  readyButton: {fileID: 11491460}
 --- !u!114 &11483904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,38 +230,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11495344
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 23
-    i1: 80
-    i2: 51
-    i3: 41
-    i4: 125
-    i5: 189
-    i6: 169
-    i7: 212
-    i8: 152
-    i9: 171
-    i10: 193
-    i11: 203
-    i12: 102
-    i13: 255
-    i14: 23
-    i15: 11
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
 --- !u!222 &22235148
 CanvasRenderer:
   m_ObjectHideFlags: 1

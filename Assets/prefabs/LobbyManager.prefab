@@ -82,31 +82,20 @@ MonoBehaviour:
   m_MatchPort: 443
   matchName: default
   matchSize: 4
-  isNetworkActive: 0
+  isNetworkActive: 1
   matchMaker: {fileID: 0}
   m_ShowLobbyGUI: 0
   m_MaxPlayers: 2
   m_MaxPlayersPerConnection: 1
-  m_MinPlayers: 2
-  m_LobbyPlayerPrefab: {fileID: 11442644, guid: 175033297dbda9d498abc1cb66ff170b,
+  m_MinPlayers: 1
+  m_LobbyPlayerPrefab: {fileID: 114000014157705542, guid: edc17c03e82d0924292302b904ca7834,
     type: 2}
   m_GamePlayerPrefab: {fileID: 177658, guid: 2673890f69db16542ba19d5069fb3f13, type: 2}
   m_LobbyScene: lobby
   m_PlayScene: start
-  lobbySlots: []
-  ip: {fileID: 0}
-  startPanel: {fileID: 224000014135145288, guid: ffeaae5dedd940a469a4c3dfb5379e91,
-    type: 2}
-  stopPanel: {fileID: 224000012794891580, guid: ffeaae5dedd940a469a4c3dfb5379e91,
-    type: 2}
-  lobbyPanel: {fileID: 224000014095826040, guid: ffeaae5dedd940a469a4c3dfb5379e91,
-    type: 2}
-  leftContainer: {fileID: 224000010490873240, guid: ffeaae5dedd940a469a4c3dfb5379e91,
-    type: 2}
-  rightContainer: {fileID: 224000011577951898, guid: ffeaae5dedd940a469a4c3dfb5379e91,
-    type: 2}
-  discovery: {fileID: 114000012450148984, guid: 2da6ee262ad85a64c88d63d6378216d8,
-    type: 2}
+  lobbySlots:
+  - {fileID: 0}
+  - {fileID: 0}
   classicManager: {fileID: 11422060, guid: b4e8a9b15d0bf46478f66d73cf606796, type: 2}
 --- !u!1001 &100100000
 Prefab:

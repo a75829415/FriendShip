@@ -69,8 +69,6 @@ public class ShipController : NetworkBehaviour
     void OnApplicationQuit()
     {
         LobbyManager.instance.SendReturnToLobby();
-        GUIEventHandler.instance.ShowLobbyGUI();
-        GUIEventHandler.instance.quitRoomDelegate();
         Application.CancelQuit();
     }
 

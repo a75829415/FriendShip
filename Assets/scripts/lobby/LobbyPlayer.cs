@@ -6,6 +6,7 @@ using System;
 
 public class LobbyPlayer : NetworkLobbyPlayer
 {
+    public RectTransform playerInfo;
     public Text playerNameText;
     public Button readyButton;
 

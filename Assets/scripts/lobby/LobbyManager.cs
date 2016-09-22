@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
@@ -11,7 +10,21 @@ public class LobbyManager : NetworkLobbyManager
         {
             return singleton as LobbyManager;
         }
+        set
+        {
+            if (singleton == null)
+            {
+                singleton = value;
+            }
+            else
+            {
+                Destroy(value.gameObject);
+            }
+        }
     }
+
+
+    public Manager classicManager;
 
     private Dictionary<NetworkConnection, ShipControlMode> controlModeAllocation;
 
@@ -35,8 +48,25 @@ public class LobbyManager : NetworkLobbyManager
         }
     }
 
+    public Manager GameManager
+    {
+        get
+        {
+            switch (Mode)
+            {
+                case GameMode.ClassicSingle:
+                    return classicManager;
+                case GameMode.ClassicDouble:
+                    return classicManager;
+                default:
+                    return null;
+            }
+        }
+    }
+
     void Awake()
     {
+        instance = this;
         DontDestroyOnLoad(gameObject);
         controlModeAllocation = new Dictionary<NetworkConnection, ShipControlMode>();
     }
