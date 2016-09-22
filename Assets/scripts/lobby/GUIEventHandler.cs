@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GUIEventHandler : MonoBehaviour
 {
@@ -32,6 +33,13 @@ public class GUIEventHandler : MonoBehaviour
         {
             RectTransform lobby = Instantiate(lobbyInfo);
             lobbyInfo.SetParent(lobbysPanel);
+            lobbyInfo.GetComponent<Image>().color = new Color(255, 255, 255, (i++ % 2) * 127);
+            lobbyInfo.GetComponentInChildren<Button>().onClick.AddListener(() =>
+            {
+                LobbyManager.instance.StartClient().Connect(
+                    lobbyInfo.GetComponentInChildren<Text>().text,
+                    LobbyManager.instance.networkPort);
+            });
         }
     }
 
