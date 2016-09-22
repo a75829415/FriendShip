@@ -109,16 +109,4 @@ public class GUIEventHandler : MonoBehaviour
             playerInfo.localScale = new Vector3(1, 1, 1);
         }
     }
-
-    public void RemovePlayer(RectTransform player)
-    {
-        if (leftPlayer != null && leftPlayer.Equals(player))
-        {
-            leftPlayer = null;
-        }
-        else if (rightPlayer != null && rightPlayer.Equals(player))
-        {
-            rightPlayer = null;
-        }
-    }
 }

@@ -37,8 +37,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnClientExitLobby()
     {
-        GUIEventHandler.instance.RemovePlayer(playerInfo);
-        Destroy(playerInfo);
+        Destroy(playerInfo.gameObject);
     }
 
     private void SetupOtherPlayer()
@@ -53,6 +52,8 @@ public class LobbyPlayer : NetworkLobbyPlayer
         playerNameText.text = "You (Local Player)";
         readyButton.GetComponentInChildren<Text>().text = "准备";
         readyButton.interactable = true;
+        readyButton.onClick.RemoveAllListeners();
+        readyButton.onClick.AddListener(ReadyButton_Click);
     }
 
     public void ReadyButton_Click()
