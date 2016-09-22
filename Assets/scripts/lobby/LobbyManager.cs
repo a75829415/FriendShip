@@ -16,7 +16,7 @@ public class LobbyManager : NetworkLobbyManager
             {
                 singleton = value;
             }
-            else
+            else if (singleton != value)
             {
                 Destroy(value.gameObject);
             }
@@ -97,11 +97,6 @@ public class LobbyManager : NetworkLobbyManager
     //    base.OnLobbyServerPlayersReady();
     //}
 
-    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
-    {
-        //HideLobbyGUI();
-    }
-
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
     {
         ReturnLobby();
@@ -110,7 +105,6 @@ public class LobbyManager : NetworkLobbyManager
 
     public override void OnLobbyClientDisconnect(NetworkConnection conn)
     {
-        //ShowLobbyGUI();
         StopClient();
     }
 
@@ -123,7 +117,6 @@ public class LobbyManager : NetworkLobbyManager
     public void ReturnLobby()
     {
         SendReturnToLobby();
-        Destroy(Manager.instance);
-        //ShowLobbyGUI();
+        Destroy(Manager.instance.gameObject);
     }
 }

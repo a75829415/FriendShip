@@ -35,11 +35,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
             (isLocalPlayer ? "取消准备" : "就绪") : (isLocalPlayer ? "准备" : "等待");
     }
 
-    public override void OnClientExitLobby()
-    {
-        Destroy(playerInfo.gameObject);
-    }
-
     private void SetupOtherPlayer()
     {
         playerNameText.text = "Remote Player";

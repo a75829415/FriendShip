@@ -1,13 +1,29 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
 public class LobbyDiscovery : NetworkDiscovery
 {
-    public static LobbyDiscovery instance;
+    private static LobbyDiscovery singleton;
+    public static LobbyDiscovery instance
+    {
+        get
+        {
+            return singleton;
+        }
+        set
+        {
+            if (singleton == null)
+            {
+                singleton = value;
+            }
+            else if (singleton != value)
+            {
+                Destroy(value.gameObject);
+            }
+        }
+    }
 
-    private float startTime;
     private Dictionary<string, float> serverAddresses;
 
     void Awake()
@@ -15,6 +31,11 @@ public class LobbyDiscovery : NetworkDiscovery
         Initialize();
         instance = this;
         serverAddresses = new Dictionary<string, float>();
+    }
+
+    void Start()
+    {
+        StartListening();
     }
 
     void Update()
@@ -50,7 +71,6 @@ public class LobbyDiscovery : NetworkDiscovery
         {
             StopBroadcastingOrListening();
         }
-        startTime = Time.realtimeSinceStartup;
         StartAsServer();
     }
 
@@ -60,13 +80,20 @@ public class LobbyDiscovery : NetworkDiscovery
         {
             StopBroadcastingOrListening();
         }
-        startTime = Time.realtimeSinceStartup;
         StartAsClient();
     }
 
     public void StopBroadcastingOrListening()
     {
-        StopBroadcast();
+        if (isServer)
+        {
+            StopBroadcast();
+            StartListening();
+        }
+        else if (isClient)
+        {
+            StopBroadcast();
+        }
         serverAddresses.Clear();
     }
 
