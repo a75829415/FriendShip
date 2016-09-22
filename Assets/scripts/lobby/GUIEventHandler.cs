@@ -15,12 +15,22 @@ public class GUIEventHandler : MonoBehaviour
     public RectTransform leftContainer;
     public RectTransform rightContainer;
 
-    private LobbyPlayer leftPlayer;
-    private LobbyPlayer rightPlayer;
+    private RectTransform leftPlayer;
+    private RectTransform rightPlayer;
 
     void Awake()
     {
         instance = this;
+    }
+
+    public void ShowLobbyGUI()
+    {
+        startPanel.localScale = lobbyPanel.localScale = new Vector3(1, 1, 1);
+    }
+
+    public void HideLobbyGUI()
+    {
+        startPanel.localScale = stopPanel.localScale = lobbyPanel.localScale = new Vector3(0, 0, 0);
     }
 
     public void CreateRoom()
@@ -82,27 +92,25 @@ public class GUIEventHandler : MonoBehaviour
         //LobbyDiscovery.instance.StopBroadcastingOrListening();
     }
 
-    public void AddPlayer(LobbyPlayer player)
+    public void AddPlayer(RectTransform playerInfo)
     {
         if (leftPlayer == null)
         {
-            leftPlayer = player;
-            RectTransform playerInfo = Instantiate(player.playerInfo);
+            leftPlayer = playerInfo;
             playerInfo.SetParent(leftContainer);
             playerInfo.localPosition = new Vector3(0, 0, 0);
             playerInfo.localScale = new Vector3(1, 1, 1);
         }
         else if (rightPlayer == null)
         {
-            rightPlayer = player;
-            RectTransform playerInfo = Instantiate(player.playerInfo);
+            rightPlayer = playerInfo;
             playerInfo.SetParent(rightContainer);
             playerInfo.localPosition = new Vector3(0, 0, 0);
             playerInfo.localScale = new Vector3(1, 1, 1);
         }
     }
 
-    public void RemovePlayer(LobbyPlayer player)
+    public void RemovePlayer(RectTransform player)
     {
         if (leftPlayer != null && leftPlayer.Equals(player))
         {
@@ -112,10 +120,5 @@ public class GUIEventHandler : MonoBehaviour
         {
             rightPlayer = null;
         }
-    }
-
-    public void ReadyButton_Click()
-    {
-        Debug.Log("Ready button clicked.");
     }
 }

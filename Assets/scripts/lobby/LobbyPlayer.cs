@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using System.Collections;
-using System;
 
 public class LobbyPlayer : NetworkLobbyPlayer
 {
-    public RectTransform playerInfo;
-    public Text playerNameText;
-    public Button readyButton;
+    public RectTransform playerInfoPrefab;
+
+    private RectTransform playerInfo;
+    private Text playerNameText;
+    private Button readyButton;
 
     public override void OnClientEnterLobby()
     {
-        GUIEventHandler.instance.AddPlayer(this);
+        playerInfo = Instantiate(playerInfoPrefab);
+        playerNameText = playerInfo.GetComponentInChildren<Text>();
+        readyButton = playerInfo.GetComponentInChildren<Button>();
+        GUIEventHandler.instance.AddPlayer(playerInfo);
         SetupOtherPlayer();
         readyToBegin = false;
     }
@@ -34,7 +37,8 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnClientExitLobby()
     {
-        GUIEventHandler.instance.RemovePlayer(this);
+        GUIEventHandler.instance.RemovePlayer(playerInfo);
+        Destroy(playerInfo);
     }
 
     private void SetupOtherPlayer()
@@ -49,8 +53,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
         playerNameText.text = "You (Local Player)";
         readyButton.GetComponentInChildren<Text>().text = "准备";
         readyButton.interactable = true;
-        readyButton.onClick.RemoveAllListeners();
-        readyButton.onClick.AddListener(ReadyButton_Click);
     }
 
     public void ReadyButton_Click()
