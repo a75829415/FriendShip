@@ -5,15 +5,17 @@ using System.Collections;
 public class ShipController : NetworkBehaviour
 {
     private Ship ship;
+
+    [SyncVar]
     private ShipControlMode controlMode;
 
     // Use this for initialization
     void Start()
     {
-        ship = Manager.instance.ship/*GameObject.FindGameObjectWithTag("Player").GetComponent<Ship>()*/;
-        if (isLocalPlayer)
+        ship = Manager.instance.ship;
+        if (isServer)
         {
-            controlMode = LobbyManager.instance.GetShipControlMode(connectionToServer);
+            controlMode = LobbyManager.instance.GetShipControlMode(connectionToClient);
         }
     }
 

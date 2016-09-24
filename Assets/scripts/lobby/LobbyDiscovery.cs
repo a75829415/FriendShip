@@ -24,11 +24,10 @@ public class LobbyDiscovery : NetworkDiscovery
         }
     }
 
-    private Dictionary<string, float> serverAddresses;
+    public Dictionary<string, float> serverAddresses { get; private set; }
 
     void Awake()
     {
-        Initialize();
         instance = this;
         serverAddresses = new Dictionary<string, float>();
     }
@@ -36,20 +35,6 @@ public class LobbyDiscovery : NetworkDiscovery
     void Start()
     {
         StartListening();
-    }
-
-    void Update()
-    {
-        if (isClient && running)
-        {
-            foreach (string address in serverAddresses.Keys)
-            {
-                if (Time.realtimeSinceStartup - serverAddresses[address] > broadcastInterval * 3.0f)
-                {
-                    serverAddresses.Remove(address);
-                }
-            }
-        }
     }
 
     public override void OnReceivedBroadcast(string fromAddress, string data)
@@ -62,6 +47,7 @@ public class LobbyDiscovery : NetworkDiscovery
         else
         {
             serverAddresses.Add(fromAddress, Time.realtimeSinceStartup);
+            GUIEventHandler.instance.AddLobby(fromAddress);
         }
     }
 
@@ -71,6 +57,7 @@ public class LobbyDiscovery : NetworkDiscovery
         {
             StopBroadcastingOrListening();
         }
+        Initialize();
         StartAsServer();
     }
 
@@ -80,6 +67,7 @@ public class LobbyDiscovery : NetworkDiscovery
         {
             StopBroadcastingOrListening();
         }
+        Initialize();
         StartAsClient();
     }
 
@@ -95,15 +83,5 @@ public class LobbyDiscovery : NetworkDiscovery
             StopBroadcast();
         }
         serverAddresses.Clear();
-    }
-
-    public List<string> GetServerAddresses()
-    {
-        List<string> addresses = new List<string>();
-        foreach (string address in serverAddresses.Keys)
-        {
-            addresses.Add(address);
-        }
-        return addresses;
     }
 }

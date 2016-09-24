@@ -23,10 +23,9 @@ public class LobbyManager : NetworkLobbyManager
         }
     }
 
-
     public Manager classicManager;
-
-    private Dictionary<NetworkConnection, ShipControlMode> controlModeAllocation;
+    
+    private Dictionary<int, ShipControlMode> controlModeAllocation;
 
     private GameMode mode;
     public GameMode Mode
@@ -68,7 +67,7 @@ public class LobbyManager : NetworkLobbyManager
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
-        controlModeAllocation = new Dictionary<NetworkConnection, ShipControlMode>();
+        controlModeAllocation = new Dictionary<int, ShipControlMode>();
     }
 
     void Update()
@@ -79,39 +78,41 @@ public class LobbyManager : NetworkLobbyManager
         }
     }
 
-    //public override void OnLobbyServerPlayersReady()
-    //{
-    //    switch (Mode)
-    //    {
-    //        case GameMode.ClassicSingle:
-    //            controlModeAllocation.Add(leftPlayer.connectionToClient, ShipControlMode.BothPaddles);
-    //            break;
-    //        case GameMode.ClassicDouble:
-    //            float random = Random.value;
-    //            controlModeAllocation.Add(leftPlayer.connectionToClient,
-    //                random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
-    //            controlModeAllocation.Add(rightPlayer.connectionToClient,
-    //                random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
-    //            break;
-    //    }
-    //    base.OnLobbyServerPlayersReady();
-    //}
+    public override void OnLobbyServerPlayersReady()
+    {
+        switch (Mode)
+        {
+            case GameMode.ClassicSingle:
+                controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId, ShipControlMode.BothPaddles);
+                break;
+            case GameMode.ClassicDouble:
+                float random = Random.value;
+                controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
+                    random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
+                controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
+                    random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
+                break;
+        }
+        base.OnLobbyServerPlayersReady();
+    }
 
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
     {
         ReturnLobby();
         StopHost();
+        Destroy(Manager.instance.gameObject);
     }
 
     public override void OnLobbyClientDisconnect(NetworkConnection conn)
     {
         StopClient();
+        Destroy(Manager.instance.gameObject);
     }
 
     public ShipControlMode GetShipControlMode(NetworkConnection conn)
     {
         ShipControlMode mode;
-        return controlModeAllocation.TryGetValue(conn, out mode) ? mode : ShipControlMode.BothPaddles;
+        return controlModeAllocation.TryGetValue(conn.connectionId, out mode) ? mode : ShipControlMode.BothPaddles;
     }
 
     public void ReturnLobby()

@@ -16,7 +16,9 @@ public class GUIEventHandler : MonoBehaviour
     public QuitRoomDelegate quitRoomDelegate;
     public RectTransform leftContainer;
     public RectTransform rightContainer;
-    public RectTransform lobbyInfo;
+    public RectTransform lobbyInfoPrefab;
+
+    private Dictionary<string, RectTransform> servers;
 
     private RectTransform leftPlayer;
     private RectTransform rightPlayer;
@@ -24,23 +26,33 @@ public class GUIEventHandler : MonoBehaviour
     void Awake()
     {
         instance = this;
+        servers = new Dictionary<string, RectTransform>();
     }
 
-    void Update()
+    public void AddLobby(string address)
     {
-        int i = 0;
-        foreach (string address in LobbyDiscovery.instance.GetServerAddresses())
+        RectTransform lobby = Instantiate(lobbyInfoPrefab);
+        lobby.GetComponent<Image>().color = new Color(255, 255, 255, (lobbysPanel.childCount % 2) * 127);
+        lobby.GetComponentInChildren<Text>().text = address;
+        lobby.GetComponentInChildren<Button>().onClick.AddListener(() =>
         {
-            RectTransform lobby = Instantiate(lobbyInfo);
-            lobbyInfo.SetParent(lobbysPanel);
-            lobbyInfo.GetComponent<Image>().color = new Color(255, 255, 255, (i++ % 2) * 127);
-            lobbyInfo.GetComponentInChildren<Button>().onClick.AddListener(() =>
+            if (Time.realtimeSinceStartup - LobbyDiscovery.instance.serverAddresses[address]
+                > LobbyDiscovery.instance.broadcastInterval / 500.0f)
             {
-                LobbyManager.instance.StartClient().Connect(
-                    lobbyInfo.GetComponentInChildren<Text>().text,
-                    LobbyManager.instance.networkPort);
-            });
-        }
+                Destroy(servers[address].gameObject);
+                servers.Remove(address);
+                LobbyDiscovery.instance.serverAddresses.Remove(address);
+                return;
+            }
+            LobbyManager.instance.Mode = GameMode.ClassicDouble;
+            LobbyManager.instance.StartClient().Connect(address, LobbyManager.instance.networkPort);
+            startPanel.localScale = lobbysPanel.localScale = new Vector3(0, 1, 1);
+            stopPanel.localScale = gameLobbyPanel.localScale = new Vector3(1, 1, 1);
+            quitRoomDelegate = LobbyManager.instance.StopClient;
+            DontDestroyOnLoad(Instantiate(LobbyManager.instance.GameManager));
+        });
+        lobby.SetParent(lobbysPanel, false);
+        servers.Add(address, lobby);
     }
 
     public void CreateRoom()
@@ -48,9 +60,9 @@ public class GUIEventHandler : MonoBehaviour
         LobbyManager.instance.Mode = GameMode.ClassicDouble;
         LobbyManager.instance.StartHost();
         LobbyDiscovery.instance.StartBroadcasting();
-        startPanel.localScale = new Vector3(0, 1, 1);
-        stopPanel.localScale = new Vector3(1, 1, 1);
-        quitRoomDelegate = QuitHostRoom;
+        startPanel.localScale = lobbysPanel.localScale = new Vector3(0, 1, 1);
+        stopPanel.localScale = gameLobbyPanel.localScale = new Vector3(1, 1, 1);
+        quitRoomDelegate = LobbyManager.instance.StopHost;
         DontDestroyOnLoad(Instantiate(LobbyManager.instance.GameManager));
     }
 
@@ -58,18 +70,8 @@ public class GUIEventHandler : MonoBehaviour
     {
         LobbyManager.instance.Mode = GameMode.ClassicSingle;
         LobbyManager.instance.StartHost();
-        quitRoomDelegate = QuitHostRoom;
+        quitRoomDelegate = LobbyManager.instance.StopHost;
         DontDestroyOnLoad(Instantiate(LobbyManager.instance.GameManager));
-    }
-
-    public void QuitHostRoom()
-    {
-        LobbyManager.instance.StopHost();
-    }
-
-    public void QuitRemoteRoom()
-    {
-        LobbyManager.instance.StopClient();
     }
 
     public void QuitRoom()
