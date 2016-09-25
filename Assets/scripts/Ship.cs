@@ -15,7 +15,7 @@ public class Ship : MoveableObject
 
 	private float invincibleTime;
 
-	public float InvincibleTime { get { return invincibleTime; } }
+	public float InvincibleTime { get { return invincibleTime; } set { invincibleTime = value; } }
 
 	private bool unprepared;
 
