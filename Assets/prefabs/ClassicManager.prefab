@@ -47,15 +47,15 @@ MonoBehaviour:
   shipProtocal: {fileID: 11452464, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
   obstacleProtocal: {fileID: 431154, guid: 4a833f9c17ab959409d4c464dafef9fc, type: 2}
   waitTimeBase: 6
-  uiCanvas: {fileID: 223000013764208560}
-  hud: {fileID: 224000011885946378}
-  hudTime: {fileID: 114000013170338730}
-  hudHealth: {fileID: 114000013422112340}
-  status: {fileID: 224000012192103534}
-  statusName: {fileID: 114000013160088680}
-  statusTime: {fileID: 224000013883466674}
-  gameOverPanel: {fileID: 224000010433136004}
-  resultText: {fileID: 114000012176123822}
+  status: {fileID: 0}
+  statusName: {fileID: 0}
+  statusTime: {fileID: 0}
+  uiCanvas: {fileID: 0}
+  hud: {fileID: 0}
+  hudTime: {fileID: 0}
+  hudHealth: {fileID: 0}
+  gameOverPanel: {fileID: 0}
+  resultText: {fileID: 0}
   health: 3
 --- !u!1001 &100100000
 Prefab:

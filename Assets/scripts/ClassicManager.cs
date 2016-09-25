@@ -12,10 +12,6 @@ public class ClassicManager : Manager
 	public Text hudTime;
 	public Text hudHealth;
 
-	public RectTransform status;
-	public Text statusName;
-	public RectTransform statusTime;
-
 	public RectTransform gameOverPanel;
 	public Text resultText;
 
@@ -43,27 +39,12 @@ public class ClassicManager : Manager
 	// Update is called once per frame
 	void Update()
 	{
+
 		base.UpdateWorkaround();
 		if (!hud.gameObject.activeSelf && currentHealth > 0 && ship != null)
 		{
 			uiCanvas.worldCamera = playerCamera;
 			hud.gameObject.SetActive(true);
-		}
-		if (ship != null && Time.timeScale != 0)
-		{
-			if (ship.IsInvincible())
-			{
-				if (!status.gameObject.activeSelf)
-				{
-					status.gameObject.SetActive(true);
-				}
-				statusName.text = "无敌";
-				statusTime.localScale = new Vector3(ship.InvincibleTime / ship.invincibleTimeBase, 1, 1);
-			}
-			else if (status.gameObject.activeSelf)
-			{
-				status.gameObject.SetActive(false);
-			}
 		}
 		hudTime.text = GameTimeInString;
 		hudHealth.text = currentHealth + "/" + health;
@@ -72,12 +53,25 @@ public class ClassicManager : Manager
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
-		if (--currentHealth == 0)
+		if (NetHub.instance.isServer && --currentHealth == 0)
 		{
 			Time.timeScale = 0.0f;
 			hud.gameObject.SetActive(false);
-			gameOverHandler(this, GameTime);
+			GameOver(GameTime);
 		}
+	}
+
+	public override void UpdateClient()
+	{
+		base.UpdateClient();
+		((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(health);
+	}
+
+	public void GameOver(float time)
+	{
+		UpdateClient();
+		((ClassicNetHub)(NetHub.instance)).RpcNotifyGameOver(time);
+		gameOverHandler(this, time);
 	}
 
 	public static void DefaultGameOverHandler(ClassicManager manager, float time)
