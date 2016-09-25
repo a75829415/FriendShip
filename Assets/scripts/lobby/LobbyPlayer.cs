@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using System.Collections;
-using System;
 
 public class LobbyPlayer : NetworkLobbyPlayer
 {
-    public Text playerNameText;
-    public Button readyButton;
+    public RectTransform playerInfoPrefab;
+
+    private RectTransform playerInfo;
+    private Text playerNameText;
+    private Button readyButton;
 
     public override void OnClientEnterLobby()
     {
-        LobbyManager.instance.AddPlayer(this);
+        playerInfo = Instantiate(playerInfoPrefab);
+        playerNameText = playerInfo.GetComponentInChildren<Text>();
+        readyButton = playerInfo.GetComponentInChildren<Button>();
+        GUIEventHandler.instance.AddPlayer(playerInfo);
         SetupOtherPlayer();
         readyToBegin = false;
     }
@@ -29,11 +33,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
     {
         readyButton.GetComponentInChildren<Text>().text = readyState ?
             (isLocalPlayer ? "取消准备" : "就绪") : (isLocalPlayer ? "准备" : "等待");
-    }
-
-    public override void OnClientExitLobby()
-    {
-        LobbyManager.instance.RemovePlayer(this);
     }
 
     private void SetupOtherPlayer()
