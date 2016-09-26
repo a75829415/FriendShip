@@ -5,15 +5,18 @@ public class MoveableObject : MonoBehaviour
 {
 	public Transform reservedTransform;
 
-	// Use this for initialization
-	void Start()
+	void Awake()
 	{
-		StartWorkaround();
+		AwakeWorkaround();
+	}
+
+	public void AwakeWorkaround()
+	{
+		reservedTransform = GetComponent<Transform>();
 	}
 
 	public void StartWorkaround()
 	{
-		reservedTransform = GetComponent<Transform>();
 	}
 
 	public void MoveVertically(float x, float z)

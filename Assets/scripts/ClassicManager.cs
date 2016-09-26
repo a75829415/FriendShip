@@ -52,7 +52,7 @@ public class ClassicManager : Manager
 
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{
-		crashHandler(shipCollider, obstacleCollider);
+		base.NotifyCrash(shipCollider, obstacleCollider);
 		if (NetHub.instance.isServer && --currentHealth == 0)
 		{
 			Time.timeScale = 0.0f;

@@ -23,7 +23,7 @@ public class LobbyManager : NetworkLobbyManager
         }
     }
 
-    public Manager classicManager;
+    public ClassicNetHub classicNetHub;
     
     private Dictionary<int, ShipControlMode> controlModeAllocation;
 
@@ -47,16 +47,16 @@ public class LobbyManager : NetworkLobbyManager
         }
     }
 
-    public Manager GameManager
+    public NetHub GameNetHub
     {
         get
         {
             switch (Mode)
             {
                 case GameMode.ClassicSingle:
-                    return classicManager;
+                    return classicNetHub;
                 case GameMode.ClassicDouble:
-                    return classicManager;
+                    return classicNetHub;
                 default:
                     return null;
             }
@@ -93,6 +93,8 @@ public class LobbyManager : NetworkLobbyManager
                     random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
                 break;
         }
+		Instantiate(GameNetHub);
+		NetworkServer.Spawn(NetHub.instance.gameObject);
         base.OnLobbyServerPlayersReady();
     }
 

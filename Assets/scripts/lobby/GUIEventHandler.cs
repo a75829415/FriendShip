@@ -49,7 +49,6 @@ public class GUIEventHandler : MonoBehaviour
             startPanel.localScale = lobbysPanel.localScale = new Vector3(0, 1, 1);
             stopPanel.localScale = gameLobbyPanel.localScale = new Vector3(1, 1, 1);
             quitRoomDelegate = LobbyManager.instance.StopClient;
-            DontDestroyOnLoad(Instantiate(LobbyManager.instance.GameManager));
         });
         lobby.SetParent(lobbysPanel, false);
         servers.Add(address, lobby);
@@ -63,7 +62,6 @@ public class GUIEventHandler : MonoBehaviour
         startPanel.localScale = lobbysPanel.localScale = new Vector3(0, 1, 1);
         stopPanel.localScale = gameLobbyPanel.localScale = new Vector3(1, 1, 1);
         quitRoomDelegate = LobbyManager.instance.StopHost;
-        DontDestroyOnLoad(Instantiate(LobbyManager.instance.GameManager));
     }
 
     public void SingleGame()
@@ -71,7 +69,6 @@ public class GUIEventHandler : MonoBehaviour
         LobbyManager.instance.Mode = GameMode.ClassicSingle;
         LobbyManager.instance.StartHost();
         quitRoomDelegate = LobbyManager.instance.StopHost;
-        DontDestroyOnLoad(Instantiate(LobbyManager.instance.GameManager));
     }
 
     public void QuitRoom()

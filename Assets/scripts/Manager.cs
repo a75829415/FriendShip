@@ -34,7 +34,7 @@ public class Manager : MonoBehaviour
 
 	public bool IsOperating()
 	{
-		return waitTime < 0;
+		return waitTime <= 0.0f;
 	}
 
 	public void ResetWaitTime()
@@ -59,13 +59,6 @@ public class Manager : MonoBehaviour
 		instance = this;
 		ResetWaitTime();
 		pieceScale = 512;
-		int seed = (int)(Random.value * int.MaxValue);
-		Random.InitState(seed);
-		NetHub.instance.RpcUpdateRandomSeed(seed);
-        foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
-		{
-			currentPiece.Regenerate();
-		}
 	}
 
 	// Use this for initialization
@@ -88,6 +81,30 @@ public class Manager : MonoBehaviour
 	{
 		if (ship != null)
 		{
+			if (Time.timeScale != 0)
+			{
+				if (ship.IsInvincible())
+				{
+					if (!status.gameObject.activeSelf)
+					{
+						status.gameObject.SetActive(true);
+					}
+					statusName.text = "无敌";
+					statusTime.localScale = new Vector3(ship.InvincibleTime / ship.invincibleTimeBase, 1, 1);
+				}
+				else
+				{
+					if (status.gameObject.activeSelf)
+					{
+						status.gameObject.SetActive(false);
+					}
+				}
+				if (IsOperating())
+				{
+					Debug.Log(GameTime);
+					gameTime += Time.deltaTime;
+				}
+			}
 			if (NetHub.instance.isServer)
 			{
 				UpdateWaitTime();
@@ -108,29 +125,6 @@ public class Manager : MonoBehaviour
 					MoveTowardSouth();
 				}
 				UpdateClient();
-			}
-        }
-		if (ship != null && Time.timeScale != 0)
-		{
-			if (ship.IsInvincible())
-			{
-				if (!status.gameObject.activeSelf)
-				{
-					status.gameObject.SetActive(true);
-				}
-				statusName.text = "无敌";
-				statusTime.localScale = new Vector3(ship.InvincibleTime / ship.invincibleTimeBase, 1, 1);
-			}
-			else
-			{
-				if (WaitTime <= 0.0f)
-				{
-					gameTime += Time.deltaTime;
-				}
-				if (status.gameObject.activeSelf)
-				{
-					status.gameObject.SetActive(false);
-				}
 			}
 		}
 	}
@@ -158,7 +152,7 @@ public class Manager : MonoBehaviour
 	{
 		NetHub.instance.RpcMoveTowardEast();
 		ship.MoveVertically(PieceScale(), 0);
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.x > PieceBound())
 			{
@@ -176,7 +170,7 @@ public class Manager : MonoBehaviour
 	{
 		NetHub.instance.RpcMoveTowardSouth();
 		ship.MoveVertically(0, -PieceScale());
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.z < -PieceBound())
 			{
@@ -194,7 +188,7 @@ public class Manager : MonoBehaviour
 	{
 		NetHub.instance.RpcMoveTowardWest();
 		ship.MoveVertically(-PieceScale(), 0);
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.x < -PieceBound())
 			{
@@ -212,7 +206,7 @@ public class Manager : MonoBehaviour
 	{
 		NetHub.instance.RpcMoveTowardNorth();
 		ship.MoveVertically(0, PieceScale());
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.z > PieceBound())
 			{

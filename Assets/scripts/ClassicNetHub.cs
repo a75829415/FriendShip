@@ -3,15 +3,20 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class ClassicNetHub : NetHub {
+	public ClassicManager classicManager;
+
+	void Awake()
+	{
+		base.AwakeWorkaround();
+		DontDestroyOnLoad(Instantiate(classicManager));
+	}
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	[ClientRpc]

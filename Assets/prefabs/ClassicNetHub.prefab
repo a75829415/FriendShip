@@ -55,24 +55,24 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
+    i0: 64
+    i1: 158
+    i2: 229
+    i3: 182
+    i4: 187
+    i5: 171
+    i6: 26
+    i7: 196
+    i8: 11
+    i9: 95
+    i10: 194
+    i11: 74
+    i12: 64
+    i13: 131
+    i14: 94
+    i15: 86
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114000014032466328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -84,3 +84,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85032ead7c5879444a3ba9911a5e1e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  classicManager: {fileID: 11422060, guid: b4e8a9b15d0bf46478f66d73cf606796, type: 2}
