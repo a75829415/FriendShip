@@ -22,7 +22,10 @@ public class ClassicNetHub : NetHub {
 	[ClientRpc]
 	public void RpcUpdateStatus(uint serverHealth)
 	{
-		((ClassicManager)(Manager.instance)).health = serverHealth;
+		if (!isServer)
+		{
+			((ClassicManager)(Manager.instance)).health = serverHealth;
+		}
     }
 
 	[ClientRpc]

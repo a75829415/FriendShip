@@ -57,7 +57,7 @@ public class ClassicManager : Manager
 		{
 			Time.timeScale = 0.0f;
 			hud.gameObject.SetActive(false);
-			GameOver(GameTime);
+			((ClassicNetHub)(NetHub.instance)).RpcNotifyGameOver(GameTime);
 		}
 	}
 
@@ -70,7 +70,6 @@ public class ClassicManager : Manager
 	public void GameOver(float time)
 	{
 		UpdateClient();
-		((ClassicNetHub)(NetHub.instance)).RpcNotifyGameOver(time);
 		gameOverHandler(this, time);
 	}
 
