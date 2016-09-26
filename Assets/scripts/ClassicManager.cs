@@ -55,8 +55,7 @@ public class ClassicManager : Manager
 		base.NotifyCrash(shipCollider, obstacleCollider);
 		if (NetHub.instance.isServer && --currentHealth == 0)
 		{
-			Time.timeScale = 0.0f;
-			hud.gameObject.SetActive(false);
+			UpdateClient();
 			((ClassicNetHub)(NetHub.instance)).RpcNotifyGameOver(GameTime);
 		}
 	}
@@ -64,12 +63,13 @@ public class ClassicManager : Manager
 	public override void UpdateClient()
 	{
 		base.UpdateClient();
-		((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(health);
+		((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(currentHealth);
 	}
 
 	public void GameOver(float time)
 	{
-		UpdateClient();
+		Time.timeScale = 0.0f;
+		hud.gameObject.SetActive(false);
 		gameOverHandler(this, time);
 	}
 
