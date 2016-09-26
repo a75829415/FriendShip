@@ -80,7 +80,6 @@ public class GUIEventHandler : MonoBehaviour
         quitRoomDelegate();
         startPanel.localScale = new Vector3(1, 1, 1);
         stopPanel.localScale = new Vector3(0, 1, 1);
-        Destroy(Manager.instance.gameObject);
     }
 
     public void AddPlayer(RectTransform playerInfo)
