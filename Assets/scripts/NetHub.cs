@@ -5,7 +5,7 @@ using System.Collections;
 public class NetHub : NetworkBehaviour {
 	public static NetHub instance;
 	[SyncVar]
-	private int seed = (int)(Random.value * int.MaxValue);
+	private int seed;
 
 	void Awake()
 	{
@@ -16,7 +16,11 @@ public class NetHub : NetworkBehaviour {
 	{
 		instance = this;
 		DontDestroyOnLoad(instance);
-		Random.InitState(seed);
+		if (isServer)
+		{
+			seed = (int)(Random.value * int.MaxValue);
+		}
+        Random.InitState(seed);
 	}
 
 	/*
