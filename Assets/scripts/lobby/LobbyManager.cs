@@ -100,26 +100,18 @@ public class LobbyManager : NetworkLobbyManager
 
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
     {
-        ReturnLobby();
+        SendReturnToLobby();
         StopHost();
-        Destroy(Manager.instance.gameObject);
     }
 
     public override void OnLobbyClientDisconnect(NetworkConnection conn)
     {
         StopClient();
-        Destroy(Manager.instance.gameObject);
     }
 
     public ShipControlMode GetShipControlMode(NetworkConnection conn)
     {
         ShipControlMode mode;
         return controlModeAllocation.TryGetValue(conn.connectionId, out mode) ? mode : ShipControlMode.BothPaddles;
-    }
-
-    public void ReturnLobby()
-    {
-        SendReturnToLobby();
-        Destroy(Manager.instance.gameObject);
     }
 }
