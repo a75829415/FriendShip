@@ -31,7 +31,7 @@ public class NetHub : NetworkBehaviour {
 	public void CmdRequestForSeed()
 	{
 		RpcUpdateRandomSeed(seed);
-    }
+	}
 
 	[ClientRpc]
 	public void RpcUpdateRandomSeed(int serverSeed)
@@ -86,37 +86,26 @@ public class NetHub : NetworkBehaviour {
 	[ClientRpc]
 	public void RpcMoveTowardEast()
 	{
-		if (!isServer)
-		{
-			Manager.instance.MoveTowardEast();
-		}
+		Manager.instance.MoveTowardEast();
 	}
 
 	[ClientRpc]
 	public void RpcMoveTowardSouth()
 	{
-		if (!isServer)
-		{
-			Manager.instance.MoveTowardSouth();
-		}
+
+		Manager.instance.MoveTowardSouth();
 	}
 
 	[ClientRpc]
 	public void RpcMoveTowardWest()
 	{
-		if (!isServer)
-		{
-			Manager.instance.MoveTowardWest();
-		}
+		Manager.instance.MoveTowardWest();
 	}
 
 	[ClientRpc]
 	public void RpcMoveTowardNorth()
 	{
-		if (!isServer)
-		{
-			Manager.instance.MoveTowardNorth();
-		}
+		Manager.instance.MoveTowardNorth();
 	}
 
 }

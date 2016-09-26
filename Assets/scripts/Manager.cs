@@ -110,19 +110,19 @@ public class Manager : MonoBehaviour
 				UpdateWaitTime();
 				if (ship.Position.x < -PieceBound())
 				{
-					MoveTowardEast();
+					NetHub.instance.RpcMoveTowardEast();
 				}
 				else if (ship.Position.x > PieceBound())
 				{
-					MoveTowardWest();
+					NetHub.instance.RpcMoveTowardWest();
 				}
 				if (ship.Position.z < -PieceBound())
 				{
-					MoveTowardNorth();
-				}
+					NetHub.instance.RpcMoveTowardNorth();
+                }
 				else if (ship.Position.z > PieceBound())
 				{
-					MoveTowardSouth();
+					NetHub.instance.RpcMoveTowardSouth();
 				}
 				UpdateClient();
 			}
@@ -150,7 +150,6 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardEast()
 	{
-		NetHub.instance.RpcMoveTowardEast();
 		ship.MoveVertically(PieceScale(), 0);
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
@@ -168,7 +167,6 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardSouth()
 	{
-		NetHub.instance.RpcMoveTowardSouth();
 		ship.MoveVertically(0, -PieceScale());
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
@@ -186,7 +184,6 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardWest()
 	{
-		NetHub.instance.RpcMoveTowardWest();
 		ship.MoveVertically(-PieceScale(), 0);
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
@@ -204,7 +201,6 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardNorth()
 	{
-		NetHub.instance.RpcMoveTowardNorth();
 		ship.MoveVertically(0, PieceScale());
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
