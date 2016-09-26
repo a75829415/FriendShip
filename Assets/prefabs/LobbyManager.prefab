@@ -41,7 +41,8 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: lobby
   m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1000013410338404, guid: 409ee5b6bbab1ac40b5fc24a40835e56, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -96,7 +97,8 @@ MonoBehaviour:
   lobbySlots:
   - {fileID: 0}
   - {fileID: 0}
-  classicManager: {fileID: 11422060, guid: b4e8a9b15d0bf46478f66d73cf606796, type: 2}
+  classicNetHub: {fileID: 114000014032466328, guid: 409ee5b6bbab1ac40b5fc24a40835e56,
+    type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

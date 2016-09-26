@@ -7,19 +7,12 @@ public class BackgroundPiece : MoveableObject {
 	public float minScale;
 	public float maxScale;
 
-	public static List<BackgroundPiece> backgroundPieces = new List<BackgroundPiece>();
-
 	private Transform[,] obstacles;
 
-	void Awake()
-	{
-		backgroundPieces.Add(this);
-    }
-
 	// Use this for initialization
-	void Start () {
-		base.StartWorkaround();
-        obstacles = new Transform[bounds, bounds];
+	void Awake() {
+		base.AwakeWorkaround();
+		obstacles = new Transform[bounds, bounds];
 		for (int i = 0; i < bounds; ++i)
 		{
 			for (int j = 0; j < bounds; ++j)
@@ -28,7 +21,6 @@ public class BackgroundPiece : MoveableObject {
 				obstacles[i, j].SetParent(reservedTransform);
 			}
 		}
-		Regenerate();
 	}
 
 	public void Regenerate()

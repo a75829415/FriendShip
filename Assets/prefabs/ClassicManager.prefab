@@ -42,18 +42,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
-  backgroundScale: 0
+  backgroundScale: 512
   playerCamera: {fileID: 0}
   shipProtocal: {fileID: 11452464, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
   obstacleProtocal: {fileID: 431154, guid: 4a833f9c17ab959409d4c464dafef9fc, type: 2}
   waitTimeBase: 6
+  status: {fileID: 224000012192103534}
+  statusName: {fileID: 114000013160088680}
+  statusTime: {fileID: 224000013883466674}
   uiCanvas: {fileID: 223000013764208560}
   hud: {fileID: 224000011885946378}
   hudTime: {fileID: 114000013170338730}
   hudHealth: {fileID: 114000013422112340}
-  status: {fileID: 224000012192103534}
-  statusName: {fileID: 114000013160088680}
-  statusTime: {fileID: 224000013883466674}
   gameOverPanel: {fileID: 224000010433136004}
   resultText: {fileID: 114000012176123822}
   health: 3

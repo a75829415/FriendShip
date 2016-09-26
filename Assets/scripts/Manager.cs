@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Manager : MonoBehaviour
@@ -17,20 +18,23 @@ public class Manager : MonoBehaviour
 	private float pieceScale;
 	private float waitTime;
 
-	public float WaitTime { get { return waitTime; } }
+	public float WaitTime { get { return waitTime; } set { waitTime = value; } }
 
-	private float beginTime = 0.0f;
+	private float gameTime = 0.0f;
 
-	public float BeginTime { get { return beginTime; } }
-	public float GameTime { get { return IsOperating() ? Time.time - beginTime : 0.0f; } }
+	public float GameTime { get { return gameTime; } set { gameTime = value; } }
 	public string GameTimeInString { get { return string.Format("{0:F3}", GameTime); } }
+
+	public RectTransform status;
+	public Text statusName;
+	public RectTransform statusTime;
 
 	public delegate void CrashHandler(Collider shipCollider, Collider obstacleCollider);
 	public CrashHandler crashHandler = DefaultCrashHandler;
 
 	public bool IsOperating()
 	{
-		return waitTime < 0;
+		return waitTime <= 0.0f;
 	}
 
 	public void ResetWaitTime()
@@ -41,10 +45,6 @@ public class Manager : MonoBehaviour
 	private void UpdateWaitTime()
 	{
 		waitTime -= Time.deltaTime;
-		if (waitTime <= 0.0f && beginTime == 0.0f)
-		{
-			beginTime = Time.time;
-		}
 	}
 
 	void Awake()
@@ -52,10 +52,13 @@ public class Manager : MonoBehaviour
 		AwakeWorkaround();
     }
 
+	
+
 	public void AwakeWorkaround()
 	{
 		instance = this;
 		ResetWaitTime();
+		pieceScale = 512;
 	}
 
 	// Use this for initialization
@@ -66,7 +69,6 @@ public class Manager : MonoBehaviour
 
 	public void StartWorkaround()
 	{
-		pieceScale = 256;
 	}
 
 	// Update is called once per frame
@@ -79,25 +81,62 @@ public class Manager : MonoBehaviour
 	{
 		if (ship != null)
 		{
-			UpdateWaitTime();
-			if (ship.Position.x < -PieceBound())
+			if (Time.timeScale != 0)
 			{
-				MoveTowardEast();
+				if (ship.IsInvincible())
+				{
+					if (!status.gameObject.activeSelf)
+					{
+						status.gameObject.SetActive(true);
+					}
+					statusName.text = "无敌";
+					statusTime.localScale = new Vector3(ship.InvincibleTime / ship.invincibleTimeBase, 1, 1);
+				}
+				else
+				{
+					if (status.gameObject.activeSelf)
+					{
+						status.gameObject.SetActive(false);
+					}
+				}
+				if (IsOperating())
+				{
+					Debug.Log(GameTime);
+					gameTime += Time.deltaTime;
+				}
 			}
-			else if (ship.Position.x > PieceBound())
+			if (NetHub.instance.isServer)
 			{
-				MoveTowardWest();
-			}
-			if (ship.Position.z < -PieceBound())
-			{
-				MoveTowardNorth();
-			}
-			else if (ship.Position.z > PieceBound())
-			{
-				MoveTowardSouth();
+				UpdateWaitTime();
+				if (ship.Position.x < -PieceBound())
+				{
+					MoveTowardEast();
+				}
+				else if (ship.Position.x > PieceBound())
+				{
+					MoveTowardWest();
+				}
+				if (ship.Position.z < -PieceBound())
+				{
+					MoveTowardNorth();
+				}
+				else if (ship.Position.z > PieceBound())
+				{
+					MoveTowardSouth();
+				}
+				UpdateClient();
 			}
 		}
 	}
+
+	public virtual void UpdateClient()
+	{
+		NetHub.instance.RpcUpdateWaitTime(WaitTime);
+		NetHub.instance.RpcUpdateInvincibleTime(ship.InvincibleTime);
+		NetHub.instance.RpcUpdateGameTime(GameTime);
+		NetHub.instance.RpcUpdateShip(ship.reservedTransform.position, ship.reservedTransform.eulerAngles, ship.reservedRigidbody.velocity,
+			ship.reservedRigidbody.angularVelocity, ship.reservedBackgroundForce.relativeForce);
+    }
 
 	public float PieceScale()
 	{
@@ -111,8 +150,9 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardEast()
 	{
+		NetHub.instance.RpcMoveTowardEast();
 		ship.MoveVertically(PieceScale(), 0);
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.x > PieceBound())
 			{
@@ -128,8 +168,9 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardSouth()
 	{
+		NetHub.instance.RpcMoveTowardSouth();
 		ship.MoveVertically(0, -PieceScale());
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.z < -PieceBound())
 			{
@@ -145,8 +186,9 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardWest()
 	{
+		NetHub.instance.RpcMoveTowardWest();
 		ship.MoveVertically(-PieceScale(), 0);
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.x < -PieceBound())
 			{
@@ -162,8 +204,9 @@ public class Manager : MonoBehaviour
 
 	public void MoveTowardNorth()
 	{
+		NetHub.instance.RpcMoveTowardNorth();
 		ship.MoveVertically(0, PieceScale());
-		foreach (BackgroundPiece currentPiece in BackgroundPiece.backgroundPieces)
+		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.z > PieceBound())
 			{
@@ -185,6 +228,5 @@ public class Manager : MonoBehaviour
 	public static void DefaultCrashHandler(Collider shipCollider, Collider obstacleCollider)
 	{
 	}
-
 
 }
