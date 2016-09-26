@@ -101,7 +101,6 @@ public class Manager : MonoBehaviour
 				}
 				if (IsOperating())
 				{
-					Debug.Log(GameTime);
 					gameTime += Time.deltaTime;
 				}
 			}

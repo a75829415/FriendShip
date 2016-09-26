@@ -4,7 +4,8 @@ using System.Collections;
 
 public class NetHub : NetworkBehaviour {
 	public static NetHub instance;
-	private int seed;
+	[SyncVar]
+	private int seed = (int)(Random.value * int.MaxValue);
 
 	void Awake()
 	{
@@ -15,12 +16,10 @@ public class NetHub : NetworkBehaviour {
 	{
 		instance = this;
 		DontDestroyOnLoad(instance);
-		if (isServer)
-		{
-			seed = (int)(Random.value * int.MaxValue);
-		}
+		Random.InitState(seed);
 	}
 
+	/*
 	public override void OnStartAuthority()
 	{
 		base.OnStartAuthority();
@@ -42,6 +41,7 @@ public class NetHub : NetworkBehaviour {
 			Random.InitState(seed);
 		}
 	}
+	*/
 
 	[ClientRpc]
 	public void RpcUpdateWaitTime(float serverWaitTime)
