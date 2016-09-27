@@ -34,4 +34,9 @@ public class ClassicNetHub : NetHub {
 		((ClassicManager)(Manager.instance)).GameOver(result);
 	}
 
+	void OnDestroy()
+	{
+		Destroy(Manager.instance.gameObject);
+	}
+
 }
