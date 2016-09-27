@@ -115,15 +115,18 @@ public class Manager : MonoBehaviour
 				{
 					NetHub.instance.RpcMoveTowardWest();
 				}
-				if (ship.Position.z < -PieceBound())
+				else if (ship.Position.z < -PieceBound())
 				{
 					NetHub.instance.RpcMoveTowardNorth();
-                }
+				}
 				else if (ship.Position.z > PieceBound())
 				{
 					NetHub.instance.RpcMoveTowardSouth();
 				}
-				UpdateClient();
+				else
+				{
+					UpdateClient();
+				}
 			}
 		}
 	}
