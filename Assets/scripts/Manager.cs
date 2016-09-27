@@ -106,6 +106,10 @@ public class Manager : MonoBehaviour
 					gameTime += Time.deltaTime;
 				}
 			}
+			else if (status.gameObject.activeSelf)
+			{
+				status.gameObject.SetActive(false);
+			}
 			if (NetHub.instance.isServer)
 			{
 				UpdateWaitTime();
