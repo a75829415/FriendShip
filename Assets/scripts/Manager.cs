@@ -23,7 +23,9 @@ public class Manager : MonoBehaviour
 	private float gameTime = 0.0f;
 
 	public float GameTime { get { return gameTime; } set { gameTime = value; } }
-	public string GameTimeInString { get { return string.Format("{0:F3}", GameTime); } }
+	public static string TimeToString(float time) {
+		return string.Format("{0:F3}", time);
+	}
 
 	public RectTransform status;
 	public Text statusName;

@@ -46,7 +46,7 @@ public class ClassicManager : Manager
 			uiCanvas.worldCamera = playerCamera;
 			hud.gameObject.SetActive(true);
 		}
-		hudTime.text = GameTimeInString;
+		hudTime.text = TimeToString(GameTime);
 		hudHealth.text = currentHealth + "/" + health;
     }
 
@@ -76,7 +76,7 @@ public class ClassicManager : Manager
 	public static void DefaultGameOverHandler(ClassicManager manager, float time)
 	{
 		manager.gameOverPanel.gameObject.SetActive(true);
-		manager.resultText.text = "时间: " + manager.GameTimeInString;
+		manager.resultText.text = "时间: " + TimeToString(time);
     }
 
 }
