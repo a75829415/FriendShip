@@ -24,7 +24,7 @@ public class ClassicNetHub : NetHub {
 	{
 		if (!isServer)
 		{
-			((ClassicManager)(Manager.instance)).health = serverHealth;
+			((ClassicManager)(Manager.instance)).currentHealth = serverHealth;
 		}
     }
 

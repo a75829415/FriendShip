@@ -19,7 +19,7 @@ public class ClassicManager : Manager
 
 	public uint health;
 
-	private uint currentHealth;
+	public uint currentHealth;
 
 	void Awake()
 	{
