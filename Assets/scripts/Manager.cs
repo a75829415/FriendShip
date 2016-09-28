@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Manager : MonoBehaviour
+public abstract class Manager : MonoBehaviour
 {
 	public static Manager instance;
 
@@ -136,6 +136,14 @@ public class Manager : MonoBehaviour
 			}
 		}
 	}
+
+	public void RegisterShip(Ship ship_to_register)
+	{
+		ship = ship_to_register;
+		InitializeShipCollider();
+    }
+
+	public abstract void InitializeShipCollider();
 
 	public virtual void UpdateClient()
 	{

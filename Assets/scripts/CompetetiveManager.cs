@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class Competetiv : Manager {
+public class Competetive : Manager {
 	public delegate void GameOverHandler(uint leftHealth, uint rightHealth);
 
 	public GameOverHandler gameOverHandler = DefaultGameOverHandler;
@@ -24,10 +25,15 @@ public class Competetiv : Manager {
 	void Update () {
     }
 
+	public override void InitializeShipCollider()
+	{
+		throw new NotImplementedException();
+	}
+
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
-		if (Object.ReferenceEquals(shipCollider, leftCollider))
+		if (UnityEngine.Object.ReferenceEquals(shipCollider, leftCollider))
 		{
 			--currentLeftHealth;
 		}

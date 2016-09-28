@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class ClassicManager : Manager
 {
 	public delegate void GameOverHandler(ClassicManager manager, float time);
 
 	public Canvas uiCanvas;
+
+	public Collider classicShipColliderProtocal;
 
 	public RectTransform hud;
 	public Text hudTime;
@@ -49,6 +52,11 @@ public class ClassicManager : Manager
 		hudTime.text = TimeToString(GameTime);
 		hudHealth.text = currentHealth + "/" + health;
     }
+
+	public override void InitializeShipCollider()
+	{
+		Instantiate(classicShipColliderProtocal).GetComponent<Transform>().SetParent(ship.reservedTransform);
+	}
 
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
 	{

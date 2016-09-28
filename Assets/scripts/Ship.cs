@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Ship : MoveableObject
 {
-	public Collider mainCollider;
-
 	public Rigidbody reservedRigidbody;
 	public ConstantForce reservedBackgroundForce;
 
@@ -48,10 +46,10 @@ public class Ship : MoveableObject
 	// Use this for initialization
 	void Start()
 	{
+		base.StartWorkaround();
 		unprepared = true;
-        base.StartWorkaround();
 		ResetInvincibleStatus();
-		Manager.instance.ship = this;
+		Manager.instance.RegisterShip(this);
     }
 
 	// Update is called once per frame

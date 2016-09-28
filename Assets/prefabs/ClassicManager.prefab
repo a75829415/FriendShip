@@ -51,12 +51,15 @@ MonoBehaviour:
   statusName: {fileID: 114000013160088680}
   statusTime: {fileID: 224000013883466674}
   uiCanvas: {fileID: 223000013764208560}
+  classicShipColliderProtocal: {fileID: 64000011960656182, guid: f8b4f39a0ae0d5047a5a5de36935e3a1,
+    type: 2}
   hud: {fileID: 224000011885946378}
   hudTime: {fileID: 114000013170338730}
   hudHealth: {fileID: 114000013422112340}
   gameOverPanel: {fileID: 224000010433136004}
   resultText: {fileID: 114000012176123822}
   health: 3
+  currentHealth: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
