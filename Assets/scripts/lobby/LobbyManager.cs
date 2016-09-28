@@ -24,7 +24,7 @@ public class LobbyManager : NetworkLobbyManager
     }
 
     public ClassicNetHub classicNetHub;
-    
+
     private Dictionary<int, ShipControlMode> controlModeAllocation;
 
     private GameMode mode;
@@ -93,20 +93,27 @@ public class LobbyManager : NetworkLobbyManager
                     random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
                 break;
         }
-		Instantiate(GameNetHub);
-		NetworkServer.Spawn(NetHub.instance.gameObject);
+        Instantiate(GameNetHub);
+        NetworkServer.Spawn(NetHub.instance.gameObject);
         base.OnLobbyServerPlayersReady();
     }
 
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
     {
-        SendReturnToLobby();
-        StopHost();
+        ServerChangeScene(lobbyScene);
+        if (NetHub.instance != null)
+        {
+            Destroy(NetHub.instance.gameObject);
+        }
     }
 
     public override void OnLobbyClientDisconnect(NetworkConnection conn)
     {
         StopClient();
+        if (NetHub.instance != null)
+        {
+            Destroy(NetHub.instance.gameObject);
+        }
     }
 
     public ShipControlMode GetShipControlMode(NetworkConnection conn)

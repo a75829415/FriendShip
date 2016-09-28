@@ -15,7 +15,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
         playerInfo = Instantiate(playerInfoPrefab);
         playerNameText = playerInfo.GetComponentInChildren<Text>();
         readyButton = playerInfo.GetComponentInChildren<Button>();
-        GUIEventHandler.instance.AddPlayer(playerInfo);
+        LobbyGUIHandler.instance.AddPlayer(playerInfo);
         SetupOtherPlayer();
         readyToBegin = false;
     }

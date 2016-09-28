@@ -29,6 +29,7 @@ public class LobbyDiscovery : NetworkDiscovery
     void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(gameObject);
         serverAddresses = new Dictionary<string, float>();
     }
 
@@ -47,7 +48,7 @@ public class LobbyDiscovery : NetworkDiscovery
         else
         {
             serverAddresses.Add(fromAddress, Time.realtimeSinceStartup);
-            GUIEventHandler.instance.AddLobby(fromAddress);
+            WelcomeGUIHandler.instance.AddLobby(fromAddress);
         }
     }
 
@@ -73,15 +74,7 @@ public class LobbyDiscovery : NetworkDiscovery
 
     public void StopBroadcastingOrListening()
     {
-        if (isServer)
-        {
-            StopBroadcast();
-            StartListening();
-        }
-        else if (isClient)
-        {
-            StopBroadcast();
-        }
+        StopBroadcast();
         serverAddresses.Clear();
     }
 }
