@@ -42,7 +42,6 @@ public class ClassicManager : Manager
 	// Update is called once per frame
 	void Update()
 	{
-
 		base.UpdateWorkaround();
 		if (!hud.gameObject.activeSelf && currentHealth > 0 && ship != null)
 		{

@@ -252,8 +252,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reservedTransform: {fileID: 0}
-  colliderProtocal: {fileID: 64000011960656182, guid: f8b4f39a0ae0d5047a5a5de36935e3a1,
-    type: 2}
   reservedRigidbody: {fileID: 5484704}
   reservedBackgroundForce: {fileID: 7535310}
   accelerationBase: 50

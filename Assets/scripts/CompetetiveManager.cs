@@ -10,6 +10,8 @@ public class Competetive : Manager {
 	public uint leftHealth;
 	public uint rightHealth;
 
+	public Collider competetiveShipColliderProtocal;
+
 	public Collider leftCollider;
 	public Collider rightCollider;
 
@@ -27,7 +29,9 @@ public class Competetive : Manager {
 
 	public override void InitializeShipCollider()
 	{
-		throw new NotImplementedException();
+		leftCollider = Instantiate(competetiveShipColliderProtocal);
+		leftCollider.GetComponent<Transform>().SetParent(ship.reservedTransform);
+		
 	}
 
 	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
