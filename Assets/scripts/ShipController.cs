@@ -68,12 +68,6 @@ public class ShipController : NetworkBehaviour
         }
     }
 
-    void OnApplicationQuit()
-    {
-        LobbyManager.instance.SendReturnToLobby();
-        Application.CancelQuit();
-    }
-
     [ClientRpc]
     public void RpcPaddleLeft()
     {
