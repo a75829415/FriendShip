@@ -8,16 +8,26 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     private RectTransform playerInfo;
     private Text playerNameText;
-    private Button readyButton;
+    private Button playerStateButton;
 
     public override void OnClientEnterLobby()
     {
-        playerInfo = Instantiate(playerInfoPrefab);
-        playerNameText = playerInfo.GetComponentInChildren<Text>();
-        readyButton = playerInfo.GetComponentInChildren<Button>();
-        LobbyGUIHandler.instance.AddPlayer(playerInfo);
-        SetupOtherPlayer();
+        if (playerInfo == null)
+        {
+            playerInfo = Instantiate(playerInfoPrefab);
+            playerNameText = playerInfo.GetComponentInChildren<Text>();
+            playerStateButton = playerInfo.GetComponentInChildren<Button>();
+            LobbyGUIHandler.instance.AddPlayer(playerInfo);
+        }
         readyToBegin = false;
+        if (isLocalPlayer)
+        {
+            SetupLocalPlayer();
+        }
+        else
+        {
+            SetupOtherPlayer();
+        }
     }
 
     public override void OnStartAuthority()
@@ -31,30 +41,38 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     public override void OnClientReady(bool readyState)
     {
-        readyButton.GetComponentInChildren<Text>().text = readyState ?
-            (isLocalPlayer ? "取消准备" : "就绪") : (isLocalPlayer ? "准备" : "等待");
+        playerStateButton.GetComponentInChildren<Text>().text = readyState ? "就    绪" : "等    待";
     }
 
     private void SetupOtherPlayer()
     {
         playerNameText.text = "Remote Player";
-        readyButton.GetComponentInChildren<Text>().text = "等待";
-        readyButton.interactable = false;
+        playerStateButton.GetComponentInChildren<Text>().text = readyToBegin ? "就    绪" : "等    待";
+        playerStateButton.interactable = false;
     }
 
     private void SetupLocalPlayer()
     {
         playerNameText.text = "You (Local Player)";
-        readyButton.GetComponentInChildren<Text>().text = "准备";
-        readyButton.interactable = true;
-        readyButton.onClick.RemoveAllListeners();
-        readyButton.onClick.AddListener(ReadyButton_Click);
+        playerStateButton.GetComponentInChildren<Text>().text = readyToBegin ? "就    绪" : "等    待";
+        playerStateButton.interactable = false;
+        WelcomeGUIHandler.instance.readyButton.GetComponentInChildren<Text>().text = "准    备";
+        WelcomeGUIHandler.instance.readyButton.onClick.RemoveAllListeners();
+        WelcomeGUIHandler.instance.readyButton.onClick.AddListener(ChangeReadyState);
     }
 
-    public void ReadyButton_Click()
+    void OnDestroy()
     {
-        Text readyText = readyButton.GetComponentInChildren<Text>();
-        if (readyText.text.Equals("准备"))
+        if (playerInfo != null)
+        {
+            Destroy(playerInfo.gameObject);
+        }
+    }
+
+    public void ChangeReadyState()
+    {
+        Text readyText = WelcomeGUIHandler.instance.readyButton.GetComponentInChildren<Text>();
+        if (readyText.text.Equals("准    备"))
         {
             SendReadyToBeginMessage();
             readyText.text = "取消准备";
@@ -62,7 +80,24 @@ public class LobbyPlayer : NetworkLobbyPlayer
         else
         {
             SendNotReadyToBeginMessage();
-            readyText.text = "准备";
+            readyText.text = "准    备";
         }
+    }
+
+    [ClientRpc]
+    public void RpcReturnLobby()
+    {
+        LobbyGUIHandler.instance.ShowLobbyGUI();
+        if (NetHub.instance != null)
+        {
+            Destroy(NetHub.instance.gameObject);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcGameStart()
+    {
+        WelcomeGUIHandler.instance.HideWelcomeGUI();
+        LobbyGUIHandler.instance.HideLobbyGUI();
     }
 }

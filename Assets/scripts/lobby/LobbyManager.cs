@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkLobbyManager
 {
+    public const ushort SINGLE_GAME_OVER = 0x00;
+    public const ushort DOUBLE_GAME_OVER = 0x01;
+    public const ushort LOSE_CONNECT_TO_CLIENT = 0x10;
+    public const ushort LOSE_CONNECT_TO_SERVER = 0x11;
+
     public static LobbyManager instance
     {
         get
@@ -76,43 +82,83 @@ public class LobbyManager : NetworkLobbyManager
         {
             Application.Quit();
         }
+        if (Input.GetMouseButton(1))
+        {
+            if (mode == GameMode.ClassicSingle)
+            {
+                ChangeToLobbyScene(SINGLE_GAME_OVER);
+            }
+            else if (mode == GameMode.ClassicDouble)
+            {
+                ChangeToLobbyScene(DOUBLE_GAME_OVER);
+            }
+        }
     }
 
     public override void OnLobbyServerPlayersReady()
     {
-        switch (Mode)
+        if (mode == GameMode.ClassicSingle)
         {
-            case GameMode.ClassicSingle:
-                controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId, ShipControlMode.BothPaddles);
-                break;
-            case GameMode.ClassicDouble:
-                float random = Random.value;
-                controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
-                    random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
-                controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
-                    random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
-                break;
+            CheckClientsReady();
         }
-        Instantiate(GameNetHub);
-        NetworkServer.Spawn(NetHub.instance.gameObject);
-        base.OnLobbyServerPlayersReady();
+        else
+        {
+            return;
+        }
     }
 
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
     {
-        ServerChangeScene(lobbyScene);
-        if (NetHub.instance != null)
+        if (SceneManager.GetActiveScene().name.Equals(playScene))
         {
-            Destroy(NetHub.instance.gameObject);
+            ChangeToLobbyScene(LOSE_CONNECT_TO_CLIENT);
         }
     }
 
     public override void OnLobbyClientDisconnect(NetworkConnection conn)
     {
-        StopClient();
-        if (NetHub.instance != null)
+        ChangeToLobbyScene(LOSE_CONNECT_TO_SERVER);
+    }
+
+    public void CheckClientsReady()
+    {
+        bool allClientsReady = true;
+        int playerCount = 0;
+        foreach (LobbyPlayer player in lobbySlots)
         {
-            Destroy(NetHub.instance.gameObject);
+            if (player != null)
+            {
+                allClientsReady &= player.readyToBegin || player.isLocalPlayer;
+                playerCount++;
+            }
+        }
+        if (playerCount < minPlayers)
+        {
+            Debug.LogWarning("Not enough players.");
+        }
+        else if (allClientsReady)
+        {
+            controlModeAllocation.Clear();
+            switch (Mode)
+            {
+                case GameMode.ClassicSingle:
+                    controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId, ShipControlMode.BothPaddles);
+                    break;
+                case GameMode.ClassicDouble:
+                    float random = Random.value;
+                    controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
+                        random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
+                    controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
+                        random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
+                    break;
+            }
+            Instantiate(GameNetHub);
+            NetworkServer.Spawn(NetHub.instance.gameObject);
+            ChangeToPlayScene();
+        }
+        else
+        {
+            Debug.LogWarning("Players not ready.");
         }
     }
 
@@ -120,5 +166,35 @@ public class LobbyManager : NetworkLobbyManager
     {
         ShipControlMode mode;
         return controlModeAllocation.TryGetValue(conn.connectionId, out mode) ? mode : ShipControlMode.BothPaddles;
+    }
+
+    public void ChangeToPlayScene()
+    {
+        (lobbySlots[0] as LobbyPlayer).RpcGameStart();
+        ServerChangeScene(playScene);
+    }
+
+    public void ChangeToLobbyScene(ushort reason)
+    {
+        switch (reason)
+        {
+            case SINGLE_GAME_OVER:
+            case LOSE_CONNECT_TO_SERVER:
+                LobbyGUIHandler.instance.QuitRoom();
+                SceneManager.LoadScene(lobbyScene);
+                break;
+            case DOUBLE_GAME_OVER:
+            case LOSE_CONNECT_TO_CLIENT:
+                (lobbySlots[0] as LobbyPlayer).RpcReturnLobby();
+                ServerChangeScene(lobbyScene);
+                break;
+        }
+        foreach (LobbyPlayer player in lobbySlots)
+        {
+            if (player != null)
+            {
+                player.readyToBegin = false;
+            }
+        }
     }
 }

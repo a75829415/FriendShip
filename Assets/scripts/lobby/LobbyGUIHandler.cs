@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class LobbyGUIHandler : MonoBehaviour
 {
     public delegate void VoidDelegate();
 
     public static LobbyGUIHandler instance;
-    public static VoidDelegate createRoomDelegate;
     public static VoidDelegate quitRoomDelegate;
-
+    
     public RectTransform menuPanel;
     public RectTransform gameLobbyPanel;
     public RectTransform leftContainer;
@@ -24,17 +19,23 @@ public class LobbyGUIHandler : MonoBehaviour
     void Awake()
     {
         instance = this;
-        if (createRoomDelegate != null)
-        {
-            createRoomDelegate();
-            createRoomDelegate = null;
-        }
+    }
+
+    public void ShowLobbyGUI()
+    {
+        menuPanel.gameObject.SetActive(true);
+        gameLobbyPanel.gameObject.SetActive(true);
+    }
+
+    public void HideLobbyGUI()
+    {
+        menuPanel.gameObject.SetActive(false);
+        gameLobbyPanel.gameObject.SetActive(false);
     }
 
     public void QuitRoom()
     {
         quitRoomDelegate();
-        SceneManager.LoadScene("welcome");
     }
 
     public void AddPlayer(RectTransform playerInfo)
