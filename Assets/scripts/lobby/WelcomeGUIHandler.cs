@@ -12,6 +12,7 @@ public class WelcomeGUIHandler : MonoBehaviour
     public RectTransform[] lobbys;
     public Button readyButton;
     public Button startButton;
+    public Button startCompetitveButton; // for competitve test
 
     private Dictionary<string, RectTransform> servers;
 
@@ -55,7 +56,6 @@ public class WelcomeGUIHandler : MonoBehaviour
 
     public void CreateRoom()
     {
-        LobbyManager.instance.Mode = GameMode.ClassicDouble;
         LobbyGUIHandler.quitRoomDelegate = () =>
         {
             LobbyManager.instance.StopHost();
@@ -69,11 +69,21 @@ public class WelcomeGUIHandler : MonoBehaviour
         LobbyDiscovery.instance.StartBroadcasting();
         readyButton.gameObject.SetActive(false);
         startButton.gameObject.SetActive(true);
+        startCompetitveButton.gameObject.SetActive(true); // for competitve test
         startButton.onClick.RemoveAllListeners();
-        startButton.onClick.AddListener(LobbyManager.instance.CheckClientsReady);
+        startButton.onClick.AddListener(()=>
+        {
+            LobbyManager.instance.Mode = GameMode.ClassicDouble;
+            LobbyManager.instance.CheckClientsReady();
+        });
+        startCompetitveButton.onClick.RemoveAllListeners(); // for competitve test
+        startCompetitveButton.onClick.AddListener(() =>
+        {
+            LobbyManager.instance.Mode = GameMode.CompetitiveDouble;
+            LobbyManager.instance.CheckClientsReady();
+        }); // for competitve test
         HideWelcomeGUI();
         LobbyGUIHandler.instance.ShowLobbyGUI();
-        lobbysPanel.gameObject.SetActive(false);
     }
 
     public void AddLobby(string address)
@@ -101,9 +111,9 @@ public class WelcomeGUIHandler : MonoBehaviour
             LobbyManager.instance.StartClient().Connect(address, LobbyManager.instance.networkPort);
             readyButton.gameObject.SetActive(true);
             startButton.gameObject.SetActive(false);
+            startCompetitveButton.gameObject.SetActive(false); // for competitve test
             HideWelcomeGUI();
             LobbyGUIHandler.instance.ShowLobbyGUI();
-            lobbysPanel.gameObject.SetActive(false);
         });
         for (int i = 0; i < lobbys.Length; i++)
         {

@@ -30,6 +30,7 @@ public class LobbyManager : NetworkLobbyManager
     }
 
     public ClassicNetHub classicNetHub;
+    public CompetetiveNetHub competitiveNetHub;
 
     private Dictionary<int, ShipControlMode> controlModeAllocation;
 
@@ -60,9 +61,10 @@ public class LobbyManager : NetworkLobbyManager
             switch (Mode)
             {
                 case GameMode.ClassicSingle:
-                    return classicNetHub;
                 case GameMode.ClassicDouble:
                     return classicNetHub;
+                case GameMode.CompetitiveDouble:
+                    return competitiveNetHub;
                 default:
                     return null;
             }
@@ -100,10 +102,6 @@ public class LobbyManager : NetworkLobbyManager
         if (mode == GameMode.ClassicSingle)
         {
             CheckClientsReady();
-        }
-        else
-        {
-            return;
         }
     }
 
