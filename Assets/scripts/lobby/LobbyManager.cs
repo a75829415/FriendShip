@@ -78,13 +78,13 @@ public class LobbyManager : NetworkLobbyManager
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
-        }
-        if (Input.GetMouseButton(1))
-        {
-            if (mode == GameMode.ClassicSingle)
+            if (SceneManager.GetActiveScene().name.Equals(lobbyScene))
+            {
+                Application.Quit();
+            }
+            else if (mode == GameMode.ClassicSingle)
             {
                 ChangeToLobbyScene(SINGLE_GAME_OVER);
             }
@@ -181,7 +181,6 @@ public class LobbyManager : NetworkLobbyManager
             case SINGLE_GAME_OVER:
             case LOSE_CONNECT_TO_SERVER:
                 LobbyGUIHandler.instance.QuitRoom();
-                SceneManager.LoadScene(lobbyScene);
                 break;
             case DOUBLE_GAME_OVER:
             case LOSE_CONNECT_TO_CLIENT:
@@ -189,12 +188,20 @@ public class LobbyManager : NetworkLobbyManager
                 ServerChangeScene(lobbyScene);
                 break;
         }
-        foreach (LobbyPlayer player in lobbySlots)
+    }
+
+    public void GameStart()
+    {
+        WelcomeGUIHandler.instance.HideWelcomeGUI();
+        LobbyGUIHandler.instance.HideLobbyGUI();
+    }
+
+    public void ReturnLobby()
+    {
+        LobbyGUIHandler.instance.ShowLobbyGUI();
+        if (NetHub.instance != null)
         {
-            if (player != null)
-            {
-                player.readyToBegin = false;
-            }
+            Destroy(NetHub.instance.gameObject);
         }
     }
 }

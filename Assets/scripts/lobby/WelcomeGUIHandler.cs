@@ -5,10 +5,8 @@ using UnityEngine.UI;
 public class WelcomeGUIHandler : MonoBehaviour
 {
     public static WelcomeGUIHandler instance;
-
-    public RectTransform menuPanel;
-    public RectTransform viewPanel;
-    public RectTransform detailPanel;
+    
+    public Canvas WelcomeGUI;
     public RectTransform lobbysPanel;
     public RectTransform lobbyInfoPrefab;
     public RectTransform[] lobbys;
@@ -25,16 +23,12 @@ public class WelcomeGUIHandler : MonoBehaviour
 
     public void ShowWelcomeGUI()
     {
-        menuPanel.gameObject.SetActive(true);
-        viewPanel.gameObject.SetActive(true);
-        detailPanel.gameObject.SetActive(true);
+        WelcomeGUI.gameObject.SetActive(true);
     }
 
     public void HideWelcomeGUI()
     {
-        menuPanel.gameObject.SetActive(false);
-        viewPanel.gameObject.SetActive(false);
-        detailPanel.gameObject.SetActive(false);
+        WelcomeGUI.gameObject.SetActive(false);
     }
 
     public void SingleGame()
@@ -52,12 +46,10 @@ public class WelcomeGUIHandler : MonoBehaviour
     public void ShowLobbys()
     {
         lobbysPanel.gameObject.SetActive(true);
-        HideWelcomeGUI();
     }
 
     public void HideLobbys()
     {
-        ShowWelcomeGUI();
         lobbysPanel.gameObject.SetActive(false);
     }
 
@@ -70,6 +62,7 @@ public class WelcomeGUIHandler : MonoBehaviour
             LobbyDiscovery.instance.StopBroadcastingOrListening();
             LobbyDiscovery.instance.StartListening();
             LobbyGUIHandler.instance.HideLobbyGUI();
+            ShowWelcomeGUI();
             ShowLobbys();
         };
         LobbyManager.instance.StartHost();
@@ -78,6 +71,7 @@ public class WelcomeGUIHandler : MonoBehaviour
         startButton.gameObject.SetActive(true);
         startButton.onClick.RemoveAllListeners();
         startButton.onClick.AddListener(LobbyManager.instance.CheckClientsReady);
+        HideWelcomeGUI();
         LobbyGUIHandler.instance.ShowLobbyGUI();
         lobbysPanel.gameObject.SetActive(false);
     }
@@ -101,11 +95,13 @@ public class WelcomeGUIHandler : MonoBehaviour
             {
                 LobbyManager.instance.StopClient();
                 LobbyGUIHandler.instance.HideLobbyGUI();
+                ShowWelcomeGUI();
                 ShowLobbys();
             };
             LobbyManager.instance.StartClient().Connect(address, LobbyManager.instance.networkPort);
             readyButton.gameObject.SetActive(true);
             startButton.gameObject.SetActive(false);
+            HideWelcomeGUI();
             LobbyGUIHandler.instance.ShowLobbyGUI();
             lobbysPanel.gameObject.SetActive(false);
         });

@@ -62,10 +62,6 @@ public class ShipController : NetworkBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
     }
 
     [ClientRpc]

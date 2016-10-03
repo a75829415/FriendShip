@@ -85,19 +85,14 @@ public class LobbyPlayer : NetworkLobbyPlayer
     }
 
     [ClientRpc]
-    public void RpcReturnLobby()
+    public void RpcGameStart()
     {
-        LobbyGUIHandler.instance.ShowLobbyGUI();
-        if (NetHub.instance != null)
-        {
-            Destroy(NetHub.instance.gameObject);
-        }
+        LobbyManager.instance.GameStart();
     }
 
     [ClientRpc]
-    public void RpcGameStart()
+    public void RpcReturnLobby()
     {
-        WelcomeGUIHandler.instance.HideWelcomeGUI();
-        LobbyGUIHandler.instance.HideLobbyGUI();
+        LobbyManager.instance.ReturnLobby();
     }
 }

@@ -7,8 +7,7 @@ public class LobbyGUIHandler : MonoBehaviour
     public static LobbyGUIHandler instance;
     public static VoidDelegate quitRoomDelegate;
     
-    public RectTransform menuPanel;
-    public RectTransform gameLobbyPanel;
+    public Canvas LobbyGUI;
     public RectTransform leftContainer;
     public RectTransform rightContainer;
     public RectTransform lobbyInfoPrefab;
@@ -23,14 +22,12 @@ public class LobbyGUIHandler : MonoBehaviour
 
     public void ShowLobbyGUI()
     {
-        menuPanel.gameObject.SetActive(true);
-        gameLobbyPanel.gameObject.SetActive(true);
+        LobbyGUI.gameObject.SetActive(true);
     }
 
     public void HideLobbyGUI()
     {
-        menuPanel.gameObject.SetActive(false);
-        gameLobbyPanel.gameObject.SetActive(false);
+        LobbyGUI.gameObject.SetActive(false);
     }
 
     public void QuitRoom()
