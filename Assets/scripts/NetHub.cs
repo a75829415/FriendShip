@@ -127,4 +127,12 @@ public class NetHub : NetworkBehaviour {
 	}
 	*/
 
+	void OnDestroy()
+	{
+		if (Manager.instance != null)
+		{
+			Destroy(Manager.instance.gameObject);
+		}
+	}
+
 }

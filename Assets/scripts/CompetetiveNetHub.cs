@@ -38,9 +38,4 @@ public class CompetetiveNetHub : NetHub {
 		((CompetetiveManager)(Manager.instance)).GameOver(time, leftHealth, rightHealth);
 	}
 
-	void OnDestroy()
-	{
-		Destroy(Manager.instance.gameObject);
-	}
-
 }
