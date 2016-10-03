@@ -7,16 +7,11 @@ public class ClassicManager : Manager
 {
 	public delegate void GameOverHandler(ClassicManager manager, float time);
 
-	public Canvas uiCanvas;
-
 	public Collider classicShipColliderProtocal;
 
 	public RectTransform hud;
 	public Text hudTime;
 	public Text hudHealth;
-
-	public RectTransform gameOverPanel;
-	public Text resultText;
 
 	public GameOverHandler gameOverHandler = DefaultGameOverHandler;
 
@@ -24,12 +19,15 @@ public class ClassicManager : Manager
 
 	public uint currentHealth;
 
+	public override bool IsGaming()
+	{
+		return currentHealth > 0 && ship != null;
+    }
+
 	void Awake()
 	{
 		base.AwakeWorkaround();
-		gameOverPanel.gameObject.SetActive(false);
 		hud.gameObject.SetActive(false);
-		status.gameObject.SetActive(false);
 	}
 
 	// Use this for initialization
@@ -43,7 +41,7 @@ public class ClassicManager : Manager
 	void Update()
 	{
 		base.UpdateWorkaround();
-		if (!hud.gameObject.activeSelf && currentHealth > 0 && ship != null)
+		if (!hud.gameObject.activeSelf && IsGaming())
 		{
 			uiCanvas.worldCamera = playerCamera;
 			hud.gameObject.SetActive(true);

@@ -3,12 +3,12 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class ClassicNetHub : NetHub {
-	public ClassicManager classicManager;
+	public ClassicManager classicManagerPrototype;
 
 	void Awake()
 	{
 		base.AwakeWorkaround();
-		DontDestroyOnLoad(Instantiate(classicManager));
+		DontDestroyOnLoad(Instantiate(classicManagerPrototype));
 	}
 
 	// Use this for initialization

@@ -112,4 +112,19 @@ public class NetHub : NetworkBehaviour {
 		Manager.instance.MoveTowardNorth();
 	}
 
+	/*
+	// Dou dou requested these
+	[ClientRpc]
+	public void RpcGameStart()
+	{
+		LobbyManager.instance.GameStart();
+	}
+
+	[ClientRpc]
+	public void RpcReturnLobby()
+	{
+		LobbyManager.instance.ReturnLobby();
+	}
+	*/
+
 }

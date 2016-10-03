@@ -27,12 +27,19 @@ public abstract class Manager : MonoBehaviour
 		return string.Format("{0:F3}", time);
 	}
 
+	public Canvas uiCanvas;
+
 	public RectTransform status;
 	public Text statusName;
 	public RectTransform statusTime;
 
+	public RectTransform gameOverPanel;
+	public Text resultText;
+
 	public delegate void CrashHandler(Collider shipCollider, Collider obstacleCollider);
 	public CrashHandler crashHandler = DefaultCrashHandler;
+
+	public abstract bool IsGaming();
 
 	public bool IsOperating()
 	{
@@ -58,9 +65,12 @@ public abstract class Manager : MonoBehaviour
 
 	public void AwakeWorkaround()
 	{
+		Time.timeScale = 1.0f;
 		instance = this;
 		ResetWaitTime();
 		pieceScale = 512;
+		gameOverPanel.gameObject.SetActive(false);
+		status.gameObject.SetActive(false);
 	}
 
 	// Use this for initialization
@@ -85,7 +95,23 @@ public abstract class Manager : MonoBehaviour
 		{
 			if (Time.timeScale != 0)
 			{
-				if (ship.IsInvincible())
+				if (!IsOperating())
+				{
+					if (WaitTime <= 3.0f)
+					{
+						if (!status.gameObject.activeSelf)
+						{
+							status.gameObject.SetActive(true);
+						}
+						statusName.text = "准备出发";
+						statusTime.localScale = new Vector3(WaitTime / 3.0f, 1, 1);
+					}
+					else if (status.gameObject.activeSelf)
+					{
+						status.gameObject.SetActive(false);
+					}
+				}
+				else if (ship.IsInvincible())
 				{
 					if (!status.gameObject.activeSelf)
 					{
