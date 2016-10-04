@@ -257,7 +257,7 @@ MonoBehaviour:
   accelerationBase: 50
   sideAccelerationBase: 0.002
   accelerationGrowth: 0.1
-  invincibleTimeBase: 5
+  invincibleTimeBase: 3
 --- !u!124 &12418738
 Behaviour:
   m_ObjectHideFlags: 1
