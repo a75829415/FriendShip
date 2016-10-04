@@ -12,7 +12,6 @@ public class WelcomeGUIHandler : MonoBehaviour
     public RectTransform[] lobbys;
     public Button readyButton;
     public Button startButton;
-    public Button startCompetitveButton; // for competitve test
 
     private Dictionary<string, RectTransform> servers;
 
@@ -32,18 +31,6 @@ public class WelcomeGUIHandler : MonoBehaviour
         WelcomeGUI.gameObject.SetActive(false);
     }
 
-    public void SingleGame()
-    {
-        LobbyManager.instance.Mode = GameMode.ClassicSingle;
-        LobbyGUIHandler.quitRoomDelegate = () =>
-        {
-            LobbyManager.instance.StopHost();
-            LobbyGUIHandler.instance.HideLobbyGUI();
-            ShowWelcomeGUI();
-        };
-        LobbyManager.instance.StartHost();
-    }
-
     public void ShowLobbys()
     {
         lobbysPanel.gameObject.SetActive(true);
@@ -56,34 +43,7 @@ public class WelcomeGUIHandler : MonoBehaviour
 
     public void CreateRoom()
     {
-        LobbyGUIHandler.quitRoomDelegate = () =>
-        {
-            LobbyManager.instance.StopHost();
-            LobbyDiscovery.instance.StopBroadcastingOrListening();
-            LobbyDiscovery.instance.StartListening();
-            LobbyGUIHandler.instance.HideLobbyGUI();
-            ShowWelcomeGUI();
-            ShowLobbys();
-        };
-        LobbyManager.instance.StartHost();
-        LobbyDiscovery.instance.StartBroadcasting();
-        readyButton.gameObject.SetActive(false);
-        startButton.gameObject.SetActive(true);
-        startCompetitveButton.gameObject.SetActive(true); // for competitve test
-        startButton.onClick.RemoveAllListeners();
-        startButton.onClick.AddListener(()=>
-        {
-            LobbyManager.instance.Mode = GameMode.ClassicDouble;
-            LobbyManager.instance.CheckClientsReady();
-        });
-        startCompetitveButton.onClick.RemoveAllListeners(); // for competitve test
-        startCompetitveButton.onClick.AddListener(() =>
-        {
-            LobbyManager.instance.Mode = GameMode.CompetitiveDouble;
-            LobbyManager.instance.CheckClientsReady();
-        }); // for competitve test
-        HideWelcomeGUI();
-        LobbyGUIHandler.instance.ShowLobbyGUI();
+        GameSettingHandler.instance.ShowSettings();
     }
 
     public void AddLobby(string address)
@@ -111,7 +71,6 @@ public class WelcomeGUIHandler : MonoBehaviour
             LobbyManager.instance.StartClient().Connect(address, LobbyManager.instance.networkPort);
             readyButton.gameObject.SetActive(true);
             startButton.gameObject.SetActive(false);
-            startCompetitveButton.gameObject.SetActive(false); // for competitve test
             HideWelcomeGUI();
             LobbyGUIHandler.instance.ShowLobbyGUI();
         });
@@ -124,5 +83,38 @@ public class WelcomeGUIHandler : MonoBehaviour
             }
         }
         servers.Add(address, lobby);
+    }
+
+    public void StartSingleGame()
+    {
+        LobbyGUIHandler.quitRoomDelegate = () =>
+        {
+            LobbyManager.instance.StopHost();
+            LobbyGUIHandler.instance.HideLobbyGUI();
+            ShowWelcomeGUI();
+        };
+        LobbyManager.instance.StartHost();
+        LobbyManager.instance.CheckClientsReady();
+    }
+
+    public void StartDoubleGame()
+    {
+        LobbyGUIHandler.quitRoomDelegate = () =>
+        {
+            LobbyManager.instance.StopHost();
+            LobbyDiscovery.instance.StopBroadcastingOrListening();
+            LobbyDiscovery.instance.StartListening();
+            LobbyGUIHandler.instance.HideLobbyGUI();
+            ShowWelcomeGUI();
+            ShowLobbys();
+        };
+        LobbyManager.instance.StartHost();
+        LobbyDiscovery.instance.StartBroadcasting();
+        readyButton.gameObject.SetActive(false);
+        startButton.gameObject.SetActive(true);
+        startButton.onClick.RemoveAllListeners();
+        startButton.onClick.AddListener(LobbyManager.instance.CheckClientsReady);
+        HideWelcomeGUI();
+        LobbyGUIHandler.instance.ShowLobbyGUI();
     }
 }

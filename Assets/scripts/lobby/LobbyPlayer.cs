@@ -33,7 +33,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
     public override void OnStartAuthority()
     {
         SetupLocalPlayer();
-        if (LobbyManager.instance.Mode == GameMode.ClassicSingle)
+        if (LobbyManager.instance.minPlayers == 1)
         {
             SendReadyToBeginMessage();
         }

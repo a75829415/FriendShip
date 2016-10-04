@@ -33,40 +33,43 @@ public class LobbyManager : NetworkLobbyManager
     public CompetetiveNetHub competitiveNetHub;
 
     private Dictionary<int, ShipControlMode> controlModeAllocation;
+    private NetHub gameNetHub;
 
     private GameMode mode;
     public GameMode Mode
     {
         get
         {
+            if (mode == GameMode.Unset)
+            {
+                Debug.LogError("Game mode not set.");
+            }
             return mode;
         }
         set
         {
-            if ((mode = value) == GameMode.ClassicSingle)
-            {
-                minPlayers = 1;
-            }
-            else
-            {
-                minPlayers = 2;
-            }
-        }
-    }
-
-    public NetHub GameNetHub
-    {
-        get
-        {
-            switch (Mode)
+            switch (mode = value)
             {
                 case GameMode.ClassicSingle:
+                    minPlayers = 1;
+                    gameNetHub = classicNetHub;
+                    break;
                 case GameMode.ClassicDouble:
-                    return classicNetHub;
+                    minPlayers = 2;
+                    gameNetHub = classicNetHub;
+                    break;
+                case GameMode.CompetitiveSingle:
+                    minPlayers = 1;
+                    gameNetHub = competitiveNetHub;
+                    break;
                 case GameMode.CompetitiveDouble:
-                    return competitiveNetHub;
+                    minPlayers = 2;
+                    gameNetHub = competitiveNetHub;
+                    break;
                 default:
-                    return null;
+                    minPlayers = 2;
+                    gameNetHub = null;
+                    break;
             }
         }
     }
@@ -86,11 +89,11 @@ public class LobbyManager : NetworkLobbyManager
             {
                 Application.Quit();
             }
-            else if (mode == GameMode.ClassicSingle)
+            else if (minPlayers == 1)
             {
                 ChangeToLobbyScene(SINGLE_GAME_OVER);
             }
-            else if (mode == GameMode.ClassicDouble)
+            else if (minPlayers == 2)
             {
                 ChangeToLobbyScene(DOUBLE_GAME_OVER);
             }
@@ -99,7 +102,7 @@ public class LobbyManager : NetworkLobbyManager
 
     public override void OnLobbyServerPlayersReady()
     {
-        if (mode == GameMode.ClassicSingle)
+        if (minPlayers == 1)
         {
             CheckClientsReady();
         }
@@ -150,7 +153,7 @@ public class LobbyManager : NetworkLobbyManager
                         random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
                     break;
             }
-            Instantiate(GameNetHub);
+            Instantiate(gameNetHub);
             NetworkServer.Spawn(NetHub.instance.gameObject);
             ChangeToPlayScene();
         }
