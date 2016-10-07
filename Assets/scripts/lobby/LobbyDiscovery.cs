@@ -33,6 +33,11 @@ public class LobbyDiscovery : NetworkDiscovery
         serverAddresses = new Dictionary<string, float>();
     }
 
+    void Start()
+    {
+        StartListening();
+    }
+
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
         float receiveTime;

@@ -53,7 +53,6 @@ public class ChooseLobbyUIHandler : MonoBehaviour
     // ---- UI event handlers ----
     public void OnReturnButtonClick()
     {
-        LobbyDiscovery.instance.StopBroadcastingOrListening();
         WelcomeUIHandler.instance.ShowGUI(true);
         ShowGUI(false);
     }

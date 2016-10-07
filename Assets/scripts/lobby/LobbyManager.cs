@@ -210,6 +210,7 @@ public class LobbyManager : NetworkLobbyManager
             stopGameDelegate = () =>
             {
                 LobbyDiscovery.instance.StopBroadcastingOrListening();
+                LobbyDiscovery.instance.StartListening();
                 StopHost();
             };
             StartHost();

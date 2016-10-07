@@ -71,7 +71,6 @@ public class WelcomeUIHandler : MonoBehaviour
 
     public void OnJoinRoomButtonClick()
     {
-        LobbyDiscovery.instance.StartListening();
         ChooseLobbyUIHandler.instance.ShowGUI(true);
         ShowGUI(false);
     }

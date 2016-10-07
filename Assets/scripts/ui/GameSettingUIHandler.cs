@@ -25,6 +25,11 @@ public class GameSettingUIHandler : MonoBehaviour
         if (showGUI)
         {
             classicToggle.isOn = true;
+            competitveToggle.isOn = false;
+            healthSlider.value = 3;
+            healthValueText.text = "3";
+            playerNumberSlider.value = 0;
+            playerNumberValueText.text = "1";
         }
         gameSettingPanel.gameObject.SetActive(showGUI);
     }
