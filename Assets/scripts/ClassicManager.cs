@@ -73,7 +73,10 @@ public class ClassicManager : Manager
 	public override void UpdateClient()
 	{
 		base.UpdateClient();
-		((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(currentHealth, health);
+		if (NetHub.instance.isServer)
+		{
+			((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(currentHealth, health);
+		}
 	}
 
 	public void GameOver(float time)

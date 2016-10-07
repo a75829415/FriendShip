@@ -93,7 +93,10 @@ public class CompetitiveManager : Manager {
 	public override void UpdateClient()
 	{
 		base.UpdateClient();
-		((CompetitiveNetHub)(NetHub.instance)).RpcUpdateStatus(currentLeftHealth, leftHealth, currentRightHealth, rightHealth);
+		if (NetHub.instance.isServer)
+		{
+			((CompetitiveNetHub)(NetHub.instance)).RpcUpdateStatus(currentLeftHealth, leftHealth, currentRightHealth, rightHealth);
+		}
     }
 
 	public void GameOver(float time, uint lHealth, uint rHealth)
