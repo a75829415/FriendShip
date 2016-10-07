@@ -26,10 +26,10 @@ public class GameSettingUIHandler : MonoBehaviour
         {
             classicToggle.isOn = true;
             competitveToggle.isOn = false;
-            healthSlider.value = 3;
-            healthValueText.text = "3";
-            playerNumberSlider.value = 0;
-            playerNumberValueText.text = "1";
+            healthSlider.value = Configuration.health;
+            healthValueText.text = Configuration.health.ToString();
+            playerNumberSlider.value = Configuration.numberOfPlayers;
+            playerNumberValueText.text = playerNumberSet[Configuration.numberOfPlayers].ToString();
         }
         gameSettingPanel.gameObject.SetActive(showGUI);
     }
@@ -43,15 +43,15 @@ public class GameSettingUIHandler : MonoBehaviour
 
     public void OnCreateRoomButtonClick()
     {
-        // set health: (int)healthSlider.value
-        // ...
+        Configuration.health = (uint)healthSlider.value;
+        Configuration.numberOfPlayers = (uint)playerNumberSlider.value;
         if (classicToggle.isOn)
         {
-            LobbyManager.instance.Mode = GameMode.Classic;
+            LobbyManager.instance.Mode = Configuration.mode = GameMode.Classic;
         }
         else if (competitveToggle.isOn)
         {
-            LobbyManager.instance.Mode = GameMode.Competitive;
+            LobbyManager.instance.Mode = Configuration.mode = GameMode.Competitive;
         }
         LobbyManager.instance.minPlayers = playerNumberSet[(int)playerNumberSlider.value];
         LobbyUIHandler.instance.quitRoomDelegate = () =>
