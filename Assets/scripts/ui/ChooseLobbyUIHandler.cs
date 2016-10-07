@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class ChooseLobbyUIHandler : MonoBehaviour
 {
@@ -8,6 +11,7 @@ public class ChooseLobbyUIHandler : MonoBehaviour
     public RectTransform chooseLobbyPanel;
     public RectTransform lobbysLayout;
     public RectTransform lobbyInfoPrefab;
+    public InputField searchServerInputField;
 
     private Dictionary<string, RectTransform> servers;
     private float timer = 3.0f;
@@ -55,5 +59,33 @@ public class ChooseLobbyUIHandler : MonoBehaviour
     {
         WelcomeUIHandler.instance.ShowGUI(true);
         ShowGUI(false);
+    }
+
+    public void OnSearchServerButtonClick()
+    {
+        if (!Regex.IsMatch(searchServerInputField.text,
+            @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$"))
+        {
+            PopupUIHandler.instance.Popup("咦，这个IP地址的格式怎么看上去好像不太对...");
+            return;
+        }
+        PopupUIHandler.instance.Popup("全速连接中...", false);
+        LobbyUIHandler.instance.quitRoomDelegate = () =>
+        {
+            ShowGUI(true);
+            LobbyUIHandler.instance.ShowGUI(false);
+            LobbyManager.instance.StopGame();
+        };
+        LobbyManager.instance.loseConnectionDelegate = () =>
+        {
+            PopupUIHandler.instance.Popup("IP地址真的写对了吗,,ԾㅂԾ,,\n连不上诶...");
+            ShowGUI(true);
+            LobbyUIHandler.instance.ShowGUI(false);
+        };
+        LobbyManager.instance.JoinGame(searchServerInputField.text);
+        LobbyUIHandler.instance.Initialize(false, searchServerInputField.text);
+        LobbyUIHandler.instance.ShowGUI(true);
+        ShowGUI(false);
+        searchServerInputField.text = string.Empty;
     }
 }
