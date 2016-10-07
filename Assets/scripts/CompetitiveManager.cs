@@ -3,8 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
-public class CompetetiveManager : Manager {
-	public delegate void GameOverHandler(CompetetiveManager manager, float time, uint leftHealth, uint rightHealth);
+public class CompetitiveManager : Manager {
+	public delegate void GameOverHandler(CompetitiveManager manager, float time, uint leftHealth, uint rightHealth);
 
 	public GameOverHandler gameOverHandler = DefaultGameOverHandler;
 
@@ -80,14 +80,14 @@ public class CompetetiveManager : Manager {
 		}
 		if (currentLeftHealth == 0 || currentRightHealth == 0)
 		{
-			((CompetetiveNetHub)(NetHub.instance)).RpcNotifyGameOver(GameTime, currentLeftHealth, currentRightHealth);
+			((CompetitiveNetHub)(NetHub.instance)).RpcNotifyGameOver(GameTime, currentLeftHealth, currentRightHealth);
 		}
 	}
 
 	public override void UpdateClient()
 	{
 		base.UpdateClient();
-		((CompetetiveNetHub)(NetHub.instance)).RpcUpdateStatus(currentLeftHealth, currentRightHealth);
+		((CompetitiveNetHub)(NetHub.instance)).RpcUpdateStatus(currentLeftHealth, currentRightHealth);
     }
 
 	public void GameOver(float time, uint lHealth, uint rHealth)
@@ -96,7 +96,7 @@ public class CompetetiveManager : Manager {
 		hud.gameObject.SetActive(false);
 	}
 
-	public static void DefaultGameOverHandler(CompetetiveManager manager, float time, uint lHealth, uint rHealth)
+	public static void DefaultGameOverHandler(CompetitiveManager manager, float time, uint lHealth, uint rHealth)
 	{
 		manager.gameOverPanel.gameObject.SetActive(true);
 		string result = "获胜方: ";

@@ -32,7 +32,7 @@ public class LobbyManager : NetworkLobbyManager
     public delegate void VoidDelegate();
     public VoidDelegate stopGameDelegate;
     public ClassicNetHub classicNetHub;
-    public CompetetiveNetHub competitiveNetHub;
+    public CompetitiveNetHub competitiveNetHub;
 
     private Dictionary<int, ShipControlMode> controlModeAllocation;
     private NetHub gameNetHub;

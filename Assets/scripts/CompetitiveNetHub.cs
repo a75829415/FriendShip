@@ -2,8 +2,8 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class CompetetiveNetHub : NetHub {
-	public CompetetiveManager competetiveManagerPrototype;
+public class CompetitiveNetHub : NetHub {
+	public CompetitiveNetHub competetiveManagerPrototype;
 
 	// Use this for initialization
 	void Awake()
@@ -27,15 +27,15 @@ public class CompetetiveNetHub : NetHub {
 	{
 		if (!isServer)
 		{
-			((CompetetiveManager)(Manager.instance)).currentLeftHealth = serverLeftHealth;
-			((CompetetiveManager)(Manager.instance)).currentRightHealth = serverRightHealth;
+			((CompetitiveManager)(Manager.instance)).currentLeftHealth = serverLeftHealth;
+			((CompetitiveManager)(Manager.instance)).currentRightHealth = serverRightHealth;
 		}
 	}
 
 	[ClientRpc]
 	public void RpcNotifyGameOver(float time, uint leftHealth, uint rightHealth)
 	{
-		((CompetetiveManager)(Manager.instance)).GameOver(time, leftHealth, rightHealth);
+		((CompetitiveManager)(Manager.instance)).GameOver(time, leftHealth, rightHealth);
 	}
 
 }
