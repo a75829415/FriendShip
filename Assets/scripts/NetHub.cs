@@ -18,7 +18,7 @@ public class NetHub : NetworkBehaviour {
 		DontDestroyOnLoad(instance);
 		if (isServer)
 		{
-			seed = (int)(Random.value * int.MaxValue);
+			seed = System.DateTime.Now.Millisecond;
 		}
         Random.InitState(seed);
 	}

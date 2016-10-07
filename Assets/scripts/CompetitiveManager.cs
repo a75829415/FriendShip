@@ -25,10 +25,22 @@ public class CompetitiveManager : Manager {
 	public uint currentLeftHealth;
 	public uint currentRightHealth;
 
+	public enum Winner
+	{
+		left,
+		right,
+		draw
+	}
+
 	public override bool IsGaming()
 	{
 		return currentLeftHealth > 0 && currentRightHealth > 0 && ship != null;
     }
+
+	public bool IsSinglePlayerMode()
+	{
+		return localControlMode == ShipControlMode.BothPaddles;
+	}
 
 	void Awake()
 	{
@@ -95,7 +107,7 @@ public class CompetitiveManager : Manager {
 			{
 				--currentLeftHealth;
 			}
-			else if (System.Object.ReferenceEquals(shipCollider, rightCollider))
+			if (System.Object.ReferenceEquals(shipCollider, rightCollider))
 			{
 				--currentRightHealth;
 			}
@@ -123,21 +135,65 @@ public class CompetitiveManager : Manager {
 		gameOverHandler(this, time, lHealth, rHealth);
     }
 
+	public static Winner DeterminesWinner(uint lHealth, uint rHealth)
+	{
+		if (rHealth < lHealth)
+		{
+			return Winner.left;
+		}
+		else if (lHealth < rHealth)
+		{
+			return Winner.right;
+		}
+		return Winner.draw;
+	}
+
+	public bool IsWinner(Winner winner)
+	{
+		return winner == Winner.left && IsPaddlingLeft();
+	}
+
+	public bool IsLoser(Winner winner)
+	{
+		return winner == Winner.left && IsPaddlingRight();
+	}
+
 	public static void DefaultGameOverHandler(CompetitiveManager manager, float time, uint lHealth, uint rHealth)
 	{
-		manager.gameOverPanel.gameObject.SetActive(true);
-		string result = "获胜方: ";
-		if (lHealth > 0)
+		CompetitiveManager competitiveManager = (CompetitiveManager)(manager);
+        manager.gameOverPanel.gameObject.SetActive(true);
+		string result;
+		Winner winner = DeterminesWinner(lHealth, rHealth);
+		if (competitiveManager.IsWinner(winner))
 		{
-			result += "左边的小伙伴";
+			result = "胜利";
 		}
-		else if (rHealth > 0)
+		else if (competitiveManager.IsLoser(winner))
 		{
-			result += "右边的小伙伴";
+			result = "失败";
 		}
 		else
 		{
-			result = "平局";
+			if (winner == Winner.draw)
+			{
+				result = "平局";
+			}
+			else if (competitiveManager.IsSinglePlayerMode())
+			{
+				result = "获胜方：";
+				if (winner == Winner.left)
+				{
+					result += "左侧的小伙伴";
+				}
+				else if (winner == Winner.right)
+				{
+					result += "右侧的小伙伴";
+                }
+			}
+			else
+			{
+				throw new System.Exception("Conflict result");
+			}
 		}
         manager.resultText.text = result;
 	}
