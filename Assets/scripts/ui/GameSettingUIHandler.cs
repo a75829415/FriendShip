@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class GameSettingUIHandler : MonoBehaviour
 {
-    public readonly int[] playerNumberSet = { 1, 2, 4 };
-
+    public static readonly uint[] playerNumberSet = { 1, 2, 4 };
     public static GameSettingUIHandler instance;
 
     public RectTransform gameSettingPanel;
@@ -28,8 +27,8 @@ public class GameSettingUIHandler : MonoBehaviour
             competitveToggle.isOn = Configuration.mode == GameMode.Competitive;
             healthSlider.value = Configuration.health;
             healthValueText.text = Configuration.health.ToString();
-            playerNumberSlider.value = Configuration.numberOfPlayers;
-            playerNumberValueText.text = playerNumberSet[Configuration.numberOfPlayers].ToString();
+            playerNumberSlider.value = Configuration.indexOfPlayers;
+            playerNumberValueText.text = playerNumberSet[Configuration.indexOfPlayers].ToString();
         }
         gameSettingPanel.gameObject.SetActive(showGUI);
     }
@@ -44,7 +43,7 @@ public class GameSettingUIHandler : MonoBehaviour
     public void OnCreateRoomButtonClick()
     {
         Configuration.health = (uint)healthSlider.value;
-        Configuration.numberOfPlayers = (uint)playerNumberSlider.value;
+        Configuration.indexOfPlayers = (uint)playerNumberSlider.value;
         if (classicToggle.isOn)
         {
             LobbyManager.instance.Mode = Configuration.mode = GameMode.Classic;
