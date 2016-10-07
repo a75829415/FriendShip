@@ -173,14 +173,17 @@ public abstract class Manager : MonoBehaviour
 
 	public virtual void UpdateClient()
 	{
-		NetHub.instance.RpcUpdateWaitTime(WaitTime);
-		if (ship != null)
+		if (NetHub.instance.isServer)
 		{
-			NetHub.instance.RpcUpdateInvincibleTime(ship.InvincibleTime);
-			NetHub.instance.RpcUpdateShip(ship.reservedTransform.position, ship.reservedTransform.eulerAngles, ship.reservedRigidbody.velocity,
-				ship.reservedRigidbody.angularVelocity, ship.reservedBackgroundForce.relativeForce);
+			NetHub.instance.RpcUpdateWaitTime(WaitTime);
+			if (ship != null)
+			{
+				NetHub.instance.RpcUpdateInvincibleTime(ship.InvincibleTime);
+				NetHub.instance.RpcUpdateShip(ship.reservedTransform.position, ship.reservedTransform.eulerAngles, ship.reservedRigidbody.velocity,
+					ship.reservedRigidbody.angularVelocity, ship.reservedBackgroundForce.relativeForce);
+			}
+			NetHub.instance.RpcUpdateGameTime(GameTime);
 		}
-		NetHub.instance.RpcUpdateGameTime(GameTime);
     }
 
 	public float PieceScale()
