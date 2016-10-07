@@ -11,10 +11,10 @@ public class CompetitiveManager : Manager {
 	public uint leftHealth;
 	public uint rightHealth;
 
-	public Collider competetiveShipColliderProtocal;
+	public ShipCollider competetiveShipColliderProtocal;
 
-	public Collider leftCollider;
-	public Collider rightCollider;
+	public ShipCollider leftCollider;
+	public ShipCollider rightCollider;
 
 	public RectTransform hud;
 	public Text hudLeftHealthValue;
@@ -62,23 +62,23 @@ public class CompetitiveManager : Manager {
 	public override void InitializeShipCollider()
 	{
 		leftCollider = Instantiate(competetiveShipColliderProtocal);
-		leftCollider.GetComponent<Transform>().position = new Vector3(-0.5f, 0, 0);
-        leftCollider.GetComponent<Transform>().SetParent(ship.reservedTransform);
+		leftCollider.reservedTransform.position = new Vector3(-0.5f, 0, 0);
+        leftCollider.reservedTransform.SetParent(ship.reservedTransform);
 		rightCollider = Instantiate(competetiveShipColliderProtocal);
-		rightCollider.GetComponent<Transform>().position = new Vector3(0.5f, 0, 0);
-		rightCollider.GetComponent<Transform>().SetParent(ship.reservedTransform);
+		rightCollider.reservedTransform.position = new Vector3(0.5f, 0, 0);
+		rightCollider.reservedTransform.SetParent(ship.reservedTransform);
 	}
 
-	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
+	public override void NotifyCrash(ShipCollider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
 		if (NetHub.instance.isServer)
 		{
-			if (UnityEngine.Object.ReferenceEquals(shipCollider, leftCollider))
+			if (System.Object.ReferenceEquals(shipCollider, leftCollider))
 			{
 				--currentLeftHealth;
 			}
-			else
+			else if (System.Object.ReferenceEquals(shipCollider, rightCollider))
 			{
 				--currentRightHealth;
 			}
@@ -100,7 +100,7 @@ public class CompetitiveManager : Manager {
 	{
 		Time.timeScale = 0.0f;
 		hud.gameObject.SetActive(false);
-		DefaultGameOverHandler(this, time, lHealth, rHealth);
+		gameOverHandler(this, time, lHealth, rHealth);
     }
 
 	public static void DefaultGameOverHandler(CompetitiveManager manager, float time, uint lHealth, uint rHealth)

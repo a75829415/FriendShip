@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShipCollider : MonoBehaviour
+public class ShipCollider : MoveableObject
 {
 	public Collider reservedCollider;
 
-	// Use this for initialization
+	public delegate void CrashNotificationHandler(ShipCollider shipCollider, Collider obstacleCollider);
+
+	public CrashNotificationHandler crashNotificationHandler = DefaultCrashNotificationHandler;
+
+	void Awake()
+	{
+		base.AwakeWorkaround();
+	}
+
 	void Start()
 	{
+		base.StartWorkaround();
 	}
 
 	// Update is called once per frame
@@ -19,11 +28,16 @@ public class ShipCollider : MonoBehaviour
 	{
 		if (!Manager.instance.ship.IsInvincible())
 		{
-			Debug.Log("Crash");
-			Manager.instance.ship.ResetInvincibleStatus();
-			Manager.instance.ship.ResetForce();
-			Manager.instance.NotifyCrash(reservedCollider, other);
-		}
+			crashNotificationHandler(this, other);
+        }
+	}
+
+	public static void DefaultCrashNotificationHandler(ShipCollider shipCollider, Collider obstacleCollider)
+	{
+		Debug.Log("Crash");
+		Manager.instance.ship.ResetInvincibleStatus();
+		Manager.instance.ship.ResetForce();
+		Manager.instance.NotifyCrash(shipCollider, obstacleCollider);
 	}
 
 }

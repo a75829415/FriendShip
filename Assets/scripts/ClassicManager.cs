@@ -7,7 +7,7 @@ public class ClassicManager : Manager
 {
 	public delegate void GameOverHandler(ClassicManager manager, float time);
 
-	public Collider classicShipColliderProtocal;
+	public ShipCollider classicShipColliderProtocal;
 
 	public RectTransform hud;
 	public Text hudTime;
@@ -57,10 +57,10 @@ public class ClassicManager : Manager
 
 	public override void InitializeShipCollider()
 	{
-		Instantiate(classicShipColliderProtocal).GetComponent<Transform>().SetParent(ship.reservedTransform);
+		Instantiate(classicShipColliderProtocal).reservedTransform.SetParent(ship.reservedTransform);
 	}
 
-	public override void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
+	public override void NotifyCrash(ShipCollider shipCollider, Collider obstacleCollider)
 	{
 		base.NotifyCrash(shipCollider, obstacleCollider);
 		if (NetHub.instance.isServer && --currentHealth == 0)

@@ -36,7 +36,7 @@ public abstract class Manager : MonoBehaviour
 	public RectTransform gameOverPanel;
 	public Text resultText;
 
-	public delegate void CrashHandler(Collider shipCollider, Collider obstacleCollider);
+	public delegate void CrashHandler(ShipCollider shipCollider, Collider obstacleCollider);
 	public CrashHandler crashHandler = DefaultCrashHandler;
 
 	public abstract bool IsGaming();
@@ -261,12 +261,12 @@ public abstract class Manager : MonoBehaviour
 		}
 	}
 
-	public virtual void NotifyCrash(Collider shipCollider, Collider obstacleCollider)
+	public virtual void NotifyCrash(ShipCollider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
 	}
 
-	public static void DefaultCrashHandler(Collider shipCollider, Collider obstacleCollider)
+	public static void DefaultCrashHandler(ShipCollider shipCollider, Collider obstacleCollider)
 	{
 	}
 

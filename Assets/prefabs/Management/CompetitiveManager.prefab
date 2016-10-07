@@ -471,10 +471,10 @@ MonoBehaviour:
   statusName: {fileID: 114000013648406412}
   statusTime: {fileID: 224000013357163650}
   gameOverPanel: {fileID: 224000013675661334}
-  resultText: {fileID: 0}
+  resultText: {fileID: 114000010715546848}
   leftHealth: 3
   rightHealth: 3
-  competetiveShipColliderProtocal: {fileID: 65000011890372502, guid: f1f77c8178a29b74ebb38c058b2300c9,
+  competetiveShipColliderProtocal: {fileID: 114000011736790040, guid: f1f77c8178a29b74ebb38c058b2300c9,
     type: 2}
   leftCollider: {fileID: 0}
   rightCollider: {fileID: 0}
