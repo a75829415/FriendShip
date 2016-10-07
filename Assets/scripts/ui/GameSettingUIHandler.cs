@@ -24,8 +24,8 @@ public class GameSettingUIHandler : MonoBehaviour
     {
         if (showGUI)
         {
-            classicToggle.isOn = true;
-            competitveToggle.isOn = false;
+            classicToggle.isOn = Configuration.mode == GameMode.Classic;
+            competitveToggle.isOn = Configuration.mode == GameMode.Competitive;
             healthSlider.value = Configuration.health;
             healthValueText.text = Configuration.health.ToString();
             playerNumberSlider.value = Configuration.numberOfPlayers;
