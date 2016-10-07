@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class GameSettingUIHandler : MonoBehaviour
 {
-    public readonly int[] playerNumberSet = { 1, 2, 4 };
-
+    public static readonly int[] playerNumberSet = { 1, 2, 4 };
     public static GameSettingUIHandler instance;
 
     public RectTransform gameSettingPanel;
