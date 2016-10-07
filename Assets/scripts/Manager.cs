@@ -6,6 +6,8 @@ public abstract class Manager : MonoBehaviour
 {
 	public static Manager instance;
 
+	public ShipControlMode localControlMode = ShipControlMode.Unknown;
+
 	public Ship ship;
 	public float backgroundScale;
 
@@ -46,6 +48,16 @@ public abstract class Manager : MonoBehaviour
 		return waitTime <= 0.0f;
 	}
 
+	public bool IsPaddlingLeft()
+	{
+		return localControlMode == ShipControlMode.LeftPaddleOnly;
+	}
+
+	public bool IsPaddlingRight()
+	{
+		return localControlMode == ShipControlMode.RightPaddleOnly;
+	}
+
 	public void ResetWaitTime()
 	{
 		waitTime = waitTimeBase;
@@ -60,8 +72,6 @@ public abstract class Manager : MonoBehaviour
 	{
 		AwakeWorkaround();
     }
-
-	
 
 	public void AwakeWorkaround()
 	{
@@ -103,7 +113,19 @@ public abstract class Manager : MonoBehaviour
 						{
 							status.gameObject.SetActive(true);
 						}
-						statusName.text = "准备出发";
+						if (IsPaddlingLeft())
+						{
+							statusName.text = "左侧准备";
+						}
+						else if (IsPaddlingRight())
+						{
+							statusName.text = "右侧准备";
+						}
+						else
+						{
+							statusName.text = "准备出发";
+							
+						}
 						statusTime.localScale = new Vector3(WaitTime / 3.0f, 1, 1);
 					}
 					else if (status.gameObject.activeSelf)
@@ -188,7 +210,8 @@ public abstract class Manager : MonoBehaviour
 
 	public virtual void NotifyControlMode(ShipControlMode controlMode)
 	{
-	}
+		localControlMode = controlMode;
+    }
 
 	public float PieceScale()
 	{

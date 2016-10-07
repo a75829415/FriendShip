@@ -71,6 +71,21 @@ public class CompetitiveManager : Manager {
 		rightCollider.reservedTransform.SetParent(ship.reservedTransform);
 	}
 
+	public override void NotifyControlMode(ShipControlMode controlMode)
+	{
+		base.NotifyControlMode(controlMode);
+		if (IsPaddlingLeft())
+		{
+			hudLeftHealth.color = Color.red;
+			hudRightHealth.color = Color.black;
+		}
+		else if (IsPaddlingRight())
+		{
+			hudLeftHealth.color = Color.black;
+			hudRightHealth.color = Color.red;
+		}
+	}
+
 	public override void NotifyCrash(ShipCollider shipCollider, Collider obstacleCollider)
 	{
 		crashHandler(shipCollider, obstacleCollider);
