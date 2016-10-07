@@ -1,4 +1,6 @@
 ﻿public enum GameMode
 {
-    Unset, ClassicSingle, ClassicDouble, CompetitiveSingle, CompetitiveDouble
+    Unset,
+    Classic,
+    Competitive,
 }

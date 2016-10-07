@@ -33,11 +33,6 @@ public class LobbyDiscovery : NetworkDiscovery
         serverAddresses = new Dictionary<string, float>();
     }
 
-    void Start()
-    {
-        StartListening();
-    }
-
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
         float receiveTime;
@@ -48,16 +43,18 @@ public class LobbyDiscovery : NetworkDiscovery
         else
         {
             serverAddresses.Add(fromAddress, Time.realtimeSinceStartup);
-            WelcomeGUIHandler.instance.AddLobby(fromAddress);
+            string[] buffer = data.Split('*');
+            ChooseLobbyUIHandler.instance.AddLobby(fromAddress, buffer[0], buffer[1]);
         }
     }
 
-    public void StartBroadcasting()
+    public void StartBroadcasting(string data)
     {
         if (running)
         {
             StopBroadcastingOrListening();
         }
+        broadcastData = data;
         Initialize();
         StartAsServer();
     }
@@ -75,6 +72,6 @@ public class LobbyDiscovery : NetworkDiscovery
     public void StopBroadcastingOrListening()
     {
         StopBroadcast();
-        serverAddresses.Clear();
+        broadcastData = string.Empty;
     }
 }

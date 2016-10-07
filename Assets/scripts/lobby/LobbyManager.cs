@@ -29,6 +29,8 @@ public class LobbyManager : NetworkLobbyManager
         }
     }
 
+    public delegate void VoidDelegate();
+    public VoidDelegate stopGameDelegate;
     public ClassicNetHub classicNetHub;
     public CompetetiveNetHub competitiveNetHub;
 
@@ -40,35 +42,21 @@ public class LobbyManager : NetworkLobbyManager
     {
         get
         {
-            if (mode == GameMode.Unset)
-            {
-                Debug.LogError("Game mode not set.");
-            }
             return mode;
         }
         set
         {
             switch (mode = value)
             {
-                case GameMode.ClassicSingle:
-                    minPlayers = 1;
+                case GameMode.Classic:
                     gameNetHub = classicNetHub;
                     break;
-                case GameMode.ClassicDouble:
-                    minPlayers = 2;
-                    gameNetHub = classicNetHub;
-                    break;
-                case GameMode.CompetitiveSingle:
-                    minPlayers = 1;
-                    gameNetHub = competitiveNetHub;
-                    break;
-                case GameMode.CompetitiveDouble:
-                    minPlayers = 2;
+                case GameMode.Competitive:
                     gameNetHub = competitiveNetHub;
                     break;
                 default:
-                    minPlayers = 2;
                     gameNetHub = null;
+                    Debug.LogWarning("Game mode not set.");
                     break;
             }
         }
@@ -140,17 +128,20 @@ public class LobbyManager : NetworkLobbyManager
         else if (allClientsReady)
         {
             controlModeAllocation.Clear();
-            switch (Mode)
+            switch (minPlayers)
             {
-                case GameMode.ClassicSingle:
+                case 1:
                     controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId, ShipControlMode.BothPaddles);
                     break;
-                case GameMode.ClassicDouble:
+                case 2:
                     float random = Random.value;
                     controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
                         random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
                     controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
                         random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
+                    break;
+                case 4:
+                    Debug.LogError("Coming soon.");
                     break;
             }
             Instantiate(gameNetHub);
@@ -181,7 +172,7 @@ public class LobbyManager : NetworkLobbyManager
         {
             case SINGLE_GAME_OVER:
             case LOSE_CONNECT_TO_SERVER:
-                LobbyGUIHandler.instance.QuitRoom();
+                LobbyUIHandler.instance.quitRoomDelegate();
                 break;
             case DOUBLE_GAME_OVER:
             case LOSE_CONNECT_TO_CLIENT:
@@ -193,16 +184,47 @@ public class LobbyManager : NetworkLobbyManager
 
     public void GameStart()
     {
-        WelcomeGUIHandler.instance.HideWelcomeGUI();
-        LobbyGUIHandler.instance.HideLobbyGUI();
+        WelcomeUIHandler.instance.ShowGUI(false);
+        LobbyUIHandler.instance.ShowGUI(false);
     }
 
     public void ReturnLobby()
     {
-        LobbyGUIHandler.instance.ShowLobbyGUI();
+        LobbyUIHandler.instance.ShowGUI(true);
         if (NetHub.instance != null)
         {
             Destroy(NetHub.instance.gameObject);
         }
+    }
+
+    // ---- UI event hooks ----
+    public void StartGame()
+    {
+        if (minPlayers == 1)
+        {
+            stopGameDelegate = StopHost;
+            StartHost();
+        }
+        else
+        {
+            stopGameDelegate = () =>
+            {
+                LobbyDiscovery.instance.StopBroadcastingOrListening();
+                StopHost();
+            };
+            StartHost();
+            LobbyDiscovery.instance.StartBroadcasting((int)mode + "*" + minPlayers);
+        }
+    }
+
+    public void JoinGame(string address)
+    {
+        stopGameDelegate = StopClient;
+        StartClient().Connect(address, networkPort);
+    }
+
+    public void StopGame()
+    {
+        stopGameDelegate();
     }
 }

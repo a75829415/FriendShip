@@ -85,6 +85,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowLobbyGUI: 1
-  playerInfoPrefab: {fileID: 22466760, guid: 175033297dbda9d498abc1cb66ff170b, type: 2}
-  readyButton: {fileID: 0}
-  startButton: {fileID: 0}
+  playersLayout: {fileID: 0}
+  playerInfoPrefab: {fileID: 224000012012076378, guid: 175033297dbda9d498abc1cb66ff170b,
+    type: 2}
