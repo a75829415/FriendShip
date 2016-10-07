@@ -64,7 +64,7 @@ public class LobbyUIHandler : MonoBehaviour
 
     public void RemovePlayer(RectTransform playerInfo)
     {
-        playerInfo.GetComponent<PlayerInfoUIHandler>().PlayerExit();
+        playerInfo.GetComponent<PlayerInfoUIHandler>().Initialize();
         players[playerInfo] = false;
     }
 
