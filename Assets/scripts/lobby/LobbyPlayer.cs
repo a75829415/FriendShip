@@ -21,7 +21,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
     {
         if (isServer)
         {
-            playerInfo.GetComponent<PlayerInfoUIHandler>().SetPlayerReady(true);
             SendReadyToBeginMessage();
         }
         else
