@@ -479,7 +479,9 @@ MonoBehaviour:
   leftCollider: {fileID: 0}
   rightCollider: {fileID: 0}
   hud: {fileID: 224000010618703980}
+  hudLeftHealth: {fileID: 114000010711930070}
   hudLeftHealthValue: {fileID: 114000012999880446}
+  hudRightHealth: {fileID: 114000013066551176}
   hudRightHealthValue: {fileID: 114000010266796268}
   currentLeftHealth: 0
   currentRightHealth: 0
