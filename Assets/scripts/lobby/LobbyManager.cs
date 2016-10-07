@@ -7,8 +7,8 @@ public class LobbyManager : NetworkLobbyManager
 {
     public const uint SINGLE_GAME_OVER = 0x00;
     public const uint DOUBLE_GAME_OVER = 0x01;
-    public const uint LOSE_CONNECT_TO_CLIENT = 0x10;
-    public const uint LOSE_CONNECT_TO_SERVER = 0x11;
+    public const uint LOSE_CONNECTION_TO_CLIENT = 0x10;
+    public const uint LOSE_CONNECTION_TO_SERVER = 0x11;
 
     public static LobbyManager instance
     {
@@ -31,6 +31,7 @@ public class LobbyManager : NetworkLobbyManager
 
     public delegate void VoidDelegate();
     public VoidDelegate stopGameDelegate;
+    public VoidDelegate loseConnectionDelegate;
     public ClassicNetHub classicNetHub;
     public CompetitiveNetHub competitiveNetHub;
 
@@ -100,13 +101,26 @@ public class LobbyManager : NetworkLobbyManager
     {
         if (SceneManager.GetActiveScene().name.Equals(playScene))
         {
-            ChangeToLobbyScene(LOSE_CONNECT_TO_CLIENT);
+            loseConnectionDelegate = () =>
+            {
+                PopupUIHandler.instance.Popup("哎呀，有玩家溜走了Σ(っ °Д °;)っ...");
+            };
+            ChangeToLobbyScene(LOSE_CONNECTION_TO_CLIENT);
         }
+    }
+
+    public override void OnLobbyClientConnect(NetworkConnection conn)
+    {
+        PopupUIHandler.instance.OnOkButtonClick();
+        loseConnectionDelegate = () =>
+        {
+            PopupUIHandler.instance.Popup("糟了，房主的Note 7好像炸了\n怎么都没法重新连接上( ╯□╰ )...");
+        };
     }
 
     public override void OnLobbyClientDisconnect(NetworkConnection conn)
     {
-        ChangeToLobbyScene(LOSE_CONNECT_TO_SERVER);
+        ChangeToLobbyScene(LOSE_CONNECTION_TO_SERVER);
     }
 
     public void CheckClientsReady()
@@ -123,7 +137,7 @@ public class LobbyManager : NetworkLobbyManager
         }
         if (playerCount < minPlayers)
         {
-            Debug.LogWarning("Not enough players.");
+            PopupUIHandler.instance.Popup("人都不够怎么玩游戏嘛←_←");
         }
         else if (allClientsReady)
         {
@@ -150,7 +164,7 @@ public class LobbyManager : NetworkLobbyManager
         }
         else
         {
-            Debug.LogWarning("Players not ready.");
+            PopupUIHandler.instance.Popup("别着急嘛，还有人没准备好呢\n(✿◡‿◡)");
         }
     }
 
@@ -171,14 +185,22 @@ public class LobbyManager : NetworkLobbyManager
         switch (reason)
         {
             case SINGLE_GAME_OVER:
-            case LOSE_CONNECT_TO_SERVER:
+                LobbyUIHandler.instance.quitRoomDelegate();
+                break;
+            case LOSE_CONNECTION_TO_SERVER:
+                loseConnectionDelegate();
                 LobbyUIHandler.instance.quitRoomDelegate();
                 break;
             case DOUBLE_GAME_OVER:
-            case LOSE_CONNECT_TO_CLIENT:
                 (lobbySlots[0] as LobbyPlayer).RpcReturnLobby();
                 ServerChangeScene(lobbyScene);
                 break;
+            case LOSE_CONNECTION_TO_CLIENT:
+                loseConnectionDelegate();
+                (lobbySlots[0] as LobbyPlayer).RpcReturnLobby();
+                ServerChangeScene(lobbyScene);
+                break;
+
         }
     }
 

@@ -41,6 +41,11 @@ public class GameSettingUIHandler : MonoBehaviour
 
     public void OnCreateRoomButtonClick()
     {
+        if (Configuration.playerNumberSet[(int)playerNumberSlider.value] == 4)
+        {
+            PopupUIHandler.instance.Popup("啊哦，我们的程序猿们还在日夜加班开发四人游戏模式(ง •_•)ง\n敬请期待");
+            return;
+        }
         Configuration.health = (uint)healthSlider.value;
         Configuration.indexOfPlayers = (int)playerNumberSlider.value;
         if (classicToggle.isOn)

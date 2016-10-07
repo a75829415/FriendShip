@@ -43,6 +43,7 @@ public class WelcomeUIHandler : MonoBehaviour
         newProductPanel.gameObject.SetActive(true);
         gameReferralPanel.gameObject.SetActive(false);
         contactUsPanel.gameObject.SetActive(false);
+        PopupUIHandler.instance.Popup("新功能很快就会上线哦o(*￣▽￣*)ブ");
     }
 
     public void OnGameReferralButtonClick()
