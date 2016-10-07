@@ -1,4 +1,8 @@
 ﻿public enum ShipControlMode
 {
-    BothPaddles, LeftPaddleOnly, RightPaddleOnly, FireOnly
+    Unknown,
+    BothPaddles,
+    LeftPaddleOnly,
+    RightPaddleOnly,
+    FireOnly,
 }

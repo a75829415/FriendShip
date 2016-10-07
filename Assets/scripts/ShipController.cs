@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
 
 public class ShipController : NetworkBehaviour
 {
@@ -26,6 +25,7 @@ public class ShipController : NetworkBehaviour
         {
             return;
         }
+        Manager.instance.NotifyControlMode(controlMode);
         if (controlMode == ShipControlMode.BothPaddles)
         {
             if (Input.GetMouseButtonDown(0))

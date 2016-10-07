@@ -157,7 +157,7 @@ public class LobbyManager : NetworkLobbyManager
     public ShipControlMode GetShipControlMode(NetworkConnection conn)
     {
         ShipControlMode mode;
-        return controlModeAllocation.TryGetValue(conn.connectionId, out mode) ? mode : ShipControlMode.BothPaddles;
+        return controlModeAllocation.TryGetValue(conn.connectionId, out mode) ? mode : ShipControlMode.Unknown;
     }
 
     public void ChangeToPlayScene()
