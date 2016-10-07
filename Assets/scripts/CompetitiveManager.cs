@@ -155,11 +155,12 @@ public class CompetitiveManager : Manager {
 
 	public bool IsLoser(Winner winner)
 	{
-		return winner == Winner.left && IsPaddlingRight();
+		return winner == Winner.right && IsPaddlingRight();
 	}
 
 	public static void DefaultGameOverHandler(CompetitiveManager manager, float time, uint lHealth, uint rHealth)
 	{
+		Debug.Log(lHealth + ", " + rHealth);
 		CompetitiveManager competitiveManager = (CompetitiveManager)(manager);
         manager.gameOverPanel.gameObject.SetActive(true);
 		string result;
