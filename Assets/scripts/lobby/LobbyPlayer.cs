@@ -39,7 +39,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
     {
         if (playerInfo != null)
         {
-            Destroy(playerInfo.gameObject);
+            playerInfo.GetComponent<PlayerInfoUIHandler>().PlayerExit();
         }
     }
 

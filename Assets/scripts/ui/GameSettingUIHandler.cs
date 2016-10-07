@@ -56,7 +56,7 @@ public class GameSettingUIHandler : MonoBehaviour
             LobbyManager.instance.StopGame();
         };
         LobbyManager.instance.StartGame();
-        LobbyUIHandler.instance.Initialize();
+        LobbyUIHandler.instance.Initialize(true, string.Empty);
         LobbyUIHandler.instance.ShowGUI(true);
         ShowGUI(false);
     }

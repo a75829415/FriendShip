@@ -87,7 +87,7 @@ MonoBehaviour:
   isNetworkActive: 1
   matchMaker: {fileID: 0}
   m_ShowLobbyGUI: 0
-  m_MaxPlayers: 2
+  m_MaxPlayers: 4
   m_MaxPlayersPerConnection: 1
   m_MinPlayers: 2
   m_LobbyPlayerPrefab: {fileID: 114000014157705542, guid: edc17c03e82d0924292302b904ca7834,
@@ -682,7 +682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000012053966214
 GameObject:
   m_ObjectHideFlags: 1

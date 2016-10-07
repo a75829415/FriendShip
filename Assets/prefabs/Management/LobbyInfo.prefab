@@ -22,7 +22,7 @@ GameObject:
   - 222: {fileID: 222000012725365520}
   - 114: {fileID: 114000013182668898}
   m_Layer: 5
-  m_Name: IDText
+  m_Name: AddressText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   classicSprite: {fileID: 21300000, guid: a6ce29301e799354fbcf45b81858dcd0, type: 3}
   competitveSprite: {fileID: 21300000, guid: b83b87a7ca169c643906101cb1774ec1, type: 3}
-  idText: {fileID: 114000013182668898}
+  addressText: {fileID: 114000013182668898}
   modeText: {fileID: 114000012258918354}
   lobbyInfoImage: {fileID: 114000010975560106}
 --- !u!222 &222000011368533290

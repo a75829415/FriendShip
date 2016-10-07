@@ -27,8 +27,14 @@ public class LobbyUIHandler : MonoBehaviour
         lobbyPanel.gameObject.SetActive(showGUI);
     }
 
-    public void Initialize()
+    public void Initialize(bool isServer, string address)
     {
+        List<RectTransform> buffer = new List<RectTransform>(players.Keys);
+        foreach (RectTransform player in buffer)
+        {
+            Destroy(player.gameObject);
+        }
+        players.Clear();
         for (int i = 0; i < LobbyManager.instance.minPlayers; i++)
         {
             RectTransform playerInfo = Instantiate(playerInfoPrefab);
@@ -36,12 +42,14 @@ public class LobbyUIHandler : MonoBehaviour
             playerInfo.SetParent(playersLayout, false);
             players.Add(playerInfo, false);
         }
+        titleText.text = isServer ? "我的房间" : address + "的房间";
+        startGameButton.gameObject.SetActive(isServer);
     }
 
     public RectTransform AddPlayer()
     {
         List<RectTransform> buffer = new List<RectTransform>(players.Keys);
-        foreach(RectTransform player in buffer)
+        foreach (RectTransform player in buffer)
         {
             if (!players[player])
             {
@@ -64,12 +72,6 @@ public class LobbyUIHandler : MonoBehaviour
     public void OnReturnButtonClick()
     {
         quitRoomDelegate();
-        List<RectTransform> buffer = new List<RectTransform>(players.Keys);
-        foreach (RectTransform player in buffer)
-        {
-            Destroy(player.gameObject);
-        }
-        players.Clear();
     }
 
     public void OnStartGameButtonClick()

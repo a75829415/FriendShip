@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkLobbyManager
 {
-    public const ushort SINGLE_GAME_OVER = 0x00;
-    public const ushort DOUBLE_GAME_OVER = 0x01;
-    public const ushort LOSE_CONNECT_TO_CLIENT = 0x10;
-    public const ushort LOSE_CONNECT_TO_SERVER = 0x11;
+    public const uint SINGLE_GAME_OVER = 0x00;
+    public const uint DOUBLE_GAME_OVER = 0x01;
+    public const uint LOSE_CONNECT_TO_CLIENT = 0x10;
+    public const uint LOSE_CONNECT_TO_SERVER = 0x11;
 
     public static LobbyManager instance
     {
@@ -166,7 +166,7 @@ public class LobbyManager : NetworkLobbyManager
         ServerChangeScene(playScene);
     }
 
-    public void ChangeToLobbyScene(ushort reason)
+    public void ChangeToLobbyScene(uint reason)
     {
         switch (reason)
         {

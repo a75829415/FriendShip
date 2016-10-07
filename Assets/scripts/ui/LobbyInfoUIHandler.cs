@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +8,7 @@ public class LobbyInfoUIHandler : MonoBehaviour
 
     public Sprite classicSprite;
     public Sprite competitveSprite;
-    public Text idText;
+    public Text addressText;
     public Text modeText;
     public Image lobbyInfoImage;
 
@@ -21,7 +21,7 @@ public class LobbyInfoUIHandler : MonoBehaviour
 
     public void Initialize(string address, string mode, string playerNumber)
     {
-        idText.text = address;
+        addressText.text = address;
         switch (Convert.ToInt32(mode))
         {
             case (int)GameMode.Classic:
@@ -53,8 +53,8 @@ public class LobbyInfoUIHandler : MonoBehaviour
             LobbyUIHandler.instance.ShowGUI(false);
             LobbyManager.instance.StopGame();
         };
-        LobbyManager.instance.JoinGame(idText.text);
-        LobbyUIHandler.instance.Initialize();
+        LobbyManager.instance.JoinGame(addressText.text);
+        LobbyUIHandler.instance.Initialize(false, addressText.text);
         LobbyUIHandler.instance.ShowGUI(true);
         ChooseLobbyUIHandler.instance.ShowGUI(false);
     }
