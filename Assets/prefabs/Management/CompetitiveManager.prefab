@@ -107,7 +107,7 @@ GameObject:
   - 4: {fileID: 4000012760124672}
   - 114: {fileID: 114000010986565986}
   m_Layer: 0
-  m_Name: CompetetiveManager
+  m_Name: CompetitiveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

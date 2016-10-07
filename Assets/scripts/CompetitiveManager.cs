@@ -37,8 +37,14 @@ public class CompetitiveManager : Manager {
 	// Use this for initialization
 	void Start () {
 		base.StartWorkaround();
-		currentLeftHealth = leftHealth;
-		currentRightHealth = rightHealth;
+		if (NetHub.instance.isServer)
+		{
+			leftHealth = Configuration.health;
+			rightHealth = Configuration.health;
+			currentLeftHealth = leftHealth;
+			currentRightHealth = rightHealth;
+		}
+		UpdateClient();
 	}
 	
 	// Update is called once per frame
@@ -87,14 +93,15 @@ public class CompetitiveManager : Manager {
 	public override void UpdateClient()
 	{
 		base.UpdateClient();
-		((CompetitiveNetHub)(NetHub.instance)).RpcUpdateStatus(currentLeftHealth, currentRightHealth);
+		((CompetitiveNetHub)(NetHub.instance)).RpcUpdateStatus(currentLeftHealth, leftHealth, currentRightHealth, rightHealth);
     }
 
 	public void GameOver(float time, uint lHealth, uint rHealth)
 	{
 		Time.timeScale = 0.0f;
 		hud.gameObject.SetActive(false);
-	}
+		DefaultGameOverHandler(this, time, lHealth, rHealth);
+    }
 
 	public static void DefaultGameOverHandler(CompetitiveManager manager, float time, uint lHealth, uint rHealth)
 	{

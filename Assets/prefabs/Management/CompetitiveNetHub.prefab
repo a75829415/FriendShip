@@ -22,7 +22,7 @@ GameObject:
   - 114: {fileID: 114000010518939826}
   - 114: {fileID: 114000012309030374}
   m_Layer: 0
-  m_Name: CompetetiveNetHub
+  m_Name: CompetitiveNetHub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

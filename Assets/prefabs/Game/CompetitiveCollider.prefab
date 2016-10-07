@@ -24,7 +24,7 @@ GameObject:
   - 23: {fileID: 23000012072422520}
   - 114: {fileID: 114000011736790040}
   m_Layer: 0
-  m_Name: CompetetiveCollider
+  m_Name: CompetitiveCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014061675208}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}

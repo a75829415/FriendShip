@@ -59,7 +59,7 @@ public class NetHub : NetworkBehaviour {
 	[ClientRpc]
 	public void RpcUpdateInvincibleTime(float serverInvincibleTime)
 	{
-		if (!isServer)
+		if (!isServer && Manager.instance.ship != null)
 		{
 			Manager.instance.ship.InvincibleTime = serverInvincibleTime;
 		}
@@ -77,7 +77,7 @@ public class NetHub : NetworkBehaviour {
 	[ClientRpc]
 	public void RpcUpdateShip(Vector3 position, Vector3 rotation, Vector3 velocity, Vector3 angularVelocity, Vector3 relativeForce)
 	{
-		if (!isServer)
+		if (!isServer && Manager.instance.ship != null)
 		{
 			Manager.instance.ship.reservedTransform.position = position;
 			Manager.instance.ship.reservedTransform.eulerAngles = rotation;

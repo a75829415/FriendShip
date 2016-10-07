@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class CompetitiveNetHub : NetHub {
-	public CompetitiveNetHub competetiveManagerPrototype;
+	public CompetitiveManager competetiveManagerPrototype;
 
 	// Use this for initialization
 	void Awake()
@@ -23,12 +23,14 @@ public class CompetitiveNetHub : NetHub {
 	}
 
 	[ClientRpc]
-	public void RpcUpdateStatus(uint serverLeftHealth, uint serverRightHealth)
+	public void RpcUpdateStatus(uint serverCurrentLeftHealth, uint serverLeftHealth, uint serverCurrentRightHealth, uint serverRightHealth)
 	{
 		if (!isServer)
 		{
-			((CompetitiveManager)(Manager.instance)).currentLeftHealth = serverLeftHealth;
-			((CompetitiveManager)(Manager.instance)).currentRightHealth = serverRightHealth;
+			((CompetitiveManager)(Manager.instance)).currentLeftHealth = serverCurrentLeftHealth;
+			((CompetitiveManager)(Manager.instance)).leftHealth = serverLeftHealth;
+			((CompetitiveManager)(Manager.instance)).currentRightHealth = serverCurrentRightHealth;
+			((CompetitiveManager)(Manager.instance)).rightHealth = serverRightHealth;
 		}
 	}
 

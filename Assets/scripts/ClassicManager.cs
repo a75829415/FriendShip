@@ -34,7 +34,12 @@ public class ClassicManager : Manager
 	void Start()
 	{
 		base.StartWorkaround();
-		currentHealth = health;
+		if (NetHub.instance.isServer)
+		{
+			health = Configuration.health;
+			currentHealth = health;
+		}
+		UpdateClient();
     }
 	
 	// Update is called once per frame
@@ -68,7 +73,7 @@ public class ClassicManager : Manager
 	public override void UpdateClient()
 	{
 		base.UpdateClient();
-		((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(currentHealth);
+		((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(currentHealth, health);
 	}
 
 	public void GameOver(float time)
