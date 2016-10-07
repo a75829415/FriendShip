@@ -113,20 +113,20 @@ public abstract class Manager : MonoBehaviour
 						{
 							status.gameObject.SetActive(true);
 						}
+						string statusText;
 						if (IsPaddlingLeft())
 						{
-							statusName.text = "左侧准备";
+							statusText = "左侧准备";
 						}
 						else if (IsPaddlingRight())
 						{
-							statusName.text = "右侧准备";
+							statusText = "右侧准备";
 						}
 						else
 						{
-							statusName.text = "准备出发";
-							
+							statusText = "准备出发";
 						}
-						statusTime.localScale = new Vector3(WaitTime / 3.0f, 1, 1);
+						UpdateStatusBar(statusText, WaitTime / 3.0f);
 					}
 					else if (status.gameObject.activeSelf)
 					{
@@ -139,8 +139,7 @@ public abstract class Manager : MonoBehaviour
 					{
 						status.gameObject.SetActive(true);
 					}
-					statusName.text = "无敌";
-					statusTime.localScale = new Vector3(ship.InvincibleTime / ship.invincibleTimeBase, 1, 1);
+					UpdateStatusBar("无敌", ship.InvincibleTime / ship.invincibleTimeBase);
 				}
 				else
 				{
@@ -183,6 +182,12 @@ public abstract class Manager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void UpdateStatusBar(string name, float size)
+	{
+		statusName.text = name;
+		statusTime.localScale = new Vector3(size, 1, 1);
 	}
 
 	public void RegisterShip(Ship ship_to_register)
