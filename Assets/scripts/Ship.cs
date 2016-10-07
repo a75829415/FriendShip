@@ -48,7 +48,7 @@ public class Ship : MoveableObject
 	{
 		base.StartWorkaround();
 		unprepared = true;
-		invincibleTimeBase = Configuration.invincibleTime;
+		invincibleTimeBase = Configuration.InvincibleTime;
 		ResetInvincibleStatus();
 		Manager.instance.RegisterShip(this);
     }

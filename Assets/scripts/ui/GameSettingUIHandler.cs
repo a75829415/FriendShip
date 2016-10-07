@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class GameSettingUIHandler : MonoBehaviour
 {
-    public static readonly uint[] playerNumberSet = { 1, 2, 4 };
     public static GameSettingUIHandler instance;
 
     public RectTransform gameSettingPanel;
@@ -28,7 +27,7 @@ public class GameSettingUIHandler : MonoBehaviour
             healthSlider.value = Configuration.health;
             healthValueText.text = Configuration.health.ToString();
             playerNumberSlider.value = Configuration.indexOfPlayers;
-            playerNumberValueText.text = playerNumberSet[Configuration.indexOfPlayers].ToString();
+            playerNumberValueText.text = Configuration.NumberOfPlayers.ToString();
         }
         gameSettingPanel.gameObject.SetActive(showGUI);
     }
@@ -43,7 +42,7 @@ public class GameSettingUIHandler : MonoBehaviour
     public void OnCreateRoomButtonClick()
     {
         Configuration.health = (uint)healthSlider.value;
-        Configuration.indexOfPlayers = (uint)playerNumberSlider.value;
+        Configuration.indexOfPlayers = (int)playerNumberSlider.value;
         if (classicToggle.isOn)
         {
             LobbyManager.instance.Mode = Configuration.mode = GameMode.Classic;
@@ -52,7 +51,7 @@ public class GameSettingUIHandler : MonoBehaviour
         {
             LobbyManager.instance.Mode = Configuration.mode = GameMode.Competitive;
         }
-        LobbyManager.instance.minPlayers = playerNumberSet[(int)playerNumberSlider.value];
+        LobbyManager.instance.minPlayers = Configuration.playerNumberSet[(int)playerNumberSlider.value];
         LobbyUIHandler.instance.quitRoomDelegate = () =>
         {
             WelcomeUIHandler.instance.ShowGUI(true);
@@ -72,6 +71,6 @@ public class GameSettingUIHandler : MonoBehaviour
 
     public void OnPlayerNumberChange()
     {
-        playerNumberValueText.text = playerNumberSet[(int)playerNumberSlider.value].ToString();
+        playerNumberValueText.text = Configuration.playerNumberSet[(int)playerNumberSlider.value].ToString();
     }
 }
