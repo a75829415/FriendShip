@@ -34,13 +34,6 @@ public class CompetitiveManager : Manager {
 	{
 		base.AwakeWorkaround();
 		hud.gameObject.SetActive(false);
-		if (LobbyManager.instance.GetShipControlMode(NetHub.instance.connectionToServer) == ShipControlMode.LeftPaddleOnly)
-		{
-			hudLeftHealth.color = Color.red;
-		} else if (LobbyManager.instance.GetShipControlMode(NetHub.instance.connectionToServer) == ShipControlMode.RightPaddleOnly)
-		{
-			hudRightHealth.color = Color.red;
-		}
 	}
 
 	// Use this for initialization

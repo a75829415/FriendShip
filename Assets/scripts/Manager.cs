@@ -186,6 +186,10 @@ public abstract class Manager : MonoBehaviour
 		}
     }
 
+	public virtual void NotifyControlMode(ShipControlMode controlMode)
+	{
+	}
+
 	public float PieceScale()
 	{
 		return pieceScale;
