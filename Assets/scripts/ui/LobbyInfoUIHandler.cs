@@ -47,12 +47,6 @@ public class LobbyInfoUIHandler : MonoBehaviour
     public void OnLobbyInfoButtonClick()
     {
         LobbyManager.instance.Mode = lobbyGameMode;
-        LobbyUIHandler.instance.quitRoomDelegate = () =>
-        {
-            ChooseLobbyUIHandler.instance.ShowGUI(true);
-            LobbyUIHandler.instance.ShowGUI(false);
-            LobbyManager.instance.StopGame();
-        };
         LobbyManager.instance.JoinGame(addressText.text);
         LobbyUIHandler.instance.Initialize(false, addressText.text);
         LobbyUIHandler.instance.ShowGUI(true);

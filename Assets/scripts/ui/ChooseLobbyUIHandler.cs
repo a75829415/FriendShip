@@ -69,19 +69,6 @@ public class ChooseLobbyUIHandler : MonoBehaviour
             PopupUIHandler.instance.Popup("咦，这个IP地址的格式怎么看上去好像不太对...");
             return;
         }
-        PopupUIHandler.instance.Popup("全速连接中...", false);
-        LobbyUIHandler.instance.quitRoomDelegate = () =>
-        {
-            ShowGUI(true);
-            LobbyUIHandler.instance.ShowGUI(false);
-            LobbyManager.instance.StopGame();
-        };
-        LobbyManager.instance.loseConnectionDelegate = () =>
-        {
-            PopupUIHandler.instance.Popup("IP地址真的写对了吗,,ԾㅂԾ,,\n连不上诶...");
-            ShowGUI(true);
-            LobbyUIHandler.instance.ShowGUI(false);
-        };
         LobbyManager.instance.JoinGame(searchServerInputField.text);
         LobbyUIHandler.instance.Initialize(false, searchServerInputField.text);
         LobbyUIHandler.instance.ShowGUI(true);

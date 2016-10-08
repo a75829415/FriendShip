@@ -2700,7 +2700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chooseLobbyPanel: {fileID: 224000014203037708}
-  lobbysLayout: {fileID: 224000012599915908}
+  lobbiesLayout: {fileID: 224000012599915908}
   lobbyInfoPrefab: {fileID: 224000011599557388, guid: 7f660ba755297fb4bb91ab573bbf6fa6,
     type: 2}
   searchServerInputField: {fileID: 114000013404355962}

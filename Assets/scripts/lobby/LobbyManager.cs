@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkLobbyManager
@@ -206,7 +206,6 @@ public class LobbyManager : NetworkLobbyManager
 
     public void GameStart()
     {
-        WelcomeUIHandler.instance.ShowGUI(false);
         LobbyUIHandler.instance.ShowGUI(false);
     }
 
@@ -243,7 +242,20 @@ public class LobbyManager : NetworkLobbyManager
     public void JoinGame(string address)
     {
         stopGameDelegate = StopClient;
+        loseConnectionDelegate = () =>
+        {
+            PopupUIHandler.instance.Popup("IP地址真的写对了吗,,ԾㅂԾ,,\n连不上诶...");
+            ChooseLobbyUIHandler.instance.ShowGUI(true);
+            LobbyUIHandler.instance.ShowGUI(false);
+        };
+        LobbyUIHandler.instance.quitRoomDelegate = () =>
+        {
+            ChooseLobbyUIHandler.instance.ShowGUI(true);
+            LobbyUIHandler.instance.ShowGUI(false);
+            StopGame();
+        };
         StartClient().Connect(address, networkPort);
+        PopupUIHandler.instance.Popup("全速连接中...", false);
     }
 
     public void StopGame()
