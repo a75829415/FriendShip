@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class WelcomeUIHandler : MonoBehaviour
 {
     public static WelcomeUIHandler instance;
-    
+
     public RectTransform welcomePanel;
     public Text titleText;
     public Button startGameButton;
@@ -15,10 +15,14 @@ public class WelcomeUIHandler : MonoBehaviour
     public RectTransform newProductPanel;
     public RectTransform gameReferralPanel;
     public RectTransform contactUsPanel;
-    
+
     void Awake()
     {
         instance = this;
+        if (LobbyUISystemInitializer.currentActivePanel == null)
+        {
+            LobbyUISystemInitializer.currentActivePanel = welcomePanel;
+        }
     }
 
     public void ShowGUI(bool showGUI)
