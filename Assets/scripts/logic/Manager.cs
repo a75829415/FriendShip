@@ -6,6 +6,10 @@ public abstract class Manager : MonoBehaviour
 {
 	public static Manager instance;
 
+	public delegate void ResultStringHandler(string result);
+
+	public ResultStringHandler resultStringHandler = DefaultResultStringHandler;
+
 	public ShipControlMode localControlMode = ShipControlMode.Unknown;
 
 	public Ship ship;
@@ -29,15 +33,6 @@ public abstract class Manager : MonoBehaviour
 		return string.Format("{0:F3}", time);
 	}
 
-	public Canvas uiCanvas;
-
-	public RectTransform status;
-	public Text statusName;
-	public RectTransform statusTime;
-
-	public RectTransform gameOverPanel;
-	public Text resultText;
-
 	public delegate void CrashHandler(ShipCollider shipCollider, Collider obstacleCollider);
 	public CrashHandler crashHandler = DefaultCrashHandler;
 
@@ -58,9 +53,16 @@ public abstract class Manager : MonoBehaviour
 		return localControlMode == ShipControlMode.RightPaddleOnly;
 	}
 
+	public abstract bool IsObstacle(Collider collider);
+
 	public void ResetWaitTime()
 	{
 		waitTime = waitTimeBase;
+	}
+
+	public virtual GameMode GetGameMode()
+	{
+		return GameMode.Unset;
 	}
 
 	private void UpdateWaitTime()
@@ -79,8 +81,6 @@ public abstract class Manager : MonoBehaviour
 		instance = this;
 		ResetWaitTime();
 		pieceScale = 512;
-		gameOverPanel.gameObject.SetActive(false);
-		status.gameObject.SetActive(false);
 	}
 
 	// Use this for initialization
@@ -103,59 +103,9 @@ public abstract class Manager : MonoBehaviour
 	{
 		if (ship != null)
 		{
-			if (Time.timeScale != 0)
+			if (IsGaming() && IsOperating())
 			{
-				if (!IsOperating())
-				{
-					if (WaitTime <= 3.0f)
-					{
-						if (!status.gameObject.activeSelf)
-						{
-							status.gameObject.SetActive(true);
-						}
-						string statusText;
-						if (IsPaddlingLeft())
-						{
-							statusText = "左侧准备";
-						}
-						else if (IsPaddlingRight())
-						{
-							statusText = "右侧准备";
-						}
-						else
-						{
-							statusText = "准备出发";
-						}
-						UpdateStatusBar(statusText, WaitTime / 3.0f);
-					}
-					else if (status.gameObject.activeSelf)
-					{
-						status.gameObject.SetActive(false);
-					}
-				}
-				else if (ship.IsInvincible())
-				{
-					if (!status.gameObject.activeSelf)
-					{
-						status.gameObject.SetActive(true);
-					}
-					UpdateStatusBar("无敌", ship.InvincibleTime / ship.invincibleTimeBase);
-				}
-				else
-				{
-					if (status.gameObject.activeSelf)
-					{
-						status.gameObject.SetActive(false);
-					}
-				}
-				if (IsOperating())
-				{
-					gameTime += Time.deltaTime;
-				}
-			}
-			else if (status.gameObject.activeSelf)
-			{
-				status.gameObject.SetActive(false);
+				gameTime += Time.deltaTime;
 			}
 			if (NetHub.instance.isServer)
 			{
@@ -182,12 +132,6 @@ public abstract class Manager : MonoBehaviour
 				}
 			}
 		}
-	}
-
-	public void UpdateStatusBar(string name, float size)
-	{
-		statusName.text = name;
-		statusTime.localScale = new Vector3(size, 1, 1);
 	}
 
 	public void RegisterShip(Ship ship_to_register)
@@ -303,6 +247,11 @@ public abstract class Manager : MonoBehaviour
 
 	public static void DefaultCrashHandler(ShipCollider shipCollider, Collider obstacleCollider)
 	{
+	}
+
+	public static void DefaultResultStringHandler(string result)
+	{
+		Debug.Log(result);
 	}
 
 }

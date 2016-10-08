@@ -3,4 +3,5 @@
     Unset,
     Classic,
     Competitive,
+	Boom,
 }

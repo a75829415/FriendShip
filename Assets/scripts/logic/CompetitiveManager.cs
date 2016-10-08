@@ -16,12 +16,6 @@ public class CompetitiveManager : Manager {
 	public ShipCollider leftCollider;
 	public ShipCollider rightCollider;
 
-	public RectTransform hud;
-	public Text hudLeftHealth;
-	public Text hudLeftHealthValue;
-	public Text hudRightHealth;
-	public Text hudRightHealthValue;
-
 	public uint currentLeftHealth;
 	public uint currentRightHealth;
 
@@ -32,10 +26,20 @@ public class CompetitiveManager : Manager {
 		draw
 	}
 
+	public override bool IsObstacle(Collider collider)
+	{
+		return !System.Object.ReferenceEquals(leftCollider, collider) && !System.Object.ReferenceEquals(rightCollider, collider);
+	}
+
 	public override bool IsGaming()
 	{
 		return currentLeftHealth > 0 && currentRightHealth > 0 && ship != null;
     }
+
+	public override GameMode GetGameMode()
+	{
+		return GameMode.Competitive;
+	}
 
 	public bool IsSinglePlayerMode()
 	{
@@ -45,7 +49,6 @@ public class CompetitiveManager : Manager {
 	void Awake()
 	{
 		base.AwakeWorkaround();
-		hud.gameObject.SetActive(false);
 	}
 
 	// Use this for initialization
@@ -64,13 +67,6 @@ public class CompetitiveManager : Manager {
 	// Update is called once per frame
 	void Update () {
 		base.UpdateWorkaround();
-		if (!hud.gameObject.activeSelf && IsGaming())
-		{
-			uiCanvas.worldCamera = playerCamera;
-			hud.gameObject.SetActive(true);
-		}
-		hudLeftHealthValue.text = currentLeftHealth + "/" + leftHealth;
-		hudRightHealthValue.text = currentRightHealth + "/" + rightHealth;
 	}
 
 	public override void InitializeShipCollider()
@@ -86,16 +82,6 @@ public class CompetitiveManager : Manager {
 	public override void NotifyControlMode(ShipControlMode controlMode)
 	{
 		base.NotifyControlMode(controlMode);
-		if (IsPaddlingLeft())
-		{
-			hudLeftHealth.color = Color.red;
-			hudRightHealth.color = Color.black;
-		}
-		else if (IsPaddlingRight())
-		{
-			hudLeftHealth.color = Color.black;
-			hudRightHealth.color = Color.red;
-		}
 	}
 
 	public override void NotifyCrash(ShipCollider shipCollider, Collider obstacleCollider)
@@ -131,7 +117,6 @@ public class CompetitiveManager : Manager {
 	public void GameOver(float time, uint lHealth, uint rHealth)
 	{
 		Time.timeScale = 0.0f;
-		hud.gameObject.SetActive(false);
 		gameOverHandler(this, time, lHealth, rHealth);
     }
 
@@ -148,21 +133,40 @@ public class CompetitiveManager : Manager {
 		return Winner.draw;
 	}
 
-	public bool IsWinner(Winner winner)
+	public bool WinAsLeft(Winner winner)
 	{
 		return winner == Winner.left && IsPaddlingLeft();
+    }
+
+	public bool WinAsRight(Winner winner)
+	{
+		return winner == Winner.right && IsPaddlingRight();
+	}
+
+	public bool IsWinner(Winner winner)
+	{
+		return WinAsLeft(winner) || WinAsRight(winner);
+	}
+
+	public bool LoseAsLeft(Winner winner)
+	{
+		return winner == Winner.right && IsPaddlingLeft();
+	}
+
+	public bool LoseAsRight(Winner winner)
+	{
+		return winner == Winner.left && IsPaddlingRight();
 	}
 
 	public bool IsLoser(Winner winner)
 	{
-		return winner == Winner.right && IsPaddlingRight();
+		return LoseAsLeft(winner) || LoseAsRight(winner);
 	}
 
 	public static void DefaultGameOverHandler(CompetitiveManager manager, float time, uint lHealth, uint rHealth)
 	{
 		Debug.Log(lHealth + ", " + rHealth);
 		CompetitiveManager competitiveManager = (CompetitiveManager)(manager);
-        manager.gameOverPanel.gameObject.SetActive(true);
 		string result;
 		Winner winner = DeterminesWinner(lHealth, rHealth);
 		if (competitiveManager.IsWinner(winner))
@@ -196,7 +200,7 @@ public class CompetitiveManager : Manager {
 				throw new System.Exception("Conflict result");
 			}
 		}
-        manager.resultText.text = result;
+		manager.resultStringHandler(result);
 	}
 
 }
