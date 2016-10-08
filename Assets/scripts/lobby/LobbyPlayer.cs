@@ -15,6 +15,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
             handler.sendPlayerNotReady = SendNotReadyToBeginMessage;
         }
         readyToBegin = false;
+        playerInfo.GetComponent<PlayerInfoUIHandler>().SetPlayerReady(false);
     }
 
     public override void OnStartAuthority()
