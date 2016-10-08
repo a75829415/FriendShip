@@ -9,7 +9,7 @@ public class ChooseLobbyUIHandler : MonoBehaviour
     public static ChooseLobbyUIHandler instance;
 
     public RectTransform chooseLobbyPanel;
-    public RectTransform lobbysLayout;
+    public RectTransform lobbiesLayout;
     public RectTransform lobbyInfoPrefab;
     public InputField searchServerInputField;
 
@@ -50,7 +50,7 @@ public class ChooseLobbyUIHandler : MonoBehaviour
     {
         RectTransform lobbyInfo = Instantiate(lobbyInfoPrefab);
         lobbyInfo.GetComponent<LobbyInfoUIHandler>().Initialize(address, mode, playerNumber);
-        lobbyInfo.SetParent(lobbysLayout, false);
+        lobbyInfo.SetParent(lobbiesLayout, false);
         servers.Add(address, lobbyInfo);
     }
 

@@ -141,7 +141,7 @@ GameObject:
   - 222: {fileID: 222000012220639480}
   - 114: {fileID: 114000010837510622}
   m_Layer: 5
-  m_Name: LobbysPanel
+  m_Name: LobbiesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -488,7 +488,7 @@ GameObject:
   - 114: {fileID: 114000013529239082}
   - 114: {fileID: 114000013355684910}
   m_Layer: 5
-  m_Name: LobbysScrollRect
+  m_Name: LobbiesScrollRect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -845,7 +845,7 @@ GameObject:
   - 114: {fileID: 114000010469548960}
   - 114: {fileID: 114000010017254144}
   m_Layer: 5
-  m_Name: LobbysScrollbar
+  m_Name: LobbiesScrollbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1154,7 +1154,7 @@ GameObject:
   - 114: {fileID: 114000012865188400}
   - 114: {fileID: 114000011377045448}
   m_Layer: 5
-  m_Name: LobbysLayout
+  m_Name: LobbiesLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1528,7 +1528,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114000010942831684}
   m_HandleRect: {fileID: 224000013804879304}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2388,8 +2388,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 89674c120c5d08c48b348d6e3f8f4558, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3186,7 +3186,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5756,7 +5756,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 2.1400614, y: 0}
-  m_SizeDelta: {x: -92, y: -580.0653}
+  m_SizeDelta: {x: -92, y: -580}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224000012675896776
 RectTransform:
@@ -6167,7 +6167,7 @@ RectTransform:
   m_Father: {fileID: 224000012276306278}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 0.9999999}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
