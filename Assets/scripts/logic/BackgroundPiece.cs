@@ -36,7 +36,8 @@ public class BackgroundPiece : MoveableObject {
 
 	private void RegenerateObstacle(int i, int j)
 	{
-		obstacles[i, j].position = new Vector3(GenerateObstacleX(i), obstacles[i, j].position.y, GenerateObstacleZ(j));
+		obstacles[i, j].gameObject.SetActive(true);
+        obstacles[i, j].position = new Vector3(GenerateObstacleX(i), obstacles[i, j].position.y, GenerateObstacleZ(j));
 		float scale = Random.Range(minScale, maxScale);
         float xScale = scale / reservedTransform.lossyScale.x;
 		float yScale = scale / reservedTransform.lossyScale.z / 8.0f;
