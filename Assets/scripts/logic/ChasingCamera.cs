@@ -183,8 +183,15 @@ public class ChasingCamera : MoveableObject {
 
 	public static void SetAsMiniView(Camera camera)
 	{
-		camera.depth = 0;
-		camera.rect = new Rect(0.73f, 0.718f, 0.25f, 0.25f);
+		if (Configuration.enableMiniView)
+		{
+			camera.depth = 0;
+		}
+		else
+		{
+			camera.depth = -2;
+		}
+		camera.rect = new Rect(0.02f, 0.02f, Configuration.MiniViewSize, Configuration.MiniViewSize);
 	}
 
 }

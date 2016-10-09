@@ -3,6 +3,7 @@
 public static class Configuration {
 	public static readonly int[] playerNumberSet = { 1, 2, 4 };
 	public static readonly float[] invincibleTimeSet = { 3.0f, 5.0f, 10.0f };
+	public static readonly float[] miniViewSizeSet = { 0.20f, 0.25f, 0.30f, 0.35f };
 
 	public static uint health = 3;
 
@@ -10,6 +11,9 @@ public static class Configuration {
 	public static int indexOfInvincibleTime = 0;
 
 	public static GameMode mode = GameMode.Classic;
+
+	public static bool enableMiniView = true;
+	public static int indexOfMiniViewSize = 2;
 
 	public static int NumberOfPlayers
 	{
@@ -32,6 +36,18 @@ public static class Configuration {
 				indexOfInvincibleTime = 0;
 			}
 			return invincibleTimeSet[indexOfInvincibleTime];
+		}
+	}
+
+	public static float MiniViewSize
+	{
+		get
+		{
+			if (indexOfMiniViewSize < 0 || indexOfMiniViewSize >= miniViewSizeSet.Length)
+			{
+				indexOfMiniViewSize = 2;
+			}
+			return miniViewSizeSet[indexOfMiniViewSize];
 		}
 	}
 
