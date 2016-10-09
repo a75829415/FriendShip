@@ -112,6 +112,7 @@ public class LobbyManager : NetworkLobbyManager
     public override void OnLobbyClientConnect(NetworkConnection conn)
     {
         PopupUIHandler.instance.OnOkButtonClick();
+        LobbyUISystemInitializer.instance.SetPanelToShow(ChooseLobbyUIHandler.instance.currentPanel);
         loseConnectionDelegate = () =>
         {
             PopupUIHandler.instance.Popup("糟了，房主的Note 7好像炸了\n怎么都没法重新连接上( ╯□╰ )...");
@@ -160,7 +161,7 @@ public class LobbyManager : NetworkLobbyManager
             }
             Instantiate(gameNetHub);
             NetworkServer.Spawn(NetHub.instance.gameObject);
-            ChangeToPlayScene();
+            ServerChangeScene(playScene);
         }
         else
         {
@@ -168,54 +169,31 @@ public class LobbyManager : NetworkLobbyManager
         }
     }
 
-    public ShipControlMode GetShipControlMode(NetworkConnection conn)
-    {
-        ShipControlMode mode;
-        return controlModeAllocation.TryGetValue(conn.connectionId, out mode) ? mode : ShipControlMode.Unknown;
-    }
-
-    public void ChangeToPlayScene()
-    {
-        (lobbySlots[0] as LobbyPlayer).RpcGameStart();
-        ServerChangeScene(playScene);
-    }
-
     public void ChangeToLobbyScene(uint reason)
     {
         switch (reason)
         {
             case SINGLE_GAME_OVER:
-                LobbyUIHandler.instance.quitRoomDelegate();
+                stopGameDelegate();
+                break;
+            case DOUBLE_GAME_OVER:
+                ServerChangeScene(lobbyScene);
                 break;
             case LOSE_CONNECTION_TO_SERVER:
                 loseConnectionDelegate();
-                LobbyUIHandler.instance.quitRoomDelegate();
-                break;
-            case DOUBLE_GAME_OVER:
-                (lobbySlots[0] as LobbyPlayer).RpcReturnLobby();
-                ServerChangeScene(lobbyScene);
+                StopGame();
                 break;
             case LOSE_CONNECTION_TO_CLIENT:
                 loseConnectionDelegate();
-                (lobbySlots[0] as LobbyPlayer).RpcReturnLobby();
                 ServerChangeScene(lobbyScene);
                 break;
-
         }
     }
 
-    public void GameStart()
+    public ShipControlMode GetShipControlMode(NetworkConnection conn)
     {
-        LobbyUIHandler.instance.ShowGUI(false);
-    }
-
-    public void ReturnLobby()
-    {
-        LobbyUIHandler.instance.ShowGUI(true);
-        if (NetHub.instance != null)
-        {
-            Destroy(NetHub.instance.gameObject);
-        }
+        ShipControlMode mode;
+        return controlModeAllocation.TryGetValue(conn.connectionId, out mode) ? mode : ShipControlMode.Unknown;
     }
 
     // ---- UI event hooks ----
@@ -248,11 +226,10 @@ public class LobbyManager : NetworkLobbyManager
             ChooseLobbyUIHandler.instance.ShowGUI(true);
             LobbyUIHandler.instance.ShowGUI(false);
         };
-        LobbyUIHandler.instance.quitRoomDelegate = () =>
+        LobbyUIHandler.quitRoomDelegate = () =>
         {
             ChooseLobbyUIHandler.instance.ShowGUI(true);
             LobbyUIHandler.instance.ShowGUI(false);
-            StopGame();
         };
         StartClient().Connect(address, networkPort);
         PopupUIHandler.instance.Popup("全速连接中...", false);

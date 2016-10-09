@@ -2,29 +2,25 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LobbyUIHandler : MonoBehaviour
+public class LobbyUIHandler : UIHandlerBase
 {
+    public delegate void VoidDelegate();
+    public static VoidDelegate quitRoomDelegate;
     public static LobbyUIHandler instance;
 
-    public delegate void VoidDelegate();
-    public VoidDelegate quitRoomDelegate;
-    public RectTransform lobbyPanel;
+    private static Dictionary<RectTransform, bool> players = new Dictionary<RectTransform, bool>();
+    private static bool isServer;
+    private static string address;
+
     public RectTransform playersLayout;
     public RectTransform playerInfoPrefab;
     public Text titleText;
     public Button startGameButton;
 
-    private Dictionary<RectTransform, bool> players;
-
     void Awake()
     {
         instance = this;
-        players = new Dictionary<RectTransform, bool>();
-    }
-
-    public void ShowGUI(bool showGUI)
-    {
-        lobbyPanel.gameObject.SetActive(showGUI);
+        Initialize(isServer, address);
     }
 
     public void Initialize(bool isServer, string address)
@@ -32,7 +28,10 @@ public class LobbyUIHandler : MonoBehaviour
         List<RectTransform> buffer = new List<RectTransform>(players.Keys);
         foreach (RectTransform player in buffer)
         {
-            Destroy(player.gameObject);
+            if (player != null)
+            {
+                Destroy(player.gameObject);
+            }
         }
         players.Clear();
         for (int i = 0; i < LobbyManager.instance.minPlayers; i++)
@@ -44,9 +43,11 @@ public class LobbyUIHandler : MonoBehaviour
         }
         titleText.text = isServer ? "我的房间" : address + "的房间";
         startGameButton.gameObject.SetActive(isServer);
+        LobbyUIHandler.isServer = isServer;
+        LobbyUIHandler.address = address;
     }
 
-    public RectTransform AddPlayer()
+    public RectTransform PlayerEnter()
     {
         List<RectTransform> buffer = new List<RectTransform>(players.Keys);
         foreach (RectTransform player in buffer)
@@ -62,7 +63,7 @@ public class LobbyUIHandler : MonoBehaviour
         return null;
     }
 
-    public void RemovePlayer(RectTransform playerInfo)
+    public void PlayerExit(RectTransform playerInfo)
     {
         playerInfo.GetComponent<PlayerInfoUIHandler>().Initialize();
         players[playerInfo] = false;
@@ -72,6 +73,7 @@ public class LobbyUIHandler : MonoBehaviour
     public void OnReturnButtonClick()
     {
         quitRoomDelegate();
+        LobbyManager.instance.StopGame();
     }
 
     public void OnStartGameButtonClick()

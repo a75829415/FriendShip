@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class ChooseLobbyUIHandler : MonoBehaviour
+public class ChooseLobbyUIHandler : UIHandlerBase
 {
     public static ChooseLobbyUIHandler instance;
-
-    public RectTransform chooseLobbyPanel;
+    
     public RectTransform lobbiesLayout;
     public RectTransform lobbyInfoPrefab;
     public InputField searchServerInputField;
@@ -41,11 +40,6 @@ public class ChooseLobbyUIHandler : MonoBehaviour
         }
     }
 
-    public void ShowGUI(bool showGUI)
-    {
-        chooseLobbyPanel.gameObject.SetActive(showGUI);
-    }
-
     public void AddLobby(string address, string mode, string playerNumber)
     {
         RectTransform lobbyInfo = Instantiate(lobbyInfoPrefab);
@@ -69,6 +63,7 @@ public class ChooseLobbyUIHandler : MonoBehaviour
             PopupUIHandler.instance.Popup("咦，这个IP地址的格式怎么看上去好像不太对...");
             return;
         }
+        LobbyUISystemInitializer.instance.SetPanelToShow(currentPanel);
         LobbyManager.instance.JoinGame(searchServerInputField.text);
         LobbyUIHandler.instance.Initialize(false, searchServerInputField.text);
         LobbyUIHandler.instance.ShowGUI(true);
