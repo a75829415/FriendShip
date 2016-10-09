@@ -238,11 +238,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11452464, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
-      propertyPath: mainCollider
-      value: 
+    - target: {fileID: 135000010680575224, guid: da053e4bfd30e574aa0a85bb3b2f5984,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 135000010680575224, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1423144972

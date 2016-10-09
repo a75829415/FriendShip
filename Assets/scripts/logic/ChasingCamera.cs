@@ -5,12 +5,25 @@ public class ChasingCamera : MoveableObject {
 	public Ship ship;
 	public Camera reservedCamera;
 
+	public Transform rearViewCameraTransfrom;
+	public Camera rearViewCamera;
+
 	public float maxRadiansDeltaPerSecond;
 	public float maxMagnitudeDeltaPerSecond;
 
 	private Vector3 previousPosition = new Vector3(0, 16, 13);
 	private Vector3 previousRotation = new Vector3(90, 0, 0);
 	private float previousAngle = 0.0f;
+
+	private bool IsPreparing()
+	{
+		return Manager.instance.WaitTime > 3.0f;
+	}
+
+	private bool RearViewOnPosition()
+	{
+		return Manager.instance.WaitTime <= 1.5f;
+    }
 
 	private float GetMaxRadiansDelta()
 	{
@@ -41,6 +54,8 @@ public class ChasingCamera : MoveableObject {
 		base.StartWorkaround();
 		Manager.instance.playerCamera = reservedCamera;
 		gameObject.SetActive(true);
+		CheckControlMode();
+		//RearCamera.SetActive(Manager.instance.GetGameMode() == GameMode.Boom);
     }
 	
 	// Update is called once per frame
@@ -48,6 +63,7 @@ public class ChasingCamera : MoveableObject {
 		UpdateCameraPosition();
 		UpdateCameraRotation();
 		UpdateCameraFOV();
+		UpdateRearViewCamera();
 		UpdateCameraVerticalRotation();
 	}
 
@@ -106,6 +122,69 @@ public class ChasingCamera : MoveableObject {
 			Vector3.up,
 			actualAngle);
 		previousAngle = actualAngle;
+	}
+
+	public void UpdateRearViewCamera()
+	{
+		Vector3 mirrorPosition = new Vector3(reservedTransform.localPosition.x,
+			reservedTransform.localPosition.y, -reservedTransform.localPosition.z);
+		Vector3 mirrorRotation = new Vector3(reservedTransform.localEulerAngles.x, 180.0f, reservedTransform.localEulerAngles.z);
+		Vector3 finalPosition = Vector3.zero;
+		Vector3 finalRotation = new Vector3(ship.boomerElevation, 180.0f, 0.0f);
+        if (IsPreparing())
+		{
+			rearViewCameraTransfrom.localPosition = mirrorPosition;
+			rearViewCameraTransfrom.localEulerAngles = mirrorRotation;
+            rearViewCamera.fieldOfView = reservedCamera.fieldOfView;
+		}
+		else
+		{
+			if (RearViewOnPosition())
+			{
+				rearViewCameraTransfrom.localPosition = finalPosition;
+				rearViewCameraTransfrom.localEulerAngles = finalRotation;
+            }
+			else
+			{
+				float process = (3.0f - Manager.instance.WaitTime) / 1.5f;
+				rearViewCameraTransfrom.localPosition = (finalPosition - mirrorPosition) * process + mirrorPosition;
+                rearViewCameraTransfrom.localEulerAngles = (finalRotation - mirrorRotation) * process + mirrorRotation;
+			}
+		}
+		if (Vector3.Distance(rearViewCameraTransfrom.localPosition, finalPosition) < 1.0f)
+		{
+			rearViewCamera.cullingMask = rearViewCamera.cullingMask & ~(1 << LayerMask.NameToLayer("Ignore in FP"));
+		}
+		else
+		{
+			rearViewCamera.cullingMask = rearViewCamera.cullingMask | (1 << LayerMask.NameToLayer("Ignore in FP"));
+		}
+	}
+
+	public void CheckControlMode()
+	{
+		if (Manager.instance.localControlMode == ShipControlMode.FireOnly)
+		{
+			SetAsMainView(rearViewCamera);
+			SetAsMiniView(reservedCamera);
+		}
+		else
+		{
+			SetAsMainView(reservedCamera);
+			SetAsMiniView(rearViewCamera);
+		}
+	}
+
+	public static void SetAsMainView(Camera camera)
+	{
+		camera.depth = -1;
+		camera.rect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
+	}
+
+	public static void SetAsMiniView(Camera camera)
+	{
+		camera.depth = 0;
+		camera.rect = new Rect(0.73f, 0.718f, 0.25f, 0.25f);
 	}
 
 }

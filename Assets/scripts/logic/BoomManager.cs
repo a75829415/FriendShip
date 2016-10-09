@@ -27,6 +27,11 @@ public class BoomManager : Manager {
 		return currentHealth > 0 && ship != null;
 	}
 
+	public override GameMode GetGameMode()
+	{
+		return GameMode.Boom;
+	}
+
 	void Awake()
 	{
 		base.AwakeWorkaround();
