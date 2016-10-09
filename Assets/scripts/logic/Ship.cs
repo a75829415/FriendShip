@@ -6,10 +6,15 @@ public class Ship : MoveableObject
 	public Rigidbody reservedRigidbody;
 	public ConstantForce reservedBackgroundForce;
 
+	public Boomer boomerPrototype;
+
 	public float accelerationBase;
 	public float sideAccelerationBase;
 	public float accelerationGrowth;
 	public float invincibleTimeBase;
+	public float boomerInitialSpeed;
+
+	public float boomerElevation = 0.0f;
 
 	private float invincibleTime;
 
@@ -148,5 +153,16 @@ public class Ship : MoveableObject
 		}
 	}
 
+	public void BoomABoomer()
+	{
+		if (Manager.instance.IsOperating())
+		{
+			Boomer boomer = Instantiate(boomerPrototype);
+			boomer.reservedTransform.position = reservedTransform.position;
+			float vertical = boomerInitialSpeed * Mathf.Sin(boomerElevation);
+			float horizontal = boomerInitialSpeed * Mathf.Cos(boomerElevation);
+			boomer.reservedRigidBody.velocity = horizontal * (-reservedTransform.forward) + new Vector3(0, vertical, 0) + reservedRigidbody.velocity;
+		}
+    }
 
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Boomer : MoveableObject
 {
+	public Rigidbody reservedRigidBody;
 	public Collider reservedCollider;
 
 	void Awake()

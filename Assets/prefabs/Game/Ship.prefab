@@ -254,6 +254,8 @@ MonoBehaviour:
   reservedTransform: {fileID: 0}
   reservedRigidbody: {fileID: 5484704}
   reservedBackgroundForce: {fileID: 7535310}
+  boomerPrototype: {fileID: 114000012093540560, guid: 27765df57046576469444f5b4ba0b68b,
+    type: 2}
   accelerationBase: 50
   sideAccelerationBase: 0.002
   accelerationGrowth: 0.1

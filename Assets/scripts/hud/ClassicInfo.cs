@@ -24,7 +24,6 @@ public class ClassicInfo : Info {
 	// Update is called once per frame
 	void Update() {
 		base.UpdateWorkaround();
-		Debug.Log("Updating!");
 		if (IsValid())
 		{
 			if (Manager.instance.IsGaming())

@@ -107,7 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reservedTransform: {fileID: 0}
-  reservedCollider: {fileID: 0}
+  reservedRigidBody: {fileID: 54000011350125582}
+  reservedCollider: {fileID: 135000011523812148}
 --- !u!135 &135000011523812148
 SphereCollider:
   m_ObjectHideFlags: 1

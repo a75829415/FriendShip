@@ -9,10 +9,6 @@ public class BoomManager : Manager {
 
 	public ShipCollider shipCollider;
 
-	public RectTransform hud;
-	public Text hudScore;
-	public Text hudHealth;
-
 	public GameOverHandler gameOverHandler = DefaultGameOverHandler;
 
 	public uint health;
@@ -34,7 +30,6 @@ public class BoomManager : Manager {
 	void Awake()
 	{
 		base.AwakeWorkaround();
-		hud.gameObject.SetActive(false);
 	}
 
 	// Use this for initialization
@@ -89,7 +84,6 @@ public class BoomManager : Manager {
 	public void GameOver(float time, uint score)
 	{
 		Time.timeScale = 0.0f;
-		hud.gameObject.SetActive(false);
 		gameOverHandler(this, time, score);
 	}
 
