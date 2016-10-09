@@ -100,6 +100,6 @@ public class PlayerInfoUIHandler : MonoBehaviour
 
     public void PlayerExit()
     {
-        LobbyUIHandler.instance.RemovePlayer(GetComponent<RectTransform>());
+        LobbyUIHandler.instance.PlayerExit(GetComponent<RectTransform>());
     }
 }

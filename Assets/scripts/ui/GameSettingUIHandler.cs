@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GameSettingUIHandler : MonoBehaviour
+public class GameSettingUIHandler : UIHandlerBase
 {
     public static GameSettingUIHandler instance;
 
-    public RectTransform gameSettingPanel;
     public Slider healthSlider;
     public Text healthValueText;
     public Slider playerNumberSlider;
@@ -18,8 +17,9 @@ public class GameSettingUIHandler : MonoBehaviour
         instance = this;
     }
 
-    public void ShowGUI(bool showGUI)
+    public override void ShowGUI(bool showGUI)
     {
+        base.ShowGUI(showGUI);
         if (showGUI)
         {
             classicToggle.isOn = Configuration.mode == GameMode.Classic;
@@ -29,7 +29,6 @@ public class GameSettingUIHandler : MonoBehaviour
             playerNumberSlider.value = Configuration.indexOfPlayers;
             playerNumberValueText.text = Configuration.NumberOfPlayers.ToString();
         }
-        gameSettingPanel.gameObject.SetActive(showGUI);
     }
 
     // ---- UI event handlers ----
@@ -57,16 +56,24 @@ public class GameSettingUIHandler : MonoBehaviour
             LobbyManager.instance.Mode = Configuration.mode = GameMode.Competitive;
         }
         LobbyManager.instance.minPlayers = Configuration.playerNumberSet[(int)playerNumberSlider.value];
-        LobbyUIHandler.instance.quitRoomDelegate = () =>
+        LobbyUIHandler.quitRoomDelegate = () =>
         {
+            LobbyUISystemInitializer.instance.SetPanelToShow(WelcomeUIHandler.instance.currentPanel);
             WelcomeUIHandler.instance.ShowGUI(true);
             LobbyUIHandler.instance.ShowGUI(false);
-            LobbyManager.instance.StopGame();
         };
+        if (LobbyManager.instance.minPlayers == 1)
+        {
+            LobbyUISystemInitializer.instance.SetPanelToShow(WelcomeUIHandler.instance.currentPanel);
+        }
+        else
+        {
+            LobbyUISystemInitializer.instance.SetPanelToShow(LobbyUIHandler.instance.currentPanel);
+            LobbyUIHandler.instance.Initialize(true, string.Empty);
+            LobbyUIHandler.instance.ShowGUI(true);
+            ShowGUI(false);
+        }
         LobbyManager.instance.StartGame();
-        LobbyUIHandler.instance.Initialize(true, string.Empty);
-        LobbyUIHandler.instance.ShowGUI(true);
-        ShowGUI(false);
     }
 
     public void OnHealthChange()

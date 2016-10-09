@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class WelcomeUIHandler : MonoBehaviour
+public class WelcomeUIHandler : UIHandlerBase
 {
     public static WelcomeUIHandler instance;
 
-    public RectTransform welcomePanel;
     public Text titleText;
     public Button startGameButton;
     public Button newProductButton;
@@ -19,15 +18,6 @@ public class WelcomeUIHandler : MonoBehaviour
     void Awake()
     {
         instance = this;
-        if (LobbyUISystemInitializer.currentActivePanel == null)
-        {
-            LobbyUISystemInitializer.currentActivePanel = welcomePanel;
-        }
-    }
-
-    public void ShowGUI(bool showGUI)
-    {
-        welcomePanel.gameObject.SetActive(showGUI);
     }
 
     // ---- UI event handlers ----
@@ -47,7 +37,7 @@ public class WelcomeUIHandler : MonoBehaviour
         newProductPanel.gameObject.SetActive(true);
         gameReferralPanel.gameObject.SetActive(false);
         contactUsPanel.gameObject.SetActive(false);
-        PopupUIHandler.instance.Popup("新功能很快就会上线哦o(*￣▽￣*)ブ");
+        PopupUIHandler.instance.Popup("新功能很快就会上线哦\no(*￣▽￣*)ブ");
     }
 
     public void OnGameReferralButtonClick()

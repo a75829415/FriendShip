@@ -9,13 +9,17 @@ public class LobbyPlayer : NetworkLobbyPlayer
     {
         if (playerInfo == null)
         {
-            playerInfo = LobbyUIHandler.instance.AddPlayer();
+            playerInfo = LobbyUIHandler.instance.PlayerEnter();
             PlayerInfoUIHandler handler = playerInfo.GetComponent<PlayerInfoUIHandler>();
             handler.sendPlayerReady = SendReadyToBeginMessage;
             handler.sendPlayerNotReady = SendNotReadyToBeginMessage;
         }
         readyToBegin = false;
         playerInfo.GetComponent<PlayerInfoUIHandler>().SetPlayerReady(false);
+        if (!isServer && isLocalPlayer)
+        {
+            playerInfo.GetComponent<PlayerInfoUIHandler>().ShowReadyButton();
+        }
     }
 
     public override void OnStartAuthority()
@@ -24,7 +28,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
         {
             SendReadyToBeginMessage();
         }
-        else
+        else if (playerInfo != null)
         {
             playerInfo.GetComponent<PlayerInfoUIHandler>().ShowReadyButton();
         }
@@ -41,17 +45,5 @@ public class LobbyPlayer : NetworkLobbyPlayer
         {
             playerInfo.GetComponent<PlayerInfoUIHandler>().PlayerExit();
         }
-    }
-
-    [ClientRpc]
-    public void RpcGameStart()
-    {
-        LobbyManager.instance.GameStart();
-    }
-
-    [ClientRpc]
-    public void RpcReturnLobby()
-    {
-        LobbyManager.instance.ReturnLobby();
     }
 }

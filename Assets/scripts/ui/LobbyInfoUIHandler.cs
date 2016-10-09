@@ -47,6 +47,7 @@ public class LobbyInfoUIHandler : MonoBehaviour
     public void OnLobbyInfoButtonClick()
     {
         LobbyManager.instance.Mode = lobbyGameMode;
+        LobbyUISystemInitializer.instance.SetPanelToShow(LobbyUIHandler.instance.currentPanel);
         LobbyManager.instance.JoinGame(addressText.text);
         LobbyUIHandler.instance.Initialize(false, addressText.text);
         LobbyUIHandler.instance.ShowGUI(true);
