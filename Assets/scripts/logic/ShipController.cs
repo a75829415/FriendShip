@@ -8,6 +8,11 @@ public class ShipController : NetworkBehaviour
     [SyncVar]
     private ShipControlMode controlMode;
 
+	public static bool ModeIsFireable(ShipControlMode mode)
+	{
+		return mode == ShipControlMode.FireOnly;
+	}
+
     // Use this for initialization
     void Start()
     {
