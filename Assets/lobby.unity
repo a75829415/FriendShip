@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ad7fac75b0b5c49a3a3af25d688263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  welcomePanel: {fileID: 155887672}
+  currentPanel: {fileID: 155887672}
   titleText: {fileID: 874271239}
   startGameButton: {fileID: 653818303}
   newProductButton: {fileID: 1595756347}
@@ -691,7 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e731f8a13b6074a867ce8e524bbb6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyPanel: {fileID: 175135417}
+  currentPanel: {fileID: 175135417}
   playersLayout: {fileID: 699360535}
   playerInfoPrefab: {fileID: 224000012012076378, guid: 175033297dbda9d498abc1cb66ff170b,
     type: 2}
@@ -3110,7 +3110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80bb665a3aad0ef44ae9699d6fd10530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chooseLobbyPanel: {fileID: 883853795}
+  currentPanel: {fileID: 883853795}
   lobbiesLayout: {fileID: 127859284}
   lobbyInfoPrefab: {fileID: 224000011599557388, guid: 7f660ba755297fb4bb91ab573bbf6fa6,
     type: 2}
@@ -5417,7 +5417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5257f1afb34ee5248aa8053c19de0994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSettingPanel: {fileID: 1664298782}
+  currentPanel: {fileID: 1664298782}
   healthSlider: {fileID: 1905401394}
   healthValueText: {fileID: 1732495638}
   playerNumberSlider: {fileID: 915416185}
@@ -6365,7 +6365,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 986062901}
   m_HandleRect: {fileID: 986062900}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
