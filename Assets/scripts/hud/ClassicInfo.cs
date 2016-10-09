@@ -24,17 +24,18 @@ public class ClassicInfo : Info {
 	// Update is called once per frame
 	void Update() {
 		base.UpdateWorkaround();
+		Debug.Log("Updating!");
 		if (IsValid())
 		{
 			if (Manager.instance.IsGaming())
 			{
-				reservedTransform.gameObject.SetActive(true);
+				Show();
 				timeValue.text = Manager.TimeToString(Manager.instance.GameTime);
 				healthValue.text = ((ClassicManager)(Manager.instance)).currentHealth + "/" + ((ClassicManager)(Manager.instance)).health;
 			}
 			else
 			{
-				reservedTransform.gameObject.SetActive(false);
+				Hide();
 			}
 		}
 	}

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Info : MonoBehaviour {
 	public RectTransform reservedTransform;
+	public RectTransform reservedSub;
 
 	public virtual bool IsValid()
 	{
@@ -34,6 +35,16 @@ public class Info : MonoBehaviour {
 
 	public void UpdateWorkaround()
 	{
+	}
+
+	public void Show()
+	{
+		reservedSub.gameObject.SetActive(true);
+    }
+
+	public void Hide()
+	{
+		reservedSub.gameObject.SetActive(false);
 	}
 
 }

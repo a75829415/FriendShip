@@ -32,7 +32,7 @@ public class CompetitiveInfo : Info {
 		{
 			if (Manager.instance.IsGaming())
 			{
-				reservedTransform.gameObject.SetActive(true);
+				Show();
 				if (Manager.instance.IsPaddlingLeft())
 				{
 					leftHealth.color = Color.red;
@@ -48,7 +48,7 @@ public class CompetitiveInfo : Info {
 			}
 			else
 			{
-				reservedTransform.gameObject.SetActive(false);
+				Hide();
 			}
 		}
 	}
