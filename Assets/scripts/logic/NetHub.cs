@@ -88,6 +88,12 @@ public class NetHub : NetworkBehaviour {
 	}
 
 	[ClientRpc]
+	public void RpcUpdateBoomer(Boomer.Status[] data)
+	{
+		Boomer.ApplyStatuses(data);
+	}
+
+	[ClientRpc]
 	public void RpcMoveTowardEast()
 	{
 		Manager.instance.MoveTowardEast();
@@ -110,6 +116,12 @@ public class NetHub : NetworkBehaviour {
 	public void RpcMoveTowardNorth()
 	{
 		Manager.instance.MoveTowardNorth();
+	}
+
+	[Command]
+	public void CmdBoomABoomer()
+	{
+		Manager.instance.ship.ServerBoom();
 	}
 
 	void OnDestroy()

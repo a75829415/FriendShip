@@ -6,8 +6,6 @@ public class Ship : MoveableObject
 	public Rigidbody reservedRigidbody;
 	public ConstantForce reservedBackgroundForce;
 
-	public Boomer boomerPrototype;
-
 	public float accelerationBase;
 	public float sideAccelerationBase;
 	public float accelerationGrowth;
@@ -155,15 +153,20 @@ public class Ship : MoveableObject
 
 	public void BoomABoomer()
 	{
+		NetHub.instance.CmdBoomABoomer();
+    }
+
+	public void ServerBoom()
+	{
 		if (Manager.instance.IsOperating())
 		{
-			Boomer boomer = Instantiate(boomerPrototype);
+			Boomer boomer = Boomer.activateABoomer();
 			boomer.reservedTransform.position = reservedTransform.position;
 			float vertical = boomerInitialSpeed * Mathf.Sin(boomerElevation);
 			float horizontal = boomerInitialSpeed * Mathf.Cos(boomerElevation);
 			boomer.reservedRigidBody.velocity = horizontal * (-reservedTransform.forward) + new Vector3(0, vertical, 0) + reservedRigidbody.velocity;
 			reservedRigidbody.velocity = (reservedRigidbody.velocity + horizontal * (reservedTransform.forward));
-        }
-    }
+		}
+	}
 
 }

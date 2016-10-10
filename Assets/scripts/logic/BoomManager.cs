@@ -68,7 +68,7 @@ public class BoomManager : Manager {
 		if (NetHub.instance.isServer && --currentHealth == 0)
 		{
 			UpdateClient();
-			((ClassicNetHub)(NetHub.instance)).RpcNotifyGameOver(GameTime);
+			((BoomNetHub)(NetHub.instance)).RpcNotifyGameOver(GameTime, score);
 		}
 	}
 
@@ -77,7 +77,7 @@ public class BoomManager : Manager {
 		base.UpdateClient();
 		if (NetHub.instance.isServer)
 		{
-			((ClassicNetHub)(NetHub.instance)).RpcUpdateStatus(currentHealth, health);
+			((BoomNetHub)(NetHub.instance)).RpcUpdateStatus(currentHealth, health, score);
 		}
 	}
 

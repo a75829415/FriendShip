@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class Manager : MonoBehaviour
 {
 	public static Manager instance;
+
+	public Boomer boomerPrototype;
 
 	public delegate void ResultStringHandler(string result);
 
@@ -14,6 +17,8 @@ public abstract class Manager : MonoBehaviour
 
 	public Ship ship;
 	public float backgroundScale;
+
+	public List<MoveableObject> toMoveList;
 
 	public Camera playerCamera;
 
@@ -134,9 +139,20 @@ public abstract class Manager : MonoBehaviour
 		}
 	}
 
-	public void RegisterShip(Ship ship_to_register)
+	public void RegisterToMove(MoveableObject toRegister)
 	{
-		ship = ship_to_register;
+		toMoveList.Add(toRegister);
+	}
+
+	public void UnregisterToMove(MoveableObject toUnregister)
+	{
+		toMoveList.Remove(toUnregister);
+    }
+
+	public void RegisterShip(Ship shipToRegister)
+	{
+		ship = shipToRegister;
+		RegisterToMove(ship);
 		InitializeShipCollider();
     }
 
@@ -152,7 +168,8 @@ public abstract class Manager : MonoBehaviour
 				NetHub.instance.RpcUpdateInvincibleTime(ship.InvincibleTime);
 				NetHub.instance.RpcUpdateShip(ship.reservedTransform.position, ship.reservedTransform.eulerAngles, ship.reservedRigidbody.velocity,
 					ship.reservedRigidbody.angularVelocity, ship.reservedBackgroundForce.relativeForce);
-			}
+				NetHub.instance.RpcUpdateBoomer(Boomer.GetStatuses());
+            }
 			NetHub.instance.RpcUpdateGameTime(GameTime);
 		}
     }
@@ -174,7 +191,10 @@ public abstract class Manager : MonoBehaviour
 
 	public void MoveTowardEast()
 	{
-		ship.MoveVertically(PieceScale(), 0);
+		foreach (MoveableObject currentToMove in toMoveList)
+		{
+			currentToMove.MoveVertically(PieceScale(), 0);
+		}
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.x > PieceBound())
@@ -191,7 +211,10 @@ public abstract class Manager : MonoBehaviour
 
 	public void MoveTowardSouth()
 	{
-		ship.MoveVertically(0, -PieceScale());
+		foreach (MoveableObject currentToMove in toMoveList)
+		{
+			currentToMove.MoveVertically(0, -PieceScale());
+		}
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.z < -PieceBound())
@@ -208,7 +231,9 @@ public abstract class Manager : MonoBehaviour
 
 	public void MoveTowardWest()
 	{
-		ship.MoveVertically(-PieceScale(), 0);
+		foreach (MoveableObject currentToMove in toMoveList) {
+			currentToMove.MoveVertically(-PieceScale(), 0);
+		}
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.x < -PieceBound())
@@ -225,7 +250,10 @@ public abstract class Manager : MonoBehaviour
 
 	public void MoveTowardNorth()
 	{
-		ship.MoveVertically(0, PieceScale());
+		foreach (MoveableObject currentToMove in toMoveList)
+		{
+			currentToMove.MoveVertically(0, PieceScale());
+		}
 		foreach (BackgroundPiece currentPiece in Background.instance.backgroundPieces)
 		{
 			if (currentPiece.Position.z > PieceBound())
