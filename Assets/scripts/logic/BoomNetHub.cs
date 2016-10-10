@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BoomNetHub : MonoBehaviour {
+public class BoomNetHub : NetHub {
 
 	// Use this for initialization
 	void Start() {
