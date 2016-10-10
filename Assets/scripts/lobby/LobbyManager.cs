@@ -32,8 +32,11 @@ public class LobbyManager : NetworkLobbyManager
     public delegate void VoidDelegate();
     public VoidDelegate stopGameDelegate;
     public VoidDelegate loseConnectionDelegate;
+
+    [Header("Net Hub Prefabs")]
     public ClassicNetHub classicNetHub;
     public CompetitiveNetHub competitiveNetHub;
+    public BoomNetHub boomNetHub;
 
     private Dictionary<int, ShipControlMode> controlModeAllocation;
     private NetHub gameNetHub;
@@ -54,6 +57,9 @@ public class LobbyManager : NetworkLobbyManager
                     break;
                 case GameMode.Competitive:
                     gameNetHub = competitiveNetHub;
+                    break;
+                case GameMode.Boom:
+                    gameNetHub = boomNetHub;
                     break;
                 default:
                     gameNetHub = null;
@@ -111,6 +117,10 @@ public class LobbyManager : NetworkLobbyManager
 
     public override void OnLobbyClientConnect(NetworkConnection conn)
     {
+        if (minPlayers == 1)
+        {
+            return;
+        }
         PopupUIHandler.instance.OnOkButtonClick();
         LobbyUISystemInitializer.instance.SetPanelToShow(ChooseLobbyUIHandler.instance.currentPanel);
         loseConnectionDelegate = () =>
