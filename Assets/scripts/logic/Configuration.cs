@@ -16,6 +16,8 @@ public static class Configuration {
 	public static bool enableMiniView = true;
 	public static int indexOfMiniViewSize = 2;
 
+    public static bool swapViews = false;
+
 	public static int NumberOfPlayers
 	{
 		get
