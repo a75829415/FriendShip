@@ -103,6 +103,8 @@ MonoBehaviour:
     type: 2}
   competitiveNetHub: {fileID: 114000010518939826, guid: c4651c7e63d01ba46a1bf3520e249ff1,
     type: 2}
+  boomNetHub: {fileID: 114000013247293350, guid: 80fc2727e96c8074f8765848c27517eb,
+    type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
