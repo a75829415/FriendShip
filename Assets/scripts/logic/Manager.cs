@@ -166,8 +166,7 @@ public abstract class Manager : MonoBehaviour
 			if (ship != null)
 			{
 				NetHub.instance.RpcUpdateInvincibleTime(ship.InvincibleTime);
-				NetHub.instance.RpcUpdateShip(ship.reservedTransform.position, ship.reservedTransform.eulerAngles, ship.reservedRigidbody.velocity,
-					ship.reservedRigidbody.angularVelocity, ship.reservedBackgroundForce.relativeForce);
+				NetHub.instance.RpcUpdateShip(ship.CurrentStatus);
 				NetHub.instance.RpcUpdateBoomer(Boomer.GetStatuses());
             }
 			NetHub.instance.RpcUpdateGameTime(GameTime);

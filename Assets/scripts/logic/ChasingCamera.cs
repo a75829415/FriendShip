@@ -98,7 +98,7 @@ public class ChasingCamera : MoveableObject {
 
 	private void UpdateCameraVerticalRotation()
 	{
-		float angle = ship.reservedRigidbody.angularVelocity.y;
+		float angle = ship.reservedRigidBody.angularVelocity.y;
 		bool toward_left;
 		if (angle < 0)
 		{
@@ -163,7 +163,20 @@ public class ChasingCamera : MoveableObject {
 
 	public void CheckControlMode()
 	{
+		bool lookAhead;
 		if (Manager.instance.localControlMode == ShipControlMode.FireOnly)
+		{
+			lookAhead = true;
+		}
+		else
+		{
+			lookAhead = false;
+		}
+		if (Configuration.swapViews)
+		{
+			lookAhead = !lookAhead;
+		}
+		if (lookAhead)
 		{
 			SetAsMainView(rearViewCamera);
 			SetAsMiniView(reservedCamera);
