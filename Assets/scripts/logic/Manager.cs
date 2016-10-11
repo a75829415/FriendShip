@@ -20,10 +20,8 @@ public abstract class Manager : MonoBehaviour
 
 	public List<MoveableObject> toMoveList;
 
-	public Camera playerCamera;
-
-	public Ship shipProtocal;
-	public Transform obstacleProtocal;
+	public Ship shipPrototype;
+	public Transform obstaclePrototype;
 	public float waitTimeBase;
 
 	private float pieceScale;

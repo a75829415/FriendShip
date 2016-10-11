@@ -22,7 +22,7 @@ GameObject:
   - 222: {fileID: 222000010360848068}
   - 114: {fileID: 114000012783471852}
   m_Layer: 0
-  m_Name: Time
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ GameObject:
   - 222: {fileID: 222000011370227634}
   - 114: {fileID: 114000012509678498}
   m_Layer: 0
-  m_Name: Time Value
+  m_Name: Score Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ GameObject:
   - 224: {fileID: 224000010611427976}
   - 222: {fileID: 222000011679042038}
   - 114: {fileID: 114000012607652722}
-  - 114: {fileID: 114000012756258306}
+  - 114: {fileID: 114000010721763490}
   m_Layer: 0
   m_Name: BoomInfo
   m_TagString: Untagged
@@ -182,6 +182,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u8010\u4E45"
+--- !u!114 &114000010721763490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014208610224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38165b8fd5cd71f4eb301a02ce6b208f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reservedTransform: {fileID: 224000010611427976}
+  reservedSub: {fileID: 224000010611427976}
+  ScoreValue: {fileID: 114000012509678498}
+  healthValue: {fileID: 114000010483747724}
 --- !u!114 &114000012509678498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,7 +229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'time val
+  m_Text: 'score val
 
 '
 --- !u!114 &114000012607652722
@@ -244,21 +259,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114000012756258306
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014208610224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f55df3038f8b844fadcba3a10546f2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reservedTransform: {fileID: 224000010611427976}
-  reservedSub: {fileID: 224000013292619072}
-  timeValue: {fileID: 114000012509678498}
-  healthValue: {fileID: 114000010483747724}
 --- !u!114 &114000012783471852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -291,7 +291,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u65F6\u95F4"
+  m_Text: "\u5F97\u5206"
 --- !u!114 &114000013938639112
 MonoBehaviour:
   m_ObjectHideFlags: 1

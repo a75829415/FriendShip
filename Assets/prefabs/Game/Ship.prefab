@@ -254,11 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98dfc430a459feb4d8807606ea7aee90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reservedTransform: {fileID: 0}
-  reservedRigidbody: {fileID: 5484704}
+  reservedTransform: {fileID: 403946}
+  reservedRigidBody: {fileID: 5484704}
   reservedBackgroundForce: {fileID: 7535310}
-  boomerPrototype: {fileID: 114000012093540560, guid: 27765df57046576469444f5b4ba0b68b,
-    type: 2}
   accelerationBase: 50
   sideAccelerationBase: 0.002
   accelerationGrowth: 0.1

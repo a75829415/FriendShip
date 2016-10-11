@@ -51,29 +51,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd32490897245c945ae7020f9d54eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boomerPrototype: {fileID: 0}
   localControlMode: 0
   ship: {fileID: 0}
   backgroundScale: 512
-  playerCamera: {fileID: 0}
-  shipProtocal: {fileID: 11452464, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
-  obstacleProtocal: {fileID: 431154, guid: 4a833f9c17ab959409d4c464dafef9fc, type: 2}
+  toMoveList: []
+  shipPrototype: {fileID: 11452464, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
+  obstaclePrototype: {fileID: 431154, guid: 4a833f9c17ab959409d4c464dafef9fc, type: 2}
   waitTimeBase: 6
-  uiCanvas: {fileID: 0}
-  status: {fileID: 0}
-  statusName: {fileID: 0}
-  statusTime: {fileID: 0}
-  gameOverPanel: {fileID: 0}
-  resultText: {fileID: 0}
   leftHealth: 3
   rightHealth: 3
   competetiveShipColliderProtocal: {fileID: 114000011736790040, guid: f1f77c8178a29b74ebb38c058b2300c9,
     type: 2}
   leftCollider: {fileID: 0}
   rightCollider: {fileID: 0}
-  hud: {fileID: 0}
-  hudLeftHealth: {fileID: 0}
-  hudLeftHealthValue: {fileID: 0}
-  hudRightHealth: {fileID: 0}
-  hudRightHealthValue: {fileID: 0}
   currentLeftHealth: 0
   currentRightHealth: 0

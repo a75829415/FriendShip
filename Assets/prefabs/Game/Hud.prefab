@@ -274,6 +274,8 @@ MonoBehaviour:
     type: 2}
   competitiveInfoPrototype: {fileID: 114000013805581596, guid: 9c54275f86f381242b2b33b6874bdb7f,
     type: 2}
+  boomInfoPrototype: {fileID: 114000010721763490, guid: 15f4add21d8038745a1f133d4fbd18cb,
+    type: 2}
   statusBar: {fileID: 224000010878902034}
   statusName: {fileID: 114000010309469670}
   statusDuration: {fileID: 224000013818137082}

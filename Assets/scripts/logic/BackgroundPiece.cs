@@ -17,7 +17,7 @@ public class BackgroundPiece : MoveableObject {
 		{
 			for (int j = 0; j < bounds; ++j)
 			{
-				obstacles[i, j] = Instantiate(Manager.instance.obstacleProtocal);
+				obstacles[i, j] = Instantiate(Manager.instance.obstaclePrototype);
 				obstacles[i, j].SetParent(reservedTransform);
 			}
 		}

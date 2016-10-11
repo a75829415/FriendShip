@@ -7,6 +7,7 @@ public class Hud : MonoBehaviour {
 
 	public ClassicInfo classicInfoPrototype;
 	public CompetitiveInfo competitiveInfoPrototype;
+	public BoomInfo boomInfoPrototype;
 
 	public RectTransform statusBar;
 	public Text statusName;
@@ -34,6 +35,10 @@ public class Hud : MonoBehaviour {
 
 			case GameMode.Competitive:
 				prototype = competitiveInfoPrototype;
+				break;
+
+			case GameMode.Boom:
+				prototype = boomInfoPrototype;
 				break;
 
 			default:
@@ -79,6 +84,10 @@ public class Hud : MonoBehaviour {
 				{
 					statusName.text = "右侧准备";
 				}
+				else if (Manager.instance.localControlMode == ShipControlMode.FireOnly)
+                {
+					statusName.text = "准备开火";
+                }
 				else
 				{
 					statusName.text = "准备出发";

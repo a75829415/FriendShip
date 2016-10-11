@@ -52,10 +52,8 @@ public class ChasingCamera : MoveableObject {
 	// Use this for initialization
 	void Start () {
 		base.StartWorkaround();
-		Manager.instance.playerCamera = reservedCamera;
 		gameObject.SetActive(true);
 		CheckControlMode();
-		//RearCamera.SetActive(Manager.instance.GetGameMode() == GameMode.Boom);
     }
 	
 	// Update is called once per frame
