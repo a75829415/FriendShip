@@ -153,27 +153,24 @@ public class LobbyManager : NetworkLobbyManager
         else if (allClientsReady)
         {
             controlModeAllocation.Clear();
-            if (mode == GameMode.Boom)
+            switch (minPlayers)
             {
-
-            }
-            else {
-                switch (minPlayers)
-                {
-                    case 1:
-                        controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId, ShipControlMode.BothPaddles);
-                        break;
-                    case 2:
-                        float random = Random.value;
-                        controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
-                            random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
-                        controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
-                            random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
-                        break;
-                    case 4:
-                        Debug.LogError("Coming soon.");
-                        break;
-                }
+                case 1:
+                    controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
+                        mode == GameMode.Boom ? ShipControlMode.BothPaddlesAndFire : ShipControlMode.BothPaddles);
+                    break;
+                case 2:
+                    float random = Random.value;
+                    controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
+                        random < 0.5 ? (mode == GameMode.Boom ? ShipControlMode.BothPaddles : ShipControlMode.LeftPaddleOnly)
+                        : (mode == GameMode.Boom ? ShipControlMode.FireOnly : ShipControlMode.RightPaddleOnly));
+                    controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
+                        random < 0.5 ? (mode == GameMode.Boom ? ShipControlMode.FireOnly : ShipControlMode.RightPaddleOnly)
+                        : (mode == GameMode.Boom ? ShipControlMode.BothPaddles : ShipControlMode.LeftPaddleOnly));
+                    break;
+                case 4:
+                    Debug.LogError("Coming soon.");
+                    break;
             }
             Instantiate(gameNetHub);
             NetworkServer.Spawn(NetHub.instance.gameObject);
