@@ -128,7 +128,7 @@ public class ChasingCamera : MoveableObject {
 			reservedTransform.localPosition.y, -reservedTransform.localPosition.z);
 		Vector3 mirrorRotation = new Vector3(reservedTransform.localEulerAngles.x, 180.0f, reservedTransform.localEulerAngles.z);
 		Vector3 finalPosition = Vector3.zero;
-		Vector3 finalRotation = new Vector3(ship.boomerElevation, 180.0f, 0.0f);
+		Vector3 finalRotation = new Vector3(-ship.boomerElevation, 180.0f, 0.0f);
         if (IsPreparing())
 		{
 			rearViewCameraTransfrom.localPosition = mirrorPosition;
