@@ -3,8 +3,43 @@ using System.Collections;
 
 public class Ship : MoveableObject
 {
-	public Rigidbody reservedRigidbody;
+	public Rigidbody reservedRigidBody;
 	public ConstantForce reservedBackgroundForce;
+
+	public struct Status
+	{
+		public Status(Vector3 iPosition, Vector3 iRotation, Vector3 iVelocity, Vector3 iAngularVelocity, Vector3 iRelativeForce, float iBoomerElevation)
+		{
+			position = iPosition;
+			rotation = iRotation;
+			velocity = iVelocity;
+			angularVelocity = iAngularVelocity;
+			relativeForce = iRelativeForce;
+			boomerElevation = iBoomerElevation;
+        }
+		public Vector3 position;
+		public Vector3 rotation;
+		public Vector3 velocity;
+		public Vector3 angularVelocity;
+		public Vector3 relativeForce;
+		public float boomerElevation;
+    }
+
+	public Status CurrentStatus
+	{
+		get {
+			return new Status(reservedTransform.position, reservedTransform.eulerAngles, reservedRigidBody.velocity,
+				reservedRigidBody.angularVelocity, reservedBackgroundForce.relativeForce, boomerElevation);
+		}
+		set {
+			reservedTransform.position = value.position;
+			reservedTransform.eulerAngles = value.rotation;
+			reservedRigidBody.velocity = value.velocity;
+			reservedRigidBody.angularVelocity = value.angularVelocity;
+			reservedBackgroundForce.relativeForce = value.relativeForce;
+			boomerElevation = value.boomerElevation;
+		}
+	}
 
 	public float accelerationBase;
 	public float sideAccelerationBase;
@@ -22,12 +57,12 @@ public class Ship : MoveableObject
 
 	public float GetSpeed()
 	{
-		return reservedRigidbody.velocity.magnitude;
+		return reservedRigidBody.velocity.magnitude;
 	}
 
 	public float GetVertical()
 	{
-		return reservedRigidbody.angularVelocity.y;
+		return reservedRigidBody.angularVelocity.y;
 	}
 
 	public bool IsInvincible()
@@ -94,7 +129,7 @@ public class Ship : MoveableObject
 
 	private float ToActualForceValue(float acceleration)
 	{
-		return acceleration * reservedRigidbody.mass;
+		return acceleration * reservedRigidBody.mass;
     }
 
 	private Vector3 ValueToForce(float force)
@@ -136,7 +171,7 @@ public class Ship : MoveableObject
 	{
 		if (Manager.instance.IsOperating())
 		{
-			reservedRigidbody.AddTorque(
+			reservedRigidBody.AddTorque(
 			Vector3.Cross((Vector3.forward * LeftAccelerationValueBase()) * accelerationBase, LeftPosition()), ForceMode.VelocityChange);
 		}
 	}
@@ -145,7 +180,7 @@ public class Ship : MoveableObject
 	{
 		if (Manager.instance.IsOperating())
 		{
-			reservedRigidbody.AddTorque(
+			reservedRigidBody.AddTorque(
 				Vector3.Cross((Vector3.forward * RightAccelerationValueBase()) * accelerationBase, RightPosition()),
 				ForceMode.VelocityChange);
 		}
@@ -158,14 +193,14 @@ public class Ship : MoveableObject
 
 	public void ServerBoom()
 	{
-		if (Manager.instance.IsOperating())
+		if (Manager.instance.IsOperating() && !IsInvincible())
 		{
 			Boomer boomer = Boomer.activateABoomer();
 			boomer.reservedTransform.position = reservedTransform.position;
 			float vertical = boomerInitialSpeed * Mathf.Sin(boomerElevation);
 			float horizontal = boomerInitialSpeed * Mathf.Cos(boomerElevation);
-			boomer.reservedRigidBody.velocity = horizontal * (-reservedTransform.forward) + new Vector3(0, vertical, 0) + reservedRigidbody.velocity;
-			reservedRigidbody.velocity = (reservedRigidbody.velocity + horizontal * (reservedTransform.forward));
+			boomer.reservedRigidBody.velocity = horizontal * (-reservedTransform.forward) + new Vector3(0, vertical, 0) + reservedRigidBody.velocity;
+			reservedRigidBody.velocity = (reservedRigidBody.velocity + horizontal * (reservedTransform.forward));
 		}
 	}
 

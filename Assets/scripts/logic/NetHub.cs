@@ -75,15 +75,11 @@ public class NetHub : NetworkBehaviour {
 	}
 
 	[ClientRpc]
-	public void RpcUpdateShip(Vector3 position, Vector3 rotation, Vector3 velocity, Vector3 angularVelocity, Vector3 relativeForce)
+	public void RpcUpdateShip(Ship.Status serverStatus)
 	{
 		if (!isServer && Manager.instance.ship != null)
 		{
-			Manager.instance.ship.reservedTransform.position = position;
-			Manager.instance.ship.reservedTransform.eulerAngles = rotation;
-			Manager.instance.ship.reservedRigidbody.velocity = velocity;
-			Manager.instance.ship.reservedRigidbody.angularVelocity = angularVelocity;
-			Manager.instance.ship.reservedBackgroundForce.relativeForce = relativeForce;
+			Manager.instance.ship.CurrentStatus = serverStatus;
 		}
 	}
 

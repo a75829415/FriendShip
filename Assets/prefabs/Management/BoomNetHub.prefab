@@ -84,4 +84,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbac07ad08cf78548b9719b595b720ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boomManagerPrototype: {fileID: 0}
+  boomManagerPrototype: {fileID: 114000013172820606, guid: 393028896236447468c6669f2d7de8e4,
+    type: 2}
