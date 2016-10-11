@@ -1,6 +1,15 @@
-﻿using UnityEngine;
+﻿#if UNITY_ANDROID && !UNITY_EDITOR
+#define ANDROID
+#endif
+#if UNITY_IPHONE && !UNITY_EDITOR
+#define IPHONE
+#endif
+
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+
 
 public class ShipController : NetworkBehaviour
 {
@@ -25,6 +34,10 @@ public class ShipController : NetworkBehaviour
         {
             controlMode = LobbyManager.instance.GetShipControlMode(connectionToClient);
         }
+        if (ModeIsFireable(controlMode))
+        {
+            ship.boomerElevation = viewChangeSlider.value;
+        }
     }
 
     // Update is called once per frame
@@ -39,15 +52,26 @@ public class ShipController : NetworkBehaviour
         {
             case ShipControlMode.BothPaddles:
             case ShipControlMode.BothPaddlesAndFire:
+#if IPHONE || ANDROID
+                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                    {
+                        if (Input.GetTouch(0).rawPosition.x < Screen.width / 2)
+#else
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (Input.mousePosition.x < Screen.width / 2)
+                    if (!EventSystem.current.IsPointerOverGameObject())
                     {
-                        CmdPaddleLeft();
-                    }
-                    else
-                    {
-                        CmdPaddleRight();
+                        if (Input.mousePosition.x < Screen.width / 2)
+#endif
+                        {
+                            CmdPaddleLeft();
+                        }
+                        else
+                        {
+                            CmdPaddleRight();
+                        }
                     }
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -72,7 +96,12 @@ public class ShipController : NetworkBehaviour
                 }
                 break;
             case ShipControlMode.FireOnly:
-                if (Input.GetMouseButtonDown(0))
+#if IPHONE || ANDROID
+                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began
+                    && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+#else
+                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+#endif
                 {
                     // TODO: control behavior
                 }
@@ -83,7 +112,10 @@ public class ShipController : NetworkBehaviour
     // ---- sync val hook ----
     public void OnControlModeChange(ShipControlMode mode)
     {
-        joystickGUI.gameObject.SetActive(ModeIsFireable(mode));
+        if (isLocalPlayer)
+        {
+            joystickGUI.gameObject.SetActive(ModeIsFireable(mode));
+        }
     }
 
     // ---- joystick event handlers ----
