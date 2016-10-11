@@ -12,9 +12,10 @@ public class GameSettingUIHandler : UIHandlerBase
     public Slider invincibleTimeSlider;
     public Text invincibleTimeValueText;
     public Toggle enableMiniViewToggle;
-    public RectTransform miniViewSizePanel;
+    public RectTransform miniViewSubPanel;
     public Slider miniViewSizeSlider;
     public Text miniViewSizeValueText;
+    public Toggle swapViewsToggle;
     public Toggle classicToggle;
     public Toggle competitveToggle;
     public Toggle boomToggle;
@@ -99,7 +100,7 @@ public class GameSettingUIHandler : UIHandlerBase
     public void OnEnableMiniViewChange()
     {
         Configuration.enableMiniView = enableMiniViewToggle.isOn;
-        miniViewSizePanel.gameObject.SetActive(enableMiniViewToggle.isOn);
+        miniViewSubPanel.gameObject.SetActive(enableMiniViewToggle.isOn);
     }
 
     public void OnMiniViewSizeChange()
@@ -107,6 +108,11 @@ public class GameSettingUIHandler : UIHandlerBase
         int index = (int)miniViewSizeSlider.value;
         Configuration.indexOfMiniViewSize = index;
         miniViewSizeValueText.text = Configuration.MiniViewSizeText;
+    }
+
+    public void OnSwapViewsChange()
+    {
+        Configuration.swapViews = swapViewsToggle.isOn;
     }
 
     public void OnGameModeChange()

@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class ShipController : NetworkBehaviour
 {
+    public Canvas joystickGUI;
+    public Slider viewChangeSlider;
+
     private Ship ship;
 
-    [SyncVar]
+    [SyncVar(hook = "OnControlModeChange")]
     private ShipControlMode controlMode;
 
-	public static bool ModeIsFireable(ShipControlMode mode)
-	{
-		return mode == ShipControlMode.FireOnly;
-	}
+    public static bool ModeIsFireable(ShipControlMode mode)
+    {
+        return mode == ShipControlMode.FireOnly || mode == ShipControlMode.BothPaddlesAndFire;
+    }
 
     // Use this for initialization
     void Start()
@@ -31,56 +35,69 @@ public class ShipController : NetworkBehaviour
             return;
         }
         Manager.instance.NotifyControlMode(controlMode);
-        if (controlMode == ShipControlMode.BothPaddles)
+        switch (controlMode)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (Input.mousePosition.x < Screen.width / 2)
+            case ShipControlMode.BothPaddles:
+            case ShipControlMode.BothPaddlesAndFire:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (Input.mousePosition.x < Screen.width / 2)
+                    {
+                        CmdPaddleLeft();
+                    }
+                    else
+                    {
+                        CmdPaddleRight();
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     CmdPaddleLeft();
                 }
-                else
+                if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     CmdPaddleRight();
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                CmdPaddleLeft();
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                CmdPaddleRight();
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (controlMode == ShipControlMode.LeftPaddleOnly)
+                break;
+            case ShipControlMode.LeftPaddleOnly:
+                if (Input.GetMouseButtonDown(0))
                 {
                     CmdPaddleLeft();
                 }
-                else if (controlMode == ShipControlMode.RightPaddleOnly)
+                break;
+            case ShipControlMode.RightPaddleOnly:
+                if (Input.GetMouseButtonDown(0))
                 {
                     CmdPaddleRight();
                 }
-            }
+                break;
+            case ShipControlMode.FireOnly:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    // TODO: control behavior
+                }
+                break;
         }
     }
 
-    [ClientRpc]
-    public void RpcPaddleLeft()
+    // ---- sync val hook ----
+    public void OnControlModeChange(ShipControlMode mode)
     {
-        ship.PaddleLeft();
+        joystickGUI.gameObject.SetActive(ModeIsFireable(mode));
     }
 
-    [ClientRpc]
-    public void RpcPaddleRight()
+    // ---- joystick event handlers ----
+    public void OnViewChange()
     {
-        ship.PaddleRight();
+        ship.boomerElevation = viewChangeSlider.value;
     }
 
+    public void OnFire()
+    {
+        ship.BoomABoomer();
+    }
+
+    // ---- commands ----
     [Command]
     public void CmdPaddleLeft()
     {
@@ -91,5 +108,18 @@ public class ShipController : NetworkBehaviour
     public void CmdPaddleRight()
     {
         RpcPaddleRight();
+    }
+
+    // ---- client rpc calls ----
+    [ClientRpc]
+    public void RpcPaddleLeft()
+    {
+        ship.PaddleLeft();
+    }
+
+    [ClientRpc]
+    public void RpcPaddleRight()
+    {
+        ship.PaddleRight();
     }
 }

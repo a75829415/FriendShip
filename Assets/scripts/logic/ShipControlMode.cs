@@ -5,4 +5,5 @@
     LeftPaddleOnly,
     RightPaddleOnly,
     FireOnly,
+    BothPaddlesAndFire,
 }

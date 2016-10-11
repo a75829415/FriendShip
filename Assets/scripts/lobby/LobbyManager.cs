@@ -153,21 +153,27 @@ public class LobbyManager : NetworkLobbyManager
         else if (allClientsReady)
         {
             controlModeAllocation.Clear();
-            switch (minPlayers)
+            if (mode == GameMode.Boom)
             {
-                case 1:
-                    controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId, ShipControlMode.BothPaddles);
-                    break;
-                case 2:
-                    float random = Random.value;
-                    controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
-                        random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
-                    controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
-                        random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
-                    break;
-                case 4:
-                    Debug.LogError("Coming soon.");
-                    break;
+
+            }
+            else {
+                switch (minPlayers)
+                {
+                    case 1:
+                        controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId, ShipControlMode.BothPaddles);
+                        break;
+                    case 2:
+                        float random = Random.value;
+                        controlModeAllocation.Add(lobbySlots[0].connectionToClient.connectionId,
+                            random < 0.5 ? ShipControlMode.LeftPaddleOnly : ShipControlMode.RightPaddleOnly);
+                        controlModeAllocation.Add(lobbySlots[1].connectionToClient.connectionId,
+                            random < 0.5 ? ShipControlMode.RightPaddleOnly : ShipControlMode.LeftPaddleOnly);
+                        break;
+                    case 4:
+                        Debug.LogError("Coming soon.");
+                        break;
+                }
             }
             Instantiate(gameNetHub);
             NetworkServer.Spawn(NetHub.instance.gameObject);
