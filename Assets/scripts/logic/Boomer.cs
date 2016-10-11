@@ -99,7 +99,7 @@ public class Boomer : MoveableObject
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (Manager.instance.IsObstacle(other))
+		if (other.gameObject.tag == "Obstacle")
 		{
 			other.gameObject.SetActive(false);
 			((BoomManager)(Manager.instance)).Scores();

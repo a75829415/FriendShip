@@ -26,7 +26,7 @@ public class ShipCollider : MoveableObject
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (!Manager.instance.ship.IsInvincible())
+		if (!Manager.instance.ship.IsInvincible() && other.gameObject.tag == "Obstacle")
 		{
 			crashNotificationHandler(this, other);
         }

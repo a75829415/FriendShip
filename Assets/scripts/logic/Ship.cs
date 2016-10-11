@@ -197,10 +197,11 @@ public class Ship : MoveableObject
 		{
 			Boomer boomer = Boomer.activateABoomer();
 			boomer.reservedTransform.position = reservedTransform.position;
-			float vertical = boomerInitialSpeed * Mathf.Sin(boomerElevation);
-			float horizontal = boomerInitialSpeed * Mathf.Cos(boomerElevation);
+			float vertical = boomerInitialSpeed * Mathf.Sin(boomerElevation / 180.0f * Mathf.PI);
+			float horizontal = boomerInitialSpeed * Mathf.Cos(boomerElevation / 180.0f * Mathf.PI);
 			boomer.reservedRigidBody.velocity = horizontal * (-reservedTransform.forward) + new Vector3(0, vertical, 0) + reservedRigidBody.velocity;
 			reservedRigidBody.velocity = (reservedRigidBody.velocity + horizontal * (reservedTransform.forward));
+			Debug.Log(vertical + ", " + horizontal + ", " + boomerElevation);
 		}
 	}
 
