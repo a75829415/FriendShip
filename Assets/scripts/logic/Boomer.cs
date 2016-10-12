@@ -89,6 +89,7 @@ public class Boomer : MoveableObject
 		while (count > 0)
 		{
 			inactivePool.Push(InstantiateABoomer(false));
+			--count;
         }
 	}
 
