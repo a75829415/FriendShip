@@ -21,9 +21,9 @@ public class LobbyUISystemInitializer : MonoBehaviour
         }
         foreach (RectTransform panel in panels)
         {
-            panel.gameObject.SetActive(false);
+            panel.GetComponent<UIHandlerBase>().ShowGUI(false);
         }
-        panels[indexOfPanelToShow].gameObject.SetActive(true);
+        panels[indexOfPanelToShow].GetComponent<UIHandlerBase>().ShowGUI(true);
     }
 
     public void SetPanelToShow(RectTransform panel)

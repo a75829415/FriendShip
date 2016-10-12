@@ -122,9 +122,10 @@ public class LobbyManager : NetworkLobbyManager
             return;
         }
         PopupUIHandler.instance.OnOkButtonClick();
-        LobbyUISystemInitializer.instance.SetPanelToShow(ChooseLobbyUIHandler.instance.currentPanel);
+        LobbyUISystemInitializer.instance.SetPanelToShow(LobbyUIHandler.instance.currentPanel);
         loseConnectionDelegate = () =>
         {
+            LobbyUISystemInitializer.instance.SetPanelToShow(ChooseLobbyUIHandler.instance.currentPanel);
             PopupUIHandler.instance.Popup("糟了，房主的Note 7好像炸了\n怎么都没法重新连接上( ╯□╰ )...");
         };
     }

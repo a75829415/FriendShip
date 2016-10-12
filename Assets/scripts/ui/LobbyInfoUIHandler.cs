@@ -8,6 +8,7 @@ public class LobbyInfoUIHandler : MonoBehaviour
 
     public Sprite classicSprite;
     public Sprite competitveSprite;
+    public Sprite boomSprite;
     public Text addressText;
     public Text modeText;
     public Image lobbyInfoImage;
@@ -30,9 +31,14 @@ public class LobbyInfoUIHandler : MonoBehaviour
                 lobbyGameMode = GameMode.Classic;
                 break;
             case (int)GameMode.Competitive:
-                modeText.text = "竞技模式";
-                lobbyInfoImage.sprite = classicSprite;
+                modeText.text = "对抗模式";
+                lobbyInfoImage.sprite = competitveSprite;
                 lobbyGameMode = GameMode.Competitive;
+                break;
+            case (int)GameMode.Boom:
+                modeText.text = "爆破模式";
+                lobbyInfoImage.sprite = boomSprite;
+                lobbyGameMode = GameMode.Boom;
                 break;
             default:
                 modeText.text = "未知模式";
@@ -47,7 +53,7 @@ public class LobbyInfoUIHandler : MonoBehaviour
     public void OnLobbyInfoButtonClick()
     {
         LobbyManager.instance.Mode = lobbyGameMode;
-        LobbyUISystemInitializer.instance.SetPanelToShow(LobbyUIHandler.instance.currentPanel);
+        LobbyUISystemInitializer.instance.SetPanelToShow(ChooseLobbyUIHandler.instance.currentPanel);
         LobbyManager.instance.JoinGame(addressText.text);
         LobbyUIHandler.instance.Initialize(false, addressText.text);
         LobbyUIHandler.instance.ShowGUI(true);
