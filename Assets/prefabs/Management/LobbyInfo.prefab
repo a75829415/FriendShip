@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   classicSprite: {fileID: 21300000, guid: a6ce29301e799354fbcf45b81858dcd0, type: 3}
   competitveSprite: {fileID: 21300000, guid: b83b87a7ca169c643906101cb1774ec1, type: 3}
+  boomSprite: {fileID: 21300000, guid: 3b4079ab5c0382c48a1d0d5ca7a1f561, type: 3}
   addressText: {fileID: 114000013182668898}
   modeText: {fileID: 114000012258918354}
   lobbyInfoImage: {fileID: 114000010975560106}

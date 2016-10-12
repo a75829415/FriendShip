@@ -41,7 +41,7 @@ public class LobbyUIHandler : UIHandlerBase
             playerInfo.SetParent(playersLayout, false);
             players.Add(playerInfo, false);
         }
-        titleText.text = isServer ? "我的房间" : address + "的房间";
+        titleText.text = isServer ? "我的房间 (" + LobbyManager.instance.networkAddress + ")" : address + "的房间";
         startGameButton.gameObject.SetActive(isServer);
         LobbyUIHandler.isServer = isServer;
         LobbyUIHandler.address = address;

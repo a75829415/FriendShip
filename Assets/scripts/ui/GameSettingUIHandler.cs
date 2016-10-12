@@ -38,6 +38,7 @@ public class GameSettingUIHandler : UIHandlerBase
             invincibleTimeSlider.value = Configuration.indexOfInvincibleTime;
             enableMiniViewToggle.isOn = Configuration.enableMiniView;
             miniViewSizeSlider.value = Configuration.indexOfMiniViewSize;
+            swapViewsToggle.isOn = Configuration.swapViews;
         }
     }
 
@@ -65,7 +66,7 @@ public class GameSettingUIHandler : UIHandlerBase
         };
         if (LobbyManager.instance.minPlayers == 1)
         {
-            LobbyUISystemInitializer.instance.SetPanelToShow(WelcomeUIHandler.instance.currentPanel);
+            LobbyUISystemInitializer.instance.SetPanelToShow(currentPanel);
         }
         else
         {
