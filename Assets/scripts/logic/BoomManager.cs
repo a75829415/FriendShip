@@ -56,6 +56,12 @@ public class BoomManager : Manager {
 		base.UpdateWorkaround();
 	}
 
+	public override void OnGameBegin()
+	{
+		base.OnGameBegin();
+		Boomer.InitializePool(8);
+	}
+
 	public override void InitializeShipCollider()
 	{
 		shipCollider = Instantiate(classicShipColliderProtocal);

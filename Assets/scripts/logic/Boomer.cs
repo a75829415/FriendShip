@@ -53,12 +53,19 @@ public class Boomer : MoveableObject
 		}
 	}
 
+	public static void InitializePool(int reservedCount)
+	{
+		activePool.Clear();
+		inactivePool.Clear();
+		reserveBoomers(reservedCount);
+	}
+
 	public static Boomer activateABoomer()
 	{
 		Boomer result;
 		if (inactivePool.Count == 0)
 		{
-			result = Instantiate(Manager.instance.boomerPrototype);
+			result = InstantiateABoomer(true);
         }
 		else
 		{
@@ -68,6 +75,21 @@ public class Boomer : MoveableObject
 		Manager.instance.RegisterToMove(result);
 		result.gameObject.SetActive(true);
 		return result;
+	}
+
+	public static Boomer InstantiateABoomer(bool active)
+	{
+		Boomer result = Instantiate(Manager.instance.boomerPrototype);
+		result.gameObject.SetActive(active);
+        return result;
+    }
+
+	public static void reserveBoomers(int count)
+	{
+		while (count > 0)
+		{
+			inactivePool.Push(InstantiateABoomer(false));
+        }
 	}
 
 	public static void deactivate(Boomer boomer)

@@ -15,6 +15,8 @@ public abstract class Manager : MonoBehaviour
 
 	public ShipControlMode localControlMode = ShipControlMode.Unknown;
 
+	private bool gameOn;
+
 	public Ship ship;
 	public float backgroundScale;
 
@@ -71,6 +73,18 @@ public abstract class Manager : MonoBehaviour
 	private void UpdateWaitTime()
 	{
 		waitTime -= Time.deltaTime;
+		if (IsOperating())
+		{
+			OnOperationBegin();
+		}
+	}
+
+	public virtual void OnOperationBegin()
+	{
+	}
+
+	public virtual void OnGameBegin()
+	{
 	}
 
 	void Awake()
@@ -84,6 +98,7 @@ public abstract class Manager : MonoBehaviour
 		instance = this;
 		ResetWaitTime();
 		pieceScale = 512;
+		gameOn = false;
 	}
 
 	// Use this for initialization
@@ -106,6 +121,11 @@ public abstract class Manager : MonoBehaviour
 	{
 		if (ship != null)
 		{
+			if (!gameOn)
+			{
+				gameOn = true;
+                OnGameBegin();
+			}
 			if (IsGaming() && IsOperating())
 			{
 				gameTime += Time.deltaTime;
