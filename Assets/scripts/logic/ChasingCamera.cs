@@ -162,27 +162,20 @@ public class ChasingCamera : MoveableObject {
 	public void CheckControlMode()
 	{
 		bool lookAhead;
-		if (Manager.instance.localControlMode == ShipControlMode.FireOnly)
-		{
-			lookAhead = true;
-		}
-		else
-		{
-			lookAhead = false;
-		}
+		lookAhead = (Manager.instance.localControlMode != ShipControlMode.FireOnly);
 		if (Configuration.swapViews)
 		{
 			lookAhead = !lookAhead;
 		}
 		if (lookAhead)
 		{
-			SetAsMainView(rearViewCamera);
-			SetAsMiniView(reservedCamera);
+			SetAsMainView(reservedCamera);
+			SetAsMiniView(rearViewCamera);
 		}
 		else
 		{
-			SetAsMainView(reservedCamera);
-			SetAsMiniView(rearViewCamera);
+			SetAsMainView(rearViewCamera);
+			SetAsMiniView(reservedCamera);
 		}
 	}
 

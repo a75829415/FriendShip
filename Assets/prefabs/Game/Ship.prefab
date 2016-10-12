@@ -261,7 +261,7 @@ MonoBehaviour:
   sideAccelerationBase: 0.002
   accelerationGrowth: 0.1
   invincibleTimeBase: 3
-  boomerInitialSpeed: 10
+  boomerInitialSpeed: 20
   boomerElevation: 0
 --- !u!124 &12418738
 Behaviour:
