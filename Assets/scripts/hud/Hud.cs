@@ -15,6 +15,7 @@ public class Hud : MonoBehaviour {
 
 	public RectTransform gameOverDialog;
 	public Text gameOverResult;
+	public Text backToLobbyButtonText;
 
 	public Info info;
 
@@ -106,7 +107,29 @@ public class Hud : MonoBehaviour {
 	private void ShowGameOverDialog(string result)
 	{
 		gameOverResult.text = result;
+		if (NetHub.instance.isServer && Configuration.NumberOfPlayers > 1)
+		{
+			backToLobbyButtonText.text = "返回房间";
+		}
+		else
+		{
+			backToLobbyButtonText.text = "退出房间";
+		}
 		gameOverDialog.gameObject.SetActive(true);
+	}
+
+	public void BackToLobby()
+	{
+		uint reason;
+		if (NetHub.instance.isServer && Configuration.NumberOfPlayers == 1)
+		{
+			reason = LobbyManager.SINGLE_GAME_OVER;
+        }
+		else
+		{
+			reason = LobbyManager.DOUBLE_GAME_OVER;
+		}
+		LobbyManager.instance.ChangeToLobbyScene(reason);
 	}
 
 }
