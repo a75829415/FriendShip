@@ -582,7 +582,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3499439dcd66e4641a35f8a6ab8821ec, type: 2}
+  - {fileID: 2100000, guid: 0c04f5b1cff273543b7540917b27dfc7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -780,6 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3e5e1826a9917488e20a9ea0a5e6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reservedTransform: {fileID: 0}
   backgroundPieces:
   - {fileID: 114000012199649558}
   - {fileID: 114000012193461152}
