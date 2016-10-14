@@ -37,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014061675208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.421033, y: 7.5241265, z: -15.952917}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalPosition: {x: 0.25, y: -0.5, z: 0}
+  m_LocalScale: {x: 0.49, y: 1, z: 3}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,4 +102,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0271e67e041b69f4a8fbe1fbc6a1a376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reservedTransform: {fileID: 0}
   reservedCollider: {fileID: 0}

@@ -72,10 +72,10 @@ public class CompetitiveManager : Manager {
 	public override void InitializeShipCollider()
 	{
 		leftCollider = Instantiate(competetiveShipColliderProtocal);
-		leftCollider.reservedTransform.position = new Vector3(-0.5f, 0, 0);
+		leftCollider.reservedTransform.position = new Vector3(-0.25f, 0, 0);
         leftCollider.reservedTransform.SetParent(ship.reservedTransform);
 		rightCollider = Instantiate(competetiveShipColliderProtocal);
-		rightCollider.reservedTransform.position = new Vector3(0.5f, 0, 0);
+		rightCollider.reservedTransform.position = new Vector3(0.25f, 0, 0);
 		rightCollider.reservedTransform.SetParent(ship.reservedTransform);
 	}
 
