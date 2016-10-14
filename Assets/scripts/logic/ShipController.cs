@@ -54,7 +54,6 @@ public class ShipController : NetworkBehaviour
         {
             return;
         }
-        Manager.instance.NotifyControlMode(controlMode);
         switch (controlMode)
         {
             case ShipControlMode.BothPaddles:
@@ -114,6 +113,11 @@ public class ShipController : NetworkBehaviour
                 }
                 break;
         }
+    }
+
+    public override void OnStartAuthority()
+    {
+        Manager.instance.RegisterController(this);
     }
 
     public void ShowJoystick(bool showJoystick)
