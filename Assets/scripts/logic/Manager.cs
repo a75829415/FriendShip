@@ -15,6 +15,8 @@ public abstract class Manager : MonoBehaviour
 
 	public ShipControlMode localControlMode = ShipControlMode.Unknown;
 
+	public ShipController localController;
+
 	private bool gameOn;
 
 	public Ship ship;
@@ -47,6 +49,11 @@ public abstract class Manager : MonoBehaviour
 	{
 		return waitTime <= 0.0f;
 	}
+
+	public ShipControlMode GetControlMode()
+	{
+		return localControlMode;
+    }
 
 	public bool IsPaddlingLeft()
 	{
@@ -189,6 +196,11 @@ public abstract class Manager : MonoBehaviour
             }
 			NetHub.instance.RpcUpdateGameTime(GameTime);
 		}
+    }
+
+	public virtual void RegisterController(ShipController controller)
+	{
+		localController = controller;
     }
 
 	public virtual void NotifyControlMode(ShipControlMode controlMode)
