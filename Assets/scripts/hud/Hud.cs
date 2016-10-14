@@ -15,13 +15,36 @@ public class Hud : MonoBehaviour {
 
 	public RectTransform gameOverDialog;
 	public Text gameOverResult;
-	public Text backToLobbyButtonText;
+
+	public Image openMenuButtonImage;
+
+	public Sprite openMenuNotPressed;
+	public Sprite openMenuPressed;
+
+	public Image backToLobbyButtonImage1;
+	public Image backToLobbyButtonImage2;
+
+	public Sprite backToRoom;
+	public Sprite exitRoom;
+
+	public RectTransform menuTransform;
 
 	public Info info;
 
 	// Use this for initialization
 	void Start()
 	{
+		if (NetHub.instance.isServer && Configuration.NumberOfPlayers > 1)
+		{
+			backToLobbyButtonImage1.sprite = backToRoom;
+			backToLobbyButtonImage2.sprite = backToRoom;
+		}
+		else
+		{
+			backToLobbyButtonImage1.sprite = exitRoom;
+			backToLobbyButtonImage2.sprite = exitRoom;
+		}
+		menuTransform.gameObject.SetActive(false);
 		gameOverDialog.gameObject.SetActive(false);
 		Manager.instance.resultStringHandler = (string result) =>
 		{
@@ -107,16 +130,24 @@ public class Hud : MonoBehaviour {
 	private void ShowGameOverDialog(string result)
 	{
 		Manager.instance.localController.ShowJoystick(false);
+		openMenuButtonImage.gameObject.SetActive(false);
+		menuTransform.gameObject.SetActive(false);
 		gameOverResult.text = result;
-		if (NetHub.instance.isServer && Configuration.NumberOfPlayers > 1)
+		gameOverDialog.gameObject.SetActive(true);
+	}
+
+	public void OnMenuButtonClicked()
+	{
+		if (!menuTransform.gameObject.activeSelf)
 		{
-			backToLobbyButtonText.text = "返回房间";
+			openMenuButtonImage.sprite = openMenuPressed;
+			menuTransform.gameObject.SetActive(true);
 		}
 		else
 		{
-			backToLobbyButtonText.text = "退出房间";
+			openMenuButtonImage.sprite = openMenuNotPressed;
+			menuTransform.gameObject.SetActive(false);
 		}
-		gameOverDialog.gameObject.SetActive(true);
 	}
 
 	public void BackToLobby()
