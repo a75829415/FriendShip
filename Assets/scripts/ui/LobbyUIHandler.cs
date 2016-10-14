@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,10 +43,23 @@ public class LobbyUIHandler : UIHandlerBase
             playerInfo.SetParent(playersLayout, false);
             players.Add(playerInfo, false);
         }
-        titleText.text = isServer ? "我的房间 (" + LobbyManager.instance.networkAddress + ")" : address + "的房间";
+        titleText.text = isServer ? "我的房间 (" + GetLocalIpv4() + ")" : address + "的房间";
         startGameButton.gameObject.SetActive(isServer);
         LobbyUIHandler.isServer = isServer;
         LobbyUIHandler.address = address;
+    }
+
+    private string GetLocalIpv4()
+    {
+        IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
+        foreach (IPAddress ip in localIPs)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return ip.ToString();
+            }
+        }
+        return "IP地址不可用";
     }
 
     public RectTransform PlayerEnter()
