@@ -58,6 +58,7 @@ public class ChasingCamera : MoveableObject {
 	
 	// Update is called once per frame
 	void Update () {
+		CheckControlMode();
 		UpdateCameraPosition();
 		UpdateCameraRotation();
 		UpdateCameraFOV();
