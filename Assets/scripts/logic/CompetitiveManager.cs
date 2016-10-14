@@ -43,7 +43,7 @@ public class CompetitiveManager : Manager {
 
 	public bool IsSinglePlayerMode()
 	{
-		return localControlMode == ShipControlMode.BothPaddles;
+		return GetControlMode() == ShipControlMode.BothPaddles;
 	}
 
 	void Awake()
@@ -77,11 +77,6 @@ public class CompetitiveManager : Manager {
 		rightCollider = Instantiate(competetiveShipColliderProtocal);
 		rightCollider.reservedTransform.position = new Vector3(0.25f, 0, 0);
 		rightCollider.reservedTransform.SetParent(ship.reservedTransform);
-	}
-
-	public override void NotifyControlMode(ShipControlMode controlMode)
-	{
-		base.NotifyControlMode(controlMode);
 	}
 
 	public override void NotifyCrash(ShipCollider shipCollider, Collider obstacleCollider)

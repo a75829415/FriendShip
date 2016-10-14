@@ -162,7 +162,7 @@ public class ChasingCamera : MoveableObject {
 	public void CheckControlMode()
 	{
 		bool lookAhead;
-		lookAhead = (Manager.instance.localControlMode != ShipControlMode.FireOnly);
+		lookAhead = (Manager.instance.GetControlMode() != ShipControlMode.FireOnly);
 		if (Configuration.swapViews)
 		{
 			lookAhead = !lookAhead;

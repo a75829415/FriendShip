@@ -85,7 +85,7 @@ public class Hud : MonoBehaviour {
 				{
 					statusName.text = "右侧准备";
 				}
-				else if (Manager.instance.localControlMode == ShipControlMode.FireOnly)
+				else if (Manager.instance.GetControlMode() == ShipControlMode.FireOnly)
                 {
 					statusName.text = "准备开火";
                 }
@@ -106,6 +106,7 @@ public class Hud : MonoBehaviour {
 
 	private void ShowGameOverDialog(string result)
 	{
+		Manager.instance.localController.ShowJoystick(false);
 		gameOverResult.text = result;
 		if (NetHub.instance.isServer && Configuration.NumberOfPlayers > 1)
 		{

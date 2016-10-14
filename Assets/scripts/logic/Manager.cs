@@ -13,8 +13,6 @@ public abstract class Manager : MonoBehaviour
 
 	public ResultStringHandler resultStringHandler = DefaultResultStringHandler;
 
-	public ShipControlMode localControlMode = ShipControlMode.Unknown;
-
 	public ShipController localController;
 
 	private bool gameOn;
@@ -52,17 +50,21 @@ public abstract class Manager : MonoBehaviour
 
 	public ShipControlMode GetControlMode()
 	{
-		return localControlMode;
+		if (localController != null)
+		{
+			return localController.ControlMode;
+		}
+		return ShipControlMode.Unknown;
     }
 
 	public bool IsPaddlingLeft()
 	{
-		return localControlMode == ShipControlMode.LeftPaddleOnly;
+		return GetControlMode() == ShipControlMode.LeftPaddleOnly;
 	}
 
 	public bool IsPaddlingRight()
 	{
-		return localControlMode == ShipControlMode.RightPaddleOnly;
+		return GetControlMode() == ShipControlMode.RightPaddleOnly;
 	}
 
 	public abstract bool IsObstacle(Collider collider);
@@ -201,11 +203,6 @@ public abstract class Manager : MonoBehaviour
 	public virtual void RegisterController(ShipController controller)
 	{
 		localController = controller;
-    }
-
-	public virtual void NotifyControlMode(ShipControlMode controlMode)
-	{
-		localControlMode = controlMode;
     }
 
 	public float PieceScale()
