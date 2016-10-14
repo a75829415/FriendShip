@@ -16,6 +16,7 @@ public class Hud : MonoBehaviour {
 	public RectTransform gameOverDialog;
 	public Text gameOverResult;
 
+	public RectTransform openMenuButtonTransform;
 	public Image openMenuButtonImage;
 
 	public Sprite openMenuNotPressed;
@@ -142,11 +143,15 @@ public class Hud : MonoBehaviour {
 		{
 			openMenuButtonImage.sprite = openMenuPressed;
 			menuTransform.gameObject.SetActive(true);
-		}
+			openMenuButtonTransform.localPosition = new Vector3(580.0f, openMenuButtonTransform.localPosition.y, openMenuButtonTransform.localPosition.z);
+			openMenuButtonTransform.sizeDelta = new Vector2(72.0f, 126.0f);
+        }
 		else
 		{
 			openMenuButtonImage.sprite = openMenuNotPressed;
 			menuTransform.gameObject.SetActive(false);
+			openMenuButtonTransform.localPosition = new Vector3(880.0f, openMenuButtonTransform.localPosition.y, openMenuButtonTransform.localPosition.z);
+			openMenuButtonTransform.sizeDelta = new Vector2(108.0f, 192.0f);
 		}
 	}
 

@@ -205,7 +205,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d819531a179a0cc4385c6b530c7d1c40, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 923112941c80b534a9ca8802375a26fe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -408,13 +408,14 @@ MonoBehaviour:
   statusDuration: {fileID: 224000013818137082}
   gameOverDialog: {fileID: 224000013297159938}
   gameOverResult: {fileID: 114000011384389602}
+  openMenuButtonTransform: {fileID: 224000012065278942}
   openMenuButtonImage: {fileID: 114000010132939806}
-  openMenuNotPressed: {fileID: 21300000, guid: d819531a179a0cc4385c6b530c7d1c40, type: 3}
-  openMenuPressed: {fileID: 21300000, guid: 52dad89a9c57943409c016fe4a4a366d, type: 3}
+  openMenuNotPressed: {fileID: 21300000, guid: 923112941c80b534a9ca8802375a26fe, type: 3}
+  openMenuPressed: {fileID: 21300000, guid: 6e016012000e6ae478e21d5e67698d34, type: 3}
   backToLobbyButtonImage1: {fileID: 114000012215970388}
   backToLobbyButtonImage2: {fileID: 114000013679967368}
-  backToRoom: {fileID: 21300000, guid: d79396cc1f0a95848b6fc6510b3f60b2, type: 3}
-  exitRoom: {fileID: 21300000, guid: a1dc2dce86d22fc4c96aebc5ff34f31f, type: 3}
+  backToRoom: {fileID: 21300000, guid: 69feda7ee41fa71438c5844ae9003a1b, type: 3}
+  exitRoom: {fileID: 21300000, guid: 56299cebebe651b4e9c4b52c7fad95c7, type: 3}
   menuTransform: {fileID: 224000010164574604}
   info: {fileID: 0}
 --- !u!114 &114000012215970388
@@ -436,8 +437,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 69feda7ee41fa71438c5844ae9003a1b, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -615,8 +616,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 69feda7ee41fa71438c5844ae9003a1b, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -755,8 +756,8 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 680, y: 265}
-  m_SizeDelta: {x: -1440, y: -870}
+  m_AnchoredPosition: {x: 800, y: 325}
+  m_SizeDelta: {x: -1600, y: -750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000010878902034
 RectTransform:
@@ -815,8 +816,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 793, y: 430}
-  m_SizeDelta: {x: 246, y: 120}
+  m_AnchoredPosition: {x: 880, y: 380}
+  m_SizeDelta: {x: 108, y: 192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000012572526022
 RectTransform:
@@ -870,7 +871,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 120}
+  m_SizeDelta: {x: 250, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000013297159938
 RectTransform:
