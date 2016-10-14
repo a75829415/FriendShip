@@ -60,7 +60,7 @@ MonoBehaviour:
   shipPrototype: {fileID: 11452464, guid: da053e4bfd30e574aa0a85bb3b2f5984, type: 2}
   obstaclePrototype: {fileID: 431154, guid: 4a833f9c17ab959409d4c464dafef9fc, type: 2}
   waitTimeBase: 6
-  classicShipColliderProtocal: {fileID: 114000013768276370, guid: f8b4f39a0ae0d5047a5a5de36935e3a1,
+  classicShipColliderPrototype: {fileID: 114000013515682886, guid: 5360bc557ef30bd48ab76fc1375a8b2b,
     type: 2}
   shipCollider: {fileID: 0}
   health: 3

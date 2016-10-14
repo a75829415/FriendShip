@@ -5,7 +5,7 @@ using System.Collections;
 public class BoomManager : Manager {
 	public delegate void GameOverHandler(BoomManager manager, float time, uint score);
 
-	public ShipCollider classicShipColliderProtocal;
+	public ShipCollider classicShipColliderPrototype;
 
 	public ShipCollider shipCollider;
 
@@ -64,7 +64,7 @@ public class BoomManager : Manager {
 
 	public override void InitializeShipCollider()
 	{
-		shipCollider = Instantiate(classicShipColliderProtocal);
+		shipCollider = Instantiate(classicShipColliderPrototype);
 		shipCollider.reservedTransform.SetParent(ship.reservedTransform);
 	}
 
