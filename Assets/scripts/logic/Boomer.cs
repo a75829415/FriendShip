@@ -108,12 +108,12 @@ public class Boomer : MoveableObject
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		base.StartWorkaround();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		if (reservedTransform.position.y < Background.instance.reservedTransform.position.y)
 		{
 			deactivate(this);
@@ -128,5 +128,11 @@ public class Boomer : MoveableObject
 			((BoomManager)(Manager.instance)).Scores();
 		}
 	}
+
+	void OnDestroy()
+	{
+		activePool.Clear();
+		inactivePool.Clear();
+    }
 
 }
