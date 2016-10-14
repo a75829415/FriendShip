@@ -109,12 +109,17 @@ public class ShipController : NetworkBehaviour
         }
     }
 
+    public void ShowJoystick(bool showJoystick)
+    {
+        joystickGUI.gameObject.SetActive(showJoystick);
+    }
+
     // ---- sync val hook ----
     public void OnControlModeChange(ShipControlMode mode)
     {
         if (isLocalPlayer)
         {
-            joystickGUI.gameObject.SetActive(ModeIsFireable(mode));
+            ShowJoystick(ModeIsFireable(mode));
         }
     }
 
