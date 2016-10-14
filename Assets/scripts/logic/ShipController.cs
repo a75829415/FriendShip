@@ -20,6 +20,13 @@ public class ShipController : NetworkBehaviour
 
     [SyncVar(hook = "OnControlModeChange")]
     private ShipControlMode controlMode;
+    public ShipControlMode ControlMode
+    {
+        get
+        {
+            return controlMode;
+        }
+    }
 
     public static bool ModeIsFireable(ShipControlMode mode)
     {
