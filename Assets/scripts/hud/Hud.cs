@@ -17,13 +17,14 @@ public class Hud : MonoBehaviour {
 	public Text gameOverResult;
 
 	public RectTransform openMenuButtonTransform;
-	public Image openMenuButtonImage;
 
-	public Sprite openMenuNotPressed;
-	public Sprite openMenuPressed;
+	public Text backToLobbyButtonText1;
+	public Text backToLobbyButtonText2;
 
-	public Image backToLobbyButtonImage1;
-	public Image backToLobbyButtonImage2;
+	public string BackToLobbyTextString
+	{
+		set { backToLobbyButtonText1.text = value; backToLobbyButtonText2.text = value; }
+	}
 
 	public Sprite backToRoom;
 	public Sprite exitRoom;
@@ -37,13 +38,11 @@ public class Hud : MonoBehaviour {
 	{
 		if (NetHub.instance.isServer && Configuration.NumberOfPlayers > 1)
 		{
-			backToLobbyButtonImage1.sprite = backToRoom;
-			backToLobbyButtonImage2.sprite = backToRoom;
-		}
+			BackToLobbyTextString = "返回房间";
+        }
 		else
 		{
-			backToLobbyButtonImage1.sprite = exitRoom;
-			backToLobbyButtonImage2.sprite = exitRoom;
+			BackToLobbyTextString = "退出房间";
 		}
 		menuTransform.gameObject.SetActive(false);
 		gameOverDialog.gameObject.SetActive(false);
@@ -131,7 +130,7 @@ public class Hud : MonoBehaviour {
 	private void ShowGameOverDialog(string result)
 	{
 		Manager.instance.localController.ShowJoystick(false);
-		openMenuButtonImage.gameObject.SetActive(false);
+		openMenuButtonTransform.gameObject.SetActive(false);
 		menuTransform.gameObject.SetActive(false);
 		gameOverResult.text = result;
 		gameOverDialog.gameObject.SetActive(true);
@@ -141,17 +140,11 @@ public class Hud : MonoBehaviour {
 	{
 		if (!menuTransform.gameObject.activeSelf)
 		{
-			openMenuButtonImage.sprite = openMenuPressed;
 			menuTransform.gameObject.SetActive(true);
-			openMenuButtonTransform.localPosition = new Vector3(580.0f, openMenuButtonTransform.localPosition.y, openMenuButtonTransform.localPosition.z);
-			openMenuButtonTransform.sizeDelta = new Vector2(72.0f, 126.0f);
         }
 		else
 		{
-			openMenuButtonImage.sprite = openMenuNotPressed;
 			menuTransform.gameObject.SetActive(false);
-			openMenuButtonTransform.localPosition = new Vector3(880.0f, openMenuButtonTransform.localPosition.y, openMenuButtonTransform.localPosition.z);
-			openMenuButtonTransform.sizeDelta = new Vector2(108.0f, 192.0f);
 		}
 	}
 
